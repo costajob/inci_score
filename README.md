@@ -1,41 +1,20 @@
-# InciScore
+## Table of Contents
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/inci_score`. To experiment with that code, run `bin/console` for an interactive prompt.
+* [Scope](#scope)
+* [Computation](#computation)
+  * [Component matching](#component-matching)
 
-TODO: Delete this and the text above, and describe your gem
+## Scope
+This gem computes the hazard of cosmetic components basing on the information provided by the [biodizionario site](http://www.biodizionario.it/).
 
-## Installation
+## Computation
+The computation takes care to score the INCI basing on:
+* its position in the list of components
+* its global hazard basing on the biodizionario
+The total score is then calculated on a one hundred score basis
 
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'inci_score'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install inci_score
-
-## Usage
-
-TODO: Write usage instructions here
-
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
-
-## Contributing
-
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/inci_score. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
-
-
-## License
-
-The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
+### Component matching
+Since the components list might come from external sources (e.g. scanned image, Web form, etc), the gem uses some techniques from the natural language processing to compare with the known component.
+Such techniques include:
+* [levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance): to compute the edit distance between the two strings
+* [metaphone algorithm](https://en.wikipedia.org/wiki/Metaphone): to detect phonetic fingerprinting of two strings 
