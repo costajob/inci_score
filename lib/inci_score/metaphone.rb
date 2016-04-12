@@ -40,7 +40,7 @@ module InciScore
     end
 
     def call
-      @tokens.map { |t| transform!(t); t }.join(' ').freeze
+      @tokens.map { |t| transform!(t); t }.join(' ')
     end
 
     private

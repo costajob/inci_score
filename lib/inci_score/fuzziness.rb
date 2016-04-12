@@ -3,6 +3,35 @@ require 'inci_score/metaphone'
 
 module InciScore
   module Fuzziness
+    class Distance
+      MAX = 100.0
+      FACTOR = 1.15
+      TOLERANCE = 7.5
+
+      attr_reader :score
+
+      def initialize(levenshtein, assonance)
+        @levenshtein = levenshtein.to_i
+        @assonance = assonance.to_i
+        @score = compute
+      end
+
+      private
+
+      def compute
+        return MAX if @levenshtein.zero?
+        (MAX/factor - tolerance).round(5)
+      end
+
+      def factor
+        Math::log(@levenshtein) + FACTOR
+      end
+
+      def tolerance
+        @assonance * TOLERANCE
+      end
+    end
+
     refine String do
       def levenshtein(t)
         Levenshtein::new(self, t).call
@@ -10,6 +39,16 @@ module InciScore
 
       def metaphone
         Metaphone::new(self).call
+      end
+
+      def assonance(t)
+        self.metaphone.levenshtein(t.metaphone)
+      end
+
+      def distance(t)
+        l = self.downcase.levenshtein(t.downcase)
+        a = self.assonance(t)
+        Distance::new(l, a)
       end
     end
   end

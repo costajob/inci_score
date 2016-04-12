@@ -83,4 +83,18 @@ module Stubs
        Stub::new('this', '0S')]
     end
   end
+
+  module Fuzziness
+    extend self
+
+    Stub = Struct::new(:s, :t, :score, :delta)
+
+    def distances
+      [Stub::new('battle', 'BAttlE', 100, 0),
+       Stub::new('battle', 'bottle', 87, 0.1),
+       Stub::new('battle', 'rattle', 79.5, 0.1),
+       Stub::new('battle', 'bottley', 54.2, 0.1),
+       Stub::new('battle', 'bottleneck', 21.2, 0.1)]
+    end
+  end
 end
