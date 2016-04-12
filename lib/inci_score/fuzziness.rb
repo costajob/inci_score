@@ -7,19 +7,25 @@ module InciScore
       MAX = 100.0
       FACTOR = 1.15
       TOLERANCE = 7.5
+      MIN = MAX / (FACTOR + TOLERANCE)
 
       attr_reader :score
 
       def initialize(levenshtein, assonance)
         @levenshtein = levenshtein.to_i
         @assonance = assonance.to_i
-        @score = compute
+        @score = fetch_score
       end
 
       private
 
-      def compute
+      def fetch_score
         return MAX if @levenshtein.zero?
+        return MIN if compute <= 0
+        compute
+      end
+
+      def compute
         (MAX/factor - tolerance).round(5)
       end
 

@@ -94,7 +94,8 @@ module Stubs
        Stub::new('battle', 'bottle', 87, 0.1),
        Stub::new('battle', 'rattle', 79.5, 0.1),
        Stub::new('battle', 'bottley', 54.2, 0.1),
-       Stub::new('battle', 'bottleneck', 21.2, 0.1)]
+       Stub::new('battle', 'bottleneck', 21.2, 0.1),
+       Stub::new('last battle on earth', 'wtf?', 11.5, 0.1)]
     end
   end
 end
