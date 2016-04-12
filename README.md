@@ -3,6 +3,7 @@
 * [Scope](#scope)
 * [Computation](#computation)
   * [Component matching](#component-matching)
+    * [text gem](#text-gem)
 
 ## Scope
 This gem computes the hazard of cosmetic components basing on the information provided by the [Biodizionario site](http://www.biodizionario.it/) by Fabrizio Zago.
@@ -19,3 +20,7 @@ Since the components list might come from external sources (e.g. scanned image, 
 Such techniques include:
 * [levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance): to compute the edit distance between the two strings
 * [metaphone algorithm](https://en.wikipedia.org/wiki/Metaphone): to detect phonetic fingerprinting of two strings 
+
+#### text gem
+Fuzzy matching logic has been extracted from the gorgeous [text gem](https://github.com/threedaymonk/text) by [Paul Battley](https://github.com/threedaymonk).  
+I decided to use my own implementation to pick just what i need, without worrying about future compatibility issues.

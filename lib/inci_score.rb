@@ -1,5 +1,3 @@
-require "inci_score/version"
+require 'inci_score/version'
+require 'inci_score/fuzzy_refinements'
 
-module InciScore
-  # Your code goes here...
-end
