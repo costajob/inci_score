@@ -2,7 +2,7 @@ require 'inci_score/levenshtein'
 require 'inci_score/metaphone'
 
 module InciScore
-  module FuzzyRefinements
+  module Fuzziness
     refine String do
       def levenshtein(t)
         Levenshtein::new(self, t).call
