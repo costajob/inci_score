@@ -7,4 +7,10 @@ Rake::TestTask.new(:spec) do |t|
   t.test_files = FileList['spec/**/*_spec.rb']
 end
 
+Rake::TestTask.new(:bench) do |t|
+  t.libs << 'bench'
+  t.libs << 'lib'
+  t.test_files = FileList['bench/**/*_bench.rb']
+end
+
 task :default => :spec

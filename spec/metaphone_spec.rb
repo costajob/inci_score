@@ -15,7 +15,7 @@ describe InciScore::Metaphone do
   end
 
   it 'must compute metaphone' do
-    Stubs::Metaphone::phonetics.each do |record|
+    Stubs::Metaphone::records.each do |record|
       InciScore::Metaphone::new(record.s).call.must_equal record.phonetic
     end
   end

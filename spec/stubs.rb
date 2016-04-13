@@ -1,11 +1,10 @@
 module Stubs
-
   module Levenshtein
     extend self
 
     Stub = Struct::new(:s, :t, :distance)
 
-    def single
+    def records
       [Stub::new('', '', 0),
        Stub::new('elvis', 'elvis', 0),
        Stub::new('elvis', 'elviz', 1),
@@ -13,14 +12,14 @@ module Stubs
        Stub::new('graceland', 'disneyland', 5)]
     end
 
-    def multiple
+    def records_multiple
       [Stub::new('föo', 'foo', 1),
        Stub::new('français', 'francais', 1),
        Stub::new('français', 'franæais', 1),
        Stub::new("私の名前はポールです", "ぼくの名前はポールです", 2)]
     end
 
-    def special
+    def records_special
       [Stub::new("elvis\n", 'elvis', 1),
        Stub::new("\rking\n", "\nking", 2),
        Stub::new('teddybear', "\t\tteddybear\n", 3)]
@@ -32,7 +31,7 @@ module Stubs
 
     Stub = Struct::new(:s, :phonetic)
 
-    def phonetics
+    def records
       [Stub::new('anastha', 'ANS0'),
        Stub::new('davis-carter', 'TFSKRTR'),
        Stub::new('escarmant', 'ESKRMNT'),
@@ -84,18 +83,18 @@ module Stubs
     end
   end
 
-  module Fuzziness
+  module Distance
     extend self
 
-    Stub = Struct::new(:s, :t, :score, :delta)
+    Stub = Struct::new(:s, :t, :score)
 
-    def distances
-      [Stub::new('battle', 'BAttlE', 100, 0),
-       Stub::new('battle', 'bottle', 87, 0.1),
-       Stub::new('battle', 'rattle', 79.5, 0.1),
-       Stub::new('battle', 'bottley', 54.2, 0.1),
-       Stub::new('battle', 'bottleneck', 21.2, 0.1),
-       Stub::new('last battle on earth', 'wtf?', 11.5, 0.1)]
+    def records
+      [Stub::new('battle', 'BAttlE', 10),
+       Stub::new('battle', 'bottle', 10),
+       Stub::new('battle', 'rattle', 9),
+       Stub::new('battle', 'bottley', 9),
+       Stub::new('battle', 'bottleneck', 5),
+       Stub::new('last battle on earth', 'wtf?', 1)]
     end
   end
 end

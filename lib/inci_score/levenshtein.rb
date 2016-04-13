@@ -1,7 +1,7 @@
 module InciScore
   class Levenshtein
     def self.encode(s)
-      String(s).encode!(Encoding::UTF_8).unpack("U*")
+      String(s).encode(Encoding::UTF_8).unpack("U*")
     end
 
     def initialize(t, s)
