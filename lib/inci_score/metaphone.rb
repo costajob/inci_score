@@ -1,39 +1,33 @@
 module InciScore
   class Metaphone
-    Rule = Struct::new(:regexp, :phonetic) do
-      def call(s)
-        String(s).gsub!(regexp, phonetic)
-      end
-    end
-
     RULES = [
-      Rule::new(/([bcdfhjklmnpqrstvwxyz])\1+/, '\1'),
-      Rule::new(/^ae/, 'E'),
-      Rule::new(/^[gkp]n/, 'N'),
-      Rule::new(/^wr/, 'R'),
-      Rule::new(/^x/, 'S'),
-      Rule::new(/^wh/, 'W'),
-      Rule::new(/mb$/, 'M'),
-      Rule::new(/(?!^)sch/, 'SK'),
-      Rule::new(/th/, '0'),
-      Rule::new(/t?ch|sh/, 'X'),
-      Rule::new(/c(?=ia)/, 'X'),
-      Rule::new(/[st](?=i[ao])/, 'X'),
-      Rule::new(/s?c(?=[iey])/, 'S'),
-      Rule::new(/(ck?|q)/, 'K'),
-      Rule::new(/dg(?=[iey])/, 'J'),
-      Rule::new(/d/, 'T'),
-      Rule::new(/g(?=h[^aeiou])/, ''),
-      Rule::new(/gn(ed)?/, 'N'),
-      Rule::new(/([^g]|^)g(?=[iey])/, '\1J'),
-      Rule::new(/g+/, 'K'),
-      Rule::new(/ph/, 'F'),
-      Rule::new(/([aeiou])h(?=\b|[^aeiou])/, '\1'),
-      Rule::new(/[wy](?![aeiou])/, ''),
-      Rule::new(/z/, 'S'),
-      Rule::new(/v/, 'F'),
-      Rule::new(/(?!^)[aeiou]+/, '')
-    ].map!(&:freeze)
+      [/([bcdfhjklmnpqrstvwxyz])\1+/, '\1'],
+      [/^ae/, 'E'],
+      [/^[gkp]n/, 'N'],
+      [/^wr/, 'R'],
+      [/^x/, 'S'],
+      [/^wh/, 'W'],
+      [/mb$/, 'M'],
+      [/(?!^)sch/, 'SK'],
+      [/th/, '0'],
+      [/t?ch|sh/, 'X'],
+      [/c(?=ia)/, 'X'],
+      [/[st](?=i[ao])/, 'X'],
+      [/s?c(?=[iey])/, 'S'],
+      [/(ck?|q)/, 'K'],
+      [/dg(?=[iey])/, 'J'],
+      [/d/, 'T'],
+      [/g(?=h[^aeiou])/, ''],
+      [/gn(ed)?/, 'N'],
+      [/([^g]|^)g(?=[iey])/, '\1J'],
+      [/g+/, 'K'],
+      [/ph/, 'F'],
+      [/([aeiou])h(?=\b|[^aeiou])/, '\1'],
+      [/[wy](?![aeiou])/, ''],
+      [/z/, 'S'],
+      [/v/, 'F'],
+      [/(?!^)[aeiou]+/, '']
+    ]
 
     def initialize(s)
       @tokens = String(s).strip.split(/\s+/)
@@ -52,7 +46,7 @@ module InciScore
     end
 
     def apply_rules!(t)
-      RULES.each { |rule| rule.call(t) }
+      RULES.each { |re, sub| t.gsub!(re, sub) }
     end
 
     def normalize!(t)
