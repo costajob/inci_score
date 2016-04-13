@@ -97,4 +97,12 @@ module Stubs
        Stub::new('last battle on earth', 'wtf?', 1)]
     end
   end
+
+  module Parser
+    extend self
+
+    def html
+      %q{<html><body><table border="0" width="751" cellspacing="0"  align="center"><tr><td><font face="Verdana, Arial, Helvetica, sans-serif"><b><font color="#000000" size="4">Trovati 5034 risultati</font></b><br><br><img src=http://biodizionario.it/images/semafori/v.gif border=0 width=39 height=20>&nbsp;&nbsp;<b><font color=#550055 face="Verdana,Arial,helvetica,sans-serif" style="font-size: 14px"> Emulsionante / Condizionante pelle</font></b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<font color=#550055 face="Verdana,Arial,helvetica,sans-serif" style="font-size: 13px">PHOSPHATIDYLCHOLINE</font><br><img src=http://biodizionario.it/images/semafori/rr.gif border=0 width=39 height=20>&nbsp;&nbsp;<b><font color=#550055 face="Verdana,Arial,helvetica,sans-serif" style="font-size: 14px">1-NAPHTHOL</font></b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<font color=#550055 face="Verdana,Arial,helvetica,sans-serif" style="font-size: 13px">colorante capelli</font><br><img src=http://biodizionario.it/images/semafori/r.gif border=0 width=39 height=20>&nbsp;&nbsp;<b><font color=#550055 face="Verdana,Arial,helvetica,sans-serif" style="font-size: 14px">1,2,4-BENZENETRIACETATE </font></b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<font color=#550055 face="Verdana,Arial,helvetica,sans-serif" style="font-size: 13px">colorante capelli </font><br><img src=http://biodizionario.it/images/semafori/vv.gif border=0 width=39 height=20>&nbsp;&nbsp;<b><font color=#550055 face="Verdana,Arial,helvetica,sans-serif" style="font-size: 14px">1,3-BIS-(2,4-DIAMINOPHENOXY)PROPANE </font></b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<font color=#550055 face="Verdana,Arial,helvetica,sans-serif" style="font-size: 13px">colorante capelli </font><br><img src=http://biodizionario.it/images/semafori/g.gif border=0 width=39 height=20>&nbsp;&nbsp;<b><font color=#550055 face="Verdana,Arial,helvetica,sans-serif" style="font-size: 14px">ACETYLATED LANOLIN </font></b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<font color=#550055 face="Verdana,Arial,helvetica,sans-serif" style="font-size: 13px">antistatico / emolliente / emulsionante </font><br></td></tr></table></body></html>}
+    end
+  end
 end

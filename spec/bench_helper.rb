@@ -1,5 +1,6 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'benchmark/ips'
+require 'stubs'
 
 module Bench
   extend self

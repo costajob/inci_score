@@ -8,9 +8,9 @@ Rake::TestTask.new(:spec) do |t|
 end
 
 Rake::TestTask.new(:bench) do |t|
-  t.libs << 'bench'
+  t.libs << 'spec'
   t.libs << 'lib'
-  t.test_files = FileList['bench/**/*_bench.rb']
+  t.test_files = FileList['spec/**/*_bench.rb']
 end
 
 task :default => :spec
