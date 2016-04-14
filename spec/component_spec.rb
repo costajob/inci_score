@@ -4,7 +4,6 @@ require 'inci_score/component'
 describe InciScore::Component do
   it 'must rais an argument error for missing attributes' do
     -> { InciScore::Component::new(hazard: 1) }.must_raise ArgumentError
-    -> { InciScore::Component::new(name: 'phosphatidylcholine') }.must_raise ArgumentError
   end
 
   it 'must define equality by name' do
