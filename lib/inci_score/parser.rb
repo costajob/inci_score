@@ -1,12 +1,16 @@
 require 'nokogiri'
+require 'inci_score/component'
 
 module InciScore
   class Parser
     SEMAPHORES = %w[vv v g r rr]
+    BIODIZIONARIO_URL = "http://www.biodizionario.it/biodizio.php".freeze
     CSS_QUERY = 'table[width="751"] > tr > td img'.freeze
 
-    def initialize(io)
-      @doc = Nokogiri::HTML(io)
+    def initialize(options = {} )
+      doc = options.fetch(:doc) { open(BIODIZIONARIO_URL) }
+      @doc = Nokogiri::HTML(doc)
+      @entity = options.fetch(:entity) { InciScore::Component }
     end
 
     def call
@@ -15,7 +19,7 @@ module InciScore
         name = img.next_sibling.next_sibling
         desc = name.next_sibling.next_sibling
         name, desc = desc, name if swap?(desc.text)
-        { hazard: SEMAPHORES.index(hazard), name: normalize(name), desc: normalize(desc) }
+        @entity::new(hazard: SEMAPHORES.index(hazard), name: normalize(name), desc: normalize(desc))
       end
     end
 
