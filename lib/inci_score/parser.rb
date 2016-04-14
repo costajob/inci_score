@@ -1,4 +1,5 @@
 require 'nokogiri'
+require 'open-uri'
 require 'inci_score/component'
 
 module InciScore
