@@ -1,6 +1,5 @@
 require 'nokogiri'
 require 'open-uri'
-require 'inci_score/component'
 
 module InciScore
   class Parser
@@ -8,26 +7,25 @@ module InciScore
     SEMAPHORES = %w[vv v g r rr]
     CSS_QUERY = 'table[width="751"] > tr > td img'.freeze
 
-    def initialize(options = {} )
-      @doc = options.fetch(:doc) { Thread::new { open(URI) } }
-      @entity = options.fetch(:entity) { InciScore::Component }
+    def initialize(out = nil)
+      @out = out || Thread::new { open(URI) }
     end
 
     def call
-      @components ||= Nokogiri::HTML(doc).css(CSS_QUERY).map do |img|
+      Nokogiri::HTML(doc).css(CSS_QUERY).inject({}) do |acc, img|
         hazard = semaphore(img.attr('src'))
         name = img.next_sibling.next_sibling
         desc = name.next_sibling.next_sibling
         name, desc = desc, name if swap?(desc.text)
-        @entity::new(hazard: SEMAPHORES.index(hazard), name: normalize(name), desc: normalize(desc))
+        acc[normalize(name)] = SEMAPHORES.index(hazard)
+        acc
       end
     end
 
     private
 
     def doc
-      return @doc.value if @doc.respond_to?(:value)
-      @doc
+      @doc ||= @out.respond_to?(:value) ? @out.value : @out
     end
 
     def semaphore(src)
