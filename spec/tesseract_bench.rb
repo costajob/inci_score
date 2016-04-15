@@ -16,5 +16,9 @@ Benchmark::ips do |x|
     RTesseract.new(img_path).to_s
   end
 
+  x.report('RAW') do
+    %x{tesseract #{img_path} stdout}
+  end
+
   x.compare!
 end
