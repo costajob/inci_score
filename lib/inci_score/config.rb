@@ -10,7 +10,5 @@ module InciScore
     def data
       @data ||= YAML.load(ERB.new(File.read(PATH)).result)
     end
-
-    ENV['TESSDATA_PREFIX'] = data.fetch('tesseract') { {} }.fetch('path') { '/usr/share/tesseract-ocr' } 
   end
 end
