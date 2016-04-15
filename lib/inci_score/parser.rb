@@ -12,7 +12,7 @@ module InciScore
     end
 
     def call
-      Nokogiri::HTML(doc).css(CSS_QUERY).inject({}) do |acc, img|
+      @components ||= Nokogiri::HTML(doc).css(CSS_QUERY).inject({}) do |acc, img|
         hazard = semaphore(img.attr('src'))
         name = img.next_sibling.next_sibling
         desc = name.next_sibling.next_sibling
