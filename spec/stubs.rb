@@ -90,11 +90,11 @@ module Stubs
 
     def records
       [Stub::new('battle', 'BAttlE', 10),
-       Stub::new('battle', 'bottle', 10),
-       Stub::new('battle', 'rattle', 9),
-       Stub::new('battle', 'bottley', 9),
-       Stub::new('battle', 'bottleneck', 5),
-       Stub::new('last battle on earth', 'wtf?', 1)]
+       Stub::new('battle', 'bottle', 9),
+       Stub::new('battle', 'rattle', 8.5),
+       Stub::new('battle', 'bottley', 8),
+       Stub::new('battle', 'bottleneck', 4.5),
+       Stub::new('last battle on earth', 'wtf?', 0.5)]
     end
   end
 

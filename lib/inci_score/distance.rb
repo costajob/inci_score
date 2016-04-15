@@ -7,7 +7,7 @@ module InciScore
     attr_reader :score
 
     MAX = 10
-    MIN = 1
+    MIN = 0.5
 
     def initialize(s, t)
       @s = s.downcase
@@ -25,12 +25,11 @@ module InciScore
     end
 
     def compute
-      @computation ||= MAX - @levenshtein + assonance
+      @score ||= MAX - @levenshtein - assonance
     end
 
     def assonance
-      return MIN if @s.assonant?(@t)
-      0
+      @assonance = @s.assonant?(@t) ? 0 : MIN
     end
   end
 end
