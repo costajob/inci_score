@@ -2,9 +2,9 @@ require 'inci_score/config'
 
 module InciScore
   class Tesseract
-    COMMAND = File::join(Config::data['tesseract']['path']).freeze
+    BIN = File::join(Config::data['tesseract']['bin']).freeze
     
-    class MissingInstallationError < StandardError; end
+    class InstallationError < StandardError; end
 
     def initialize(options = {})
       @src = options.fetch(:src) { fail ArgumentError, 'missing src'}
@@ -12,10 +12,10 @@ module InciScore
       @opts = options.fetch(:opts) { '' }
     end
 
-    def call
-      %x{#{COMMAND} #{@src} #{@out} #{@opts}}
+    def call(bin = BIN)
+      `#{bin} #{@src} #{@out} #{@opts}`
     rescue StandardError
-      raise MissingInstallationError, "install tesseract for your platform"
+      raise InstallationError, "install tesseract for your platform"
     end
   end
 end

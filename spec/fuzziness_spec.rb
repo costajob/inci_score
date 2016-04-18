@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'inci_score/fuzziness'
+require 'inci_score/distance'
 
 using InciScore::Fuzziness
 
@@ -14,5 +14,13 @@ describe InciScore::Fuzziness do
 
   it 'must check assonance' do
     assert 'bottle'.assonant?('battle')
+  end
+
+  it 'must return a distance object' do
+    'bottle'.distance('battle').must_be_instance_of InciScore::Distance
+  end
+
+  it 'must compute distance' do
+    'bottle'.distance('battle').score.must_equal 9
   end
 end

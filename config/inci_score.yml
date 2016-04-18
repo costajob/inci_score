@@ -1,2 +1,5 @@
+biodizio:
+  src: <%= ENV.fetch('BIODIZIO_SRC') { 'http://www.biodizionario.it/biodizio.php' } %>
+
 tesseract:
-  path: <%= ENV.fetch('TESSERACT_BIN') { '/usr/bin/tesseract' } %>
+  bin: <%= ENV.fetch('TESSERACT_BIN') { '/usr/bin/tesseract' } %>

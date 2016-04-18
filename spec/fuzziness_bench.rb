@@ -1,5 +1,5 @@
 require 'bench_helper'
-require 'inci_score/fuzziness'
+require 'inci_score/distance'
 
 using InciScore::Fuzziness
 
@@ -14,5 +14,9 @@ Benchmark::ips do |x|
 
   x.report("Assonance of '#{Bench::S}' and '#{Bench::T}'") do
     Bench::S.assonant?(Bench::T)
+  end
+
+  x.report("Distance of '#{Bench::S}' and '#{Bench::T}'") do
+    Bench::S.distance(Bench::T)
   end
 end

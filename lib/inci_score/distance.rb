@@ -1,8 +1,7 @@
 require 'inci_score/fuzziness'
 
-using InciScore::Fuzziness
-
 module InciScore
+  using Fuzziness
   class Distance
     attr_reader :score
 
@@ -30,6 +29,14 @@ module InciScore
 
     def assonance
       @assonance = @s.assonant?(@t) ? 0 : MIN
+    end
+  end
+
+  module Fuzziness
+    refine String do
+      def distance(t)
+        Distance::new(self, t)
+      end
     end
   end
 end

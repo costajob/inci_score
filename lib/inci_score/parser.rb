@@ -1,14 +1,13 @@
 require 'nokogiri'
-require 'open-uri'
+require 'inci_score/config'
 
 module InciScore
   class Parser
-    URI = "http://www.biodizionario.it/biodizio.php".freeze
     SEMAPHORES = %w[vv v g r rr]
     CSS_QUERY = 'table[width="751"] > tr > td img'.freeze
 
     def initialize(out = nil)
-      @out = out || Thread::new { open(URI) }
+      @out = out || Thread::new { open(Config::data['biodizio']['src']) }
     end
 
     def call
