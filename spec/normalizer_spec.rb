@@ -15,8 +15,7 @@ describe InciScore::Normalizer do
   it 'must apply all rules to tokenize src' do
     Stubs::Normalizer::sources.each do |record|
       norm = InciScore::Normalizer::new(src: record.src)
-      norm.call
-      norm.src.size.must_equal record.size
+      norm.call.size.must_equal record.size
     end
   end
 end

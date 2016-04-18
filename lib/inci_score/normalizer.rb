@@ -25,6 +25,7 @@ module InciScore
 
     def call
       @rules.each { |rule| send(rule) }
+      @src
     rescue NameError => e
       raise NoentRuleError, e, e.backtrace
     end
