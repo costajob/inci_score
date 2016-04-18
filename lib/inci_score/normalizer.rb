@@ -1,7 +1,6 @@
 module InciScore
   class Normalizer
-    NEW_LINE = "\\\\n".freeze
-    SPACE = ' '.freeze
+    DEFAULTS = %i{inline down replace behead split purge strip}
     REPLACEMENTS = [
       [';', ','],
       ['.', ','],
@@ -20,12 +19,12 @@ module InciScore
 
     def initialize(options = {})
       @src = options.fetch(:src) { fail ArgumentError, 'missing src' }
-      @rules = options.fetch(:rules) { %i{inline down replace split behead strip purge} }
+      @rules = options.fetch(:rules) { DEFAULTS }
     end
 
     def call
-      @rules.each { |rule| send(rule) }
-      @src
+      return @src if @src.instance_of?(Array)
+      @rules.each { |rule| send(rule) }; @src
     rescue NameError => e
       raise NoentRuleError, e, e.backtrace
     end
@@ -33,7 +32,7 @@ module InciScore
     private
 
     def inline
-      @src.tr!(NEW_LINE, SPACE)
+      @src.tr!("\n", " ")
     end
 
     def down
@@ -46,6 +45,15 @@ module InciScore
       end
     end
 
+    def behead
+      return unless sep_index
+      @src = @src[sep_index+1, @src.size]
+    end
+
+    def sep_index
+      @src.index(TITLE_SEP)
+    end
+
     def split
       counted = SPACERS.reduce({}) { |acc,s| acc[s] = @src.count(s); acc }
       return if counted.values.all?(&:zero?)
@@ -53,19 +61,13 @@ module InciScore
       @src = @src.split(spacer)
     end
 
-    def behead
-      @src = Array(@src)
-      return if @src[0].count(TITLE_SEP) == 0
-      _, @src[0] = @src[0].split(TITLE_SEP)
-    end
-
     def strip
       Array(@src).each(&:strip!)
+      @src.reject!(&:empty?)
     end
 
     def purge
       @src = Array(@src)
-      @src.reject!(&:empty?)
       @src.each { |s| s.gsub!(REMOVALS, '') }
     end
   end
