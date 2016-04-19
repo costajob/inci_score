@@ -11,6 +11,4 @@ Benchmark::ips do |x|
   x.report('all') do
     InciScore::Normalizer::new(src: Stubs::Normalizer::sources.first.src).call
   end
-
-  x.compare!
 end

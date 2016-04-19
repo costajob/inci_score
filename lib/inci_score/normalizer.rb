@@ -44,7 +44,7 @@ module InciScore
 
     def replace
       REPLACEMENTS.each do |r|
-        @src.tr!(r[0], r[1])
+        @src.tr!(r[0], r[1]) if @src.index(r[0])
       end
     end
 
