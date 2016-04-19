@@ -1,3 +1,5 @@
+require 'inci_score/logger'
+
 module InciScore
   class Normalizer
     DEFAULTS = %i{inline down replace behead split purge strip}
@@ -26,6 +28,7 @@ module InciScore
       return @src if @src.instance_of?(Array)
       @rules.each { |rule| send(rule) }; @src
     rescue NameError => e
+      Logger::instance.error(e)
       raise NoentRuleError, e, e.backtrace
     end
 
@@ -62,13 +65,13 @@ module InciScore
     end
 
     def strip
-      Array(@src).each(&:strip!)
+      @src = Array(@src)
+      @src.each(&:strip!)
       @src.reject!(&:empty?)
     end
 
     def purge
-      @src = Array(@src)
-      @src.each { |s| s.gsub!(REMOVALS, '') }
+      Array(@src).each { |s| s.gsub!(REMOVALS, '') }
     end
   end
 end

@@ -1,4 +1,4 @@
-require 'inci_score/config'
+require 'inci_score/logger'
 
 module InciScore
   class Tesseract
@@ -14,7 +14,8 @@ module InciScore
 
     def call(bin = BIN)
       `#{bin} #{@src} #{@out} #{@opts}`
-    rescue StandardError
+    rescue StandardError => e
+      Logger::instance.error(e)
       raise InstallationError, "install tesseract for your platform"
     end
   end

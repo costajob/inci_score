@@ -1,5 +1,12 @@
+logger:
+  file: <%= File::expand_path('../log/inci_score.log', __FILE__) %>
+  left: 5
+  size: <%= 1024**3 %>
+  level: 1
+
 biodizio:
-  src: <%= ENV.fetch('BIODIZIO_SRC') { 'http://www.biodizionario.it/biodizio.php' } %>
+  uri: http://www.biodizionario.it/biodizio.php
+  cache: <%= File::expand_path('../sample/biodizio.html', __FILE__) %>
 
 tesseract:
   bin: <%= ENV.fetch('TESSERACT_BIN') { '/usr/bin/tesseract' } %>

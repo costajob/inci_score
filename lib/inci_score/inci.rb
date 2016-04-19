@@ -6,9 +6,13 @@ require 'inci_score/normalizer'
 module InciScore
   using Fuzziness
   class Inci
+    def self.catalog
+      @catalog ||= Parser::new.call
+    end
+
     def initialize(options = {})
       @src = options.fetch(:src) { fail ArgumentError, "missing src" }
-      @catalog = options.fetch(:catalog) { Parser::new.call }
+      @catalog = options.fetch(:catalog) { self.class::catalog }
       @processor = options.fetch(:processor) { Tesseract::new(src: @src) }
       @normalizer = options.fetch(:normalizer) { Normalizer::new(src: @processor.call) }
     end

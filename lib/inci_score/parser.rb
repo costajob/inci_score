@@ -1,13 +1,21 @@
 require 'nokogiri'
-require 'inci_score/config'
+require 'inci_score/logger'
 
 module InciScore
   class Parser
     SEMAPHORES = %w[vv v g r rr]
     CSS_QUERY = 'table[width="751"] > tr > td img'.freeze
 
-    def initialize(out = nil)
-      @out = out || Thread::new { open(Config::data['biodizio']['src']) }
+    def self.fetch_src
+      open(Config::data['biodizio']['uri'])
+    rescue SocketError, Net::OpenTimeout => e
+      Logger::instance.error(e)
+      Logger::instance.info('fetching from cache')
+      open(Config::data['biodizio']['cache'])
+    end
+
+    def initialize(src = nil)
+      @src = src || Thread::new { self.class::fetch_src }
     end
 
     def call
@@ -24,7 +32,7 @@ module InciScore
     private
 
     def doc
-      @doc ||= @out.respond_to?(:value) ? @out.value : @out
+      @src.respond_to?(:value) ? @src.value : @src
     end
 
     def semaphore(src)
