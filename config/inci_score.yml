@@ -6,7 +6,6 @@ logger:
 
 biodizio:
   uri: http://www.biodizionario.it/biodizio.php
-  cache: <%= File::expand_path('../sample/biodizio.html', __FILE__) %>
 
 tesseract:
   bin: <%= ENV.fetch('TESSERACT_BIN') { '/usr/bin/tesseract' } %>

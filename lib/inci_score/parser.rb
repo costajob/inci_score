@@ -6,16 +6,8 @@ module InciScore
     SEMAPHORES = %w[vv v g r rr]
     CSS_QUERY = 'table[width="751"] > tr > td img'.freeze
 
-    def self.fetch_src
-      open(Config::data['biodizio']['uri'])
-    rescue SocketError, Net::OpenTimeout => e
-      Logger::instance.error(e)
-      Logger::instance.info('fetching from cache')
-      open(Config::data['biodizio']['cache'])
-    end
-
     def initialize(src = nil)
-      @src = src || Thread::new { self.class::fetch_src }
+      @src = src || Thread::new { open(Config::data['biodizio']['uri']) }
     end
 
     def call

@@ -35,7 +35,7 @@ module InciScore
   module Fuzziness
     refine String do
       def distance(t)
-        Distance::new(self, t)
+        Distance::new(self, t).score
       end
     end
   end

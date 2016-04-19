@@ -1,3 +1,5 @@
+require 'yaml'
+
 module Stubs
   module Levenshtein
     extend self
@@ -122,6 +124,16 @@ module Stubs
        Stub::new("      \n   \n   \n        \n    \n      \n\nINGREDIENTS: Butane, Isobutane, Propane,\nAluminum Chlorohydrate, PPG-14 Butyl Ether,\nCyclopentasiloxane, Parfum, Disteardimonium\nHectonte, Helianthus Annuus Seed Oil, C12-15\n§kV‘B?”103te,Octyldodecanol, BHT,\nﬂah'conﬂ. Propylene Carbonate, PEG4.\nEsme, Citric Acid, AI ha-Isomethyl lonone,\n09W. Benzyl alicylate, ButylphenY'\na?p'9na|. CItraI, Geraniol, Hexyl\n'L'm0nene, Linalool.\n\n", 25),
        Stub::new("INGREDIENTS : AQUa (wa‘eﬂ'\nslearate, Propylene glycol, F588\ncapric triglyceride, COCOS can\" ‘Wcla\n(Coconul) oil, Isupropyl palmna‘eW’ 09M\nalcohol, Sorbitan palmitate, pom\n\n40, Parfum (Fragrance), DisodiUm E\nCarbomer. Limonene, cum BHr\nSodium hydroxide, cums glands.\n(Grapefruit) fruit extract, SodiUm\ndroacetate, Sodium methyl dehy‘\n\nSorbic acid, Tetrasodium Elm-A CI\n10316 (Ext Yellow 7)‘\n\n", 16),
        Stub::new("782208 5‘ » INGREDIEMS: AQUA/WATER ~ GLYCERIN ' DIMETHICONE ' ISOHEXADEUNE ' SILICA\n‘ HVDROXVEIHYIHPERAZINE ETHANE SULFONIC ACID ' ALCOHOL DENAT. ' WE SLY“,- '\nSVNTHETIC WAX ' CI 77163 I BISMUTH OXVCHLORIDE ' CI 77391 / TIIANIUM DIOXIDE ' SECALE\nCEREALE EXTRACT/ RYE SEED EXTRACT ' SODIUM ACRYLATES COPOLVMER ‘ SODIUM\nHVALURONATE ‘ PHENOXYETHANOL ‘ ADENDSINE ~ PEG-10 DIMETHICONE ‘ ETHYLHEXYL\nHYDROXVSTEARATE ' NYLON-12 ' DIMETHICONE/PEG-IO/IS CROSSPOLVMER -\nD|HETHICONE/POLVGLYCERIN-3 CROSSPOLYMER ' PENWLENE GLYCOL ‘ SYNTHEIIC\nFLUORPHLOGOPITE ' BENZVL SALICVLATE - BENZVL ALCOHOL ' LINALOOL ‘ BENZVL BENZOATE '\nCAPRVLIUCAPRIC TRIGLYCERIDE ' CAPRVLYL GLYCOI. ‘ DIPOTASSIUM GLVCVRRHIZATE ' ALPINIA\nGAUNGA LEAF EXTRACT ' DISTEARDIMDNIUN HECTDRITE ' DISOUIUM EDTA - CIIRONELLOL ‘\nPARFUH/ FRAGRANCE. (F.I.L 3166675”).\nIorl MermIzIonI su\n\nM399 V ,\nwww.lorealpans.nt\n\n \n\n \n\n", 30)]
+    end
+  end
+
+  module Inci
+    extend self
+
+    CATALOG_YML = File::expand_path('../../sample/catalog.yml', __FILE__)
+
+    def catalog
+      @catalog ||= YAML::load_file(CATALOG_YML)
     end
   end
 end
