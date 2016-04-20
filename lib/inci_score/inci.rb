@@ -10,50 +10,44 @@ module InciScore
       @catalog ||= Parser::new.call
     end
 
+    attr_reader :unrecognized
+
     def initialize(options = {})
       @src = options[:src]
       @catalog = options.fetch(:catalog) { self.class::catalog }
       @processor = options.fetch(:processor) { Tesseract::new(src: @src) }
       @normalizer = options.fetch(:normalizer) { Normalizer::new(src: @processor.call) }
+      @except = []
+      @unrecognized = []
     end
 
     def ingredients
       @ingredients ||= @normalizer.call
     end
 
-    def components(msg = :find)
+    def components
       @components ||= ingredients.map do |ingredient|
-        send(msg, ingredient)
-      end
-      @components.compact!
-      @components.reject!(&:empty?)
-      @components
-    end
-
-    def scores
-      components.map { |ingredient| @catalog[ingredient] }
+        find(ingredient).tap do |found| 
+          @except << found
+        end
+      end.tap { |c| c.compact! }
     end
 
     private
 
-    def find_exp(ingredient)
+    def find(ingredient)
       return ingredient if @catalog[ingredient]
       found = [nil, 0]
-      @catalog.keys.each do |component|
+      components = @catalog.keys.clone - @except
+      until components.empty? do
+        component = components.shift
         d = ingredient.distance(component)
         return component if d == Distance::MAX
         found = [component, d] if found[1] < d
       end
-      found[0]
-    end
-
-    def find(ingredient)
-      return ingredient if @catalog[ingredient]
-      found = [nil, 0]
-      @catalog.keys.each do |component|
-        d = ingredient.distance(component)
-        return component if d == Distance::MAX
-        found = [component, d] if found[1] < d
+      if found[1] >= ingredient.size
+        @unrecognized << ingredient
+        return nil
       end
       found[0]
     end
