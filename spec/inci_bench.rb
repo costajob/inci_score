@@ -1,11 +1,16 @@
 require 'bench_helper'
 require 'inci_score/inci'
 
-ingredients = ["aqua", "disodium laureth sulfosuccinate", "cocamidopropiyl betaine", "disodium cocoamphodiacetate", "giyceryi laurate", "pegj glyceryi cocoate", "sodium lactate", "parfum", "niacinamide", "glycine", "magnesium aspanate", "aianine", "lysine", "leucine", "allantoin", "peg150 e  distearate", "peg120 methyl glucose dioleate", "phenoxyethanoi", "ci 61570", "50"]
-inci = InciScore::Inci::new(catalog: Stubs::Inci::catalog, normalizer: -> { ingredients })
+inci = Stubs::Inci::instance
 
 Benchmark::ips do |x| 
-  x.report('scores') do
-    inci.scores
+  x.report('find') do
+    inci.components
   end
+
+  x.report('find exp') do
+    inci.components(:find_exp)
+  end
+
+  x.compare!
 end

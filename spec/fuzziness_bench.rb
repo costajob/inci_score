@@ -19,4 +19,8 @@ Benchmark::ips do |x|
   x.report("Distance of '#{Bench::S}' and '#{Bench::T}'") do
     Bench::S.distance(Bench::T)
   end
+
+  x.report("Assonant distance of '#{Bench::S}' and '#{Bench::T}'") do
+    Bench::S.distance(Bench::T, true)
+  end
 end

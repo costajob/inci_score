@@ -88,15 +88,15 @@ module Stubs
   module Distance
     extend self
 
-    Stub = Struct::new(:s, :t, :score)
+    Stub = Struct::new(:s, :t, :score1, :score2)
 
     def records
-      [Stub::new('battle', 'BAttlE', 10),
-       Stub::new('battle', 'bottle', 9),
-       Stub::new('battle', 'rattle', 8.5),
-       Stub::new('battle', 'bottley', 8),
-       Stub::new('battle', 'bottleneck', 4.5),
-       Stub::new('last battle on earth', 'wtf?', 0.5)]
+      [Stub::new('battle', 'BAttlE', 10, 10),
+       Stub::new('battle', 'bottle', 9.5, 9),
+       Stub::new('battle', 'rattle', 9, 9),
+       Stub::new('battle', 'bottley', 8.5, 8),
+       Stub::new('battle', 'bottleneck', 5, 5),
+       Stub::new('last battle on earth', 'wtf?', 0.5, 0.5)]
     end
   end
 
@@ -132,8 +132,16 @@ module Stubs
 
     CATALOG_YML = File::expand_path('../../sample/catalog.yml', __FILE__)
 
+    def ingredients
+      ["aqua", "disodium laureth sulfosuccinate", "cocamidopropiyl betaine", "disodium cocoamphodiacetate", "giyceryi laurate", "pegj glyceryi cocoate", "sodium lactate", "parfum", "niacinamide", "glycine", "magnesium aspanate", "aianine", "lysine", "leucine", "allantoin", "peg150 e  distearate", "peg120 methyl glucose dioleate", "phenoxyethanoi", "ci 61570", "50"]
+    end
+
     def catalog
       @catalog ||= YAML::load_file(CATALOG_YML)
+    end
+
+    def instance
+      @instance ||= InciScore::Inci::new(catalog: catalog, normalizer: -> { ingredients } )
     end
   end
 end

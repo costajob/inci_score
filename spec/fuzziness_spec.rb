@@ -17,6 +17,10 @@ describe InciScore::Fuzziness do
   end
 
   it 'must compute distance' do
-    'bottle'.distance('battle').must_equal 9
+    'battle'.distance('bottley').must_equal 8
+  end
+
+  it 'must compute distance with assonance' do
+    'battle'.distance('bottley', true).must_equal 8.5
   end
 end
