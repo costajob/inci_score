@@ -8,10 +8,6 @@ describe InciScore::Levenshtein do
     end
   end
 
-  it 'must be case sensitive' do
-    InciScore::Levenshtein::new('elvis', 'Elvis').call.must_equal 1
-  end
-
   it 'must return string length if blank is compared' do
     s = 'loveme'
     InciScore::Levenshtein::new(s, '').call.must_equal s.length

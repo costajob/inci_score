@@ -37,6 +37,7 @@ module InciScore
 
     # adjust displaying issues on biodizionario
     def swap?(desc)
+      return false if desc.empty?
       desc == desc.upcase
     end
   end

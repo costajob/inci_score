@@ -1,7 +1,7 @@
 module InciScore
   class Levenshtein
     def self.encode(s)
-      String(s).encode(Encoding::UTF_8).unpack("U*")
+      String(s).downcase.encode(Encoding::UTF_8).unpack("U*")
     end
 
     def initialize(t, s)
@@ -16,7 +16,7 @@ module InciScore
       return m if n.zero?
       return n if m.zero?
 
-      d = (0..m).to_a
+      d = Array::new(m+1) { |i| i }
       x = nil
 
       n.times do |i|

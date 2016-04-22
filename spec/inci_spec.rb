@@ -8,11 +8,7 @@ describe InciScore::Inci do
     inci.ingredients.must_equal Stubs::Inci::ingredients
   end
 
-  it 'must map ingredients with components' do
-    inci.components.must_equal ["aqua", "disodium laureth sulfosuccinate", "cocamidopropyl betaine", "disodium cocoamphodiacetate", "glyceryl laurate", "peg-7 glyceryl cocoate", "sodium lactate", "niacinamide", "glycine", "magnesium aspartate", "lysine", "leucine", "allantoin", "peg-150 distearate", "peg-120 methyl glucose dioleate", "phenoxyethanol", "ci 61570"]
-  end
-
-  it 'must collect unrecognized components' do
-    inci.unrecognized.must_equal ["parfum", "aianine", "50"]
+  it 'must map ingredients with components and collect unrecognized' do
+    inci.components.must_equal ["aqua", "disodium laureth sulfosuccinate", "cocamidopropyl betaine", "disodium cocoamphodiacetate", "glyceryl laurate", "peg-7 glyceryl cocoate", "sodium lactate", "acetum", "niacinamide", "glycine", "magnesium aspartate", "alanine", "lysine", "leucine", "allantoin", "peg-150 distearate", "peg-120 methyl glucose dioleate", "phenoxyethanol", "ci 61570"]
   end
 end
