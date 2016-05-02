@@ -2,7 +2,7 @@ require 'inci_score/logger'
 
 module InciScore
   class Normalizer
-    DEFAULTS = %i{inline down replace behead split purge strip}
+    DEFAULTS = %w{inline down replace behead split purge strip}
     REPLACEMENTS = [
       [';', ','],
       ['.', ','],
