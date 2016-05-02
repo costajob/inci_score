@@ -38,3 +38,9 @@ module InciScore
     end
   end
 end
+
+String.class_eval do
+  def distance(t)
+    InciScore::Levenshtein::new(self, t).call
+  end
+end

@@ -56,13 +56,13 @@ module Stubs
     end
   end
 
-  module Inci
+  module Computer
     extend self
 
     CATALOG_YML = File::expand_path('../../sample/catalog.yml', __FILE__)
 
     def ingredients
-      ["aqua", "disodium laureth sulfosuccinate", "cocamidopropiyl betaine", "disodium cocoamphodiacetate", "giyceryi laurate", "pegj glyceryi cocoate", "sodium lactate", "parfum", "niacinamide", "glycine", "magnesium aspanate", "aianine", "lysine", "leucine", "allantoin", "peg150 e  distearate", "peg120 methyl glucose dioleate", "phenoxyethanoi", "ci 61570", "50"]
+      ["aqua", "disodium laureth sulfosuccinate", "cocamidopropiyl betaine", "disodium cocoamphodiacetate", "giyceryi laurate", "pegj glyceryi cocoate", "sodium lactate", "parfum", "niacinamide", "glycine", "magnesium aspanate", "aianine", "lysine", "leucine", "allantoin", "peg150 e distearate", "peg120 methyl glucose dioleate", "phenoxyethanoi", "ci 61570", "50"]
     end
 
     def catalog
@@ -70,7 +70,7 @@ module Stubs
     end
 
     def instance
-      @instance ||= InciScore::Inci::new(catalog: catalog, normalizer: -> { ingredients } )
+      @instance ||= InciScore::Computer::new(catalog: catalog, normalizer: -> { ingredients } )
     end
   end
 end

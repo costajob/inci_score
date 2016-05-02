@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.summary = %q{A library that computes the hazard of cosmetic products components, based on the Biodizionario data.}
   s.homepage = "https://github.com/costajob/inci_score.git"
   s.license = "MIT"
-  s.required_ruby_version = ">= 2.1.1"
+  s.required_ruby_version = ">= 1.9.2"
   s.files = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(spec|test|s|features)/}) }
   s.bindir = "exe"
   s.executables = s.files.grep(%r{^exe/}) { |f| File.basename(f) }

@@ -66,7 +66,7 @@ module InciScore
 
     def strip
       @src = Array(@src)
-      @src.each(&:strip!)
+      @src.each { |token| token.strip!; token.gsub!(/\s{2,}/, ' ')}
       @src.reject!(&:empty?)
     end
 
