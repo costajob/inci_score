@@ -16,9 +16,9 @@ module Stubs
     end
 
     def records_multiple
-      [Stub::new('föo', 'foo', 1),
-       Stub::new('français', 'francais', 1),
-       Stub::new('français', 'franæais', 1),
+      [Stub::new("föo", 'foo', 1),
+       Stub::new("français", "francais", 1),
+       Stub::new("français", "franæais", 1),
        Stub::new("私の名前はポールです", "ぼくの名前はポールです", 2)]
     end
 
