@@ -4,6 +4,7 @@ require 'inci_score/matcher'
 describe InciScore::Matcher do
   let(:component) { 'peg-7 glyceryl cocoate' }
   let(:unrecognized) { 'peg-7 cocamide' }
+  let(:short) { 'xx' }
   let(:ingredient) { 'pegj glyceryi cocoate' }
   let(:matcher) { InciScore::Matcher::new(ingredient) }
 
@@ -32,5 +33,18 @@ describe InciScore::Matcher do
     matcher.update!(unrecognized)
     refute matcher.call
     matcher.unrecognized.must_include ingredient 
+  end
+
+  it 'must collect unreconized ingredients if no component is found' do
+    matcher = InciScore::Matcher::new(short)
+    matcher.update!(component)
+    matcher.call
+    matcher.unrecognized.must_include short
+  end
+
+  it 'must collect unrecognized ingredients only once' do
+    matcher.update!(unrecognized)
+    2.times { refute matcher.call }
+    matcher.unrecognized.size.must_equal 1
   end
 end

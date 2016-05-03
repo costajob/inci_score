@@ -1,10 +1,8 @@
 require 'bench_helper'
 require 'inci_score/computer'
 
-inci = Stubs::Computer::instance
-
 Benchmark::ips do |x| 
-  x.report('components') do
-    inci.components
+  x.report('call') do
+    Stubs::Computer::instance.call
   end
 end

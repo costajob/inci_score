@@ -21,13 +21,19 @@ module InciScore
 
     def call
       return @component if valid?
-      @unrecognized << @ingredient
-      nil
+      manage_unrecognized
     end
 
     private
 
+    def manage_unrecognized
+      return if @unrecognized.include? @ingredient
+      @unrecognized << @ingredient 
+      nil
+    end
+
     def valid?
+      return false unless @component
       @distance <= TOLERANCE
     end
   end
