@@ -1,6 +1,10 @@
+require 'inci_score/levenshtein'
+
 module InciScore
   class Matcher
     TOLERANCE = 3
+
+    attr_reader :distance, :component, :unrecognized
 
     def initialize(ingredient, unrecognized = [])
       @ingredient = ingredient
@@ -8,7 +12,8 @@ module InciScore
       @unrecognized = unrecognized
     end
 
-    def update!(component, distance)
+    def update!(component)
+      distance = @ingredient.distance(component)
       return if @distance <= distance
       @component = component
       @distance = distance

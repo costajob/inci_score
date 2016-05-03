@@ -1,4 +1,3 @@
-# coding: utf-8
 require 'inci_score/logger'
 
 module InciScore

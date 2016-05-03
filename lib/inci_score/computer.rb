@@ -1,5 +1,4 @@
 require 'inci_score/parser'
-require 'inci_score/levenshtein'
 require 'inci_score/tesseract'
 require 'inci_score/normalizer'
 require 'inci_score/matcher'
@@ -28,24 +27,26 @@ module InciScore
     def components
       @components ||= ingredients.map do |ingredient|
         find(ingredient).tap do |found| 
-          @recognized << found
+          @recognized << found if found
         end
       end.tap { |c| c.compact! }
     end
 
     private
 
-    def components_to_scan
-      @catalog.keys - @recognized
+    def components_to_scan(ingredient)
+      first_char = ingredient[0]
+      (@catalog.keys - @recognized).select do |component|
+        component.start_with?(first_char)
+      end
     end
 
     def find(ingredient)
       return ingredient if @catalog[ingredient]
       matcher = Matcher::new(ingredient, @unrecognized)
-      components_to_scan.each do |component|
-        distance = ingredient.distance(component)
-        return component if distance.zero?
-        matcher.update!(component, distance) 
+      components_to_scan(ingredient).each do |component|
+        matcher.update!(component)
+        return component if matcher.distance.zero?
       end
       matcher.call
     end
