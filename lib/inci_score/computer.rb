@@ -13,7 +13,7 @@ module InciScore
       @catalog ||= Parser::new.call
     end
 
-    attr_reader :ingredients, :components, :unrecognized
+    attr_reader :unrecognized
 
     def initialize(options = {})
       @src = options[:src]
@@ -25,28 +25,28 @@ module InciScore
     end
 
     def call
-      fail UnrecognizedIngredientsError, @unrecognized.inspect unless check!
+      fail UnrecognizedIngredientsError, @unrecognized.inspect unless valid?
     end
 
-    private
-
-    def check!
-      total = fetch_ingredients.size
-      unfound = total - fetch_components.size
-      percent = unfound / (total / 100.0) 
-      percent <= TOLERANCE
-    end
-
-    def fetch_ingredients
+    def ingredients
       @ingredients ||= @normalizer.call
     end
 
-    def fetch_components
+    def components
       @components ||= ingredients.map do |ingredient|
         find(ingredient).tap do |found| 
           @recognized << found if found
         end
       end.tap { |c| c.compact! }
+    end
+
+    private
+
+    def valid?
+      total = ingredients.size
+      unfound = total - components.size
+      percent = unfound / (total / 100.0) 
+      percent <= TOLERANCE
     end
 
     def components_to_scan(ingredient)
