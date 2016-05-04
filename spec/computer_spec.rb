@@ -21,4 +21,8 @@ describe InciScore::Computer do
     computer = InciScore::Computer::new(catalog: Stubs::Computer::catalog, normalizer: -> { %w[parfum glycerin dimthicone] } )
     -> { computer.call }.must_raise InciScore::Computer::UnrecognizedIngredientsError
   end
+
+  it 'must compute the score' do
+    computer.call.must_be_close_to 82, 0.1
+  end
 end

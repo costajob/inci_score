@@ -2,6 +2,7 @@ require 'inci_score/parser'
 require 'inci_score/tesseract'
 require 'inci_score/normalizer'
 require 'inci_score/matcher'
+require 'inci_score/scorer'
 
 module InciScore
   class Computer
@@ -24,8 +25,10 @@ module InciScore
       @unrecognized = []
     end
 
-    def call
+    def call(scorer = Scorer)
       fail UnrecognizedIngredientsError, @unrecognized.inspect unless valid?
+      hazards = @catalog.select { |k,v| components.include?(k) }.values
+      scorer::new(hazards).call
     end
 
     def ingredients

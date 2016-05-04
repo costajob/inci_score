@@ -67,4 +67,23 @@ module Stubs
       {"alanine"=>0, "allantoin"=>0, "aqua"=>0, "ci 61570"=>3, "cocamidopropyl betaine"=>1, "disodium cocoamphodiacetate"=>0, "disodium laureth sulfosuccinate"=>2, "glyceryl laurate"=>0, "glycine"=>0, "leucine"=>0, "lysine"=>0, "magnesium aspartate"=>0, "niacinamide"=>0, "peg-120 methyl glucose dioleate"=>3, "peg-150 distearate"=>3, "peg-7 glyceryl cocoate"=>3, "phenoxyethanol"=>2, "sodium lactate"=>0}
     end
   end
+
+  module Scorer
+    extend self
+
+    Stub = Struct::new(:hazards, :score)
+
+    def hazards
+      [Stub::new([0,1], 92),
+       Stub::new(Array::new(10) { 0 }, 100),
+       Stub::new(Array::new(5) { 4 }, 9),
+       Stub::new([4,3,4,4,1,1,0], 47),
+       Stub::new([0,1,0,0,2,3,0,4], 75),
+       Stub::new([1,0,0,1,0,2,0,4,3], 76),
+       Stub::new([0,0,0,0,0,0,0,4], 90),
+       Stub::new([4,4,4,4,4,4,4,4,0], 20),
+       Stub::new([0,1,2,3,4] * 10, 62),
+       Stub::new([0,1,2,3,4] * 100, 64)]
+    end
+  end
 end

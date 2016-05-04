@@ -1,28 +1,35 @@
+require 'inci_score/hazard'
+
 module InciScore
   class Scorer
-    def initialize(catalog, components)
-      @catalog = catalog
-      @size = components.size.to_f
-      @components = @catalog.select { |k,v| components.include?(k) }
+    HAZARD_PERCENT = 25
+    WEIGHT_FACTOR = 3
+
+    def initialize(hazards)
+      @hazards = Array(hazards)
+      @size = @hazards.size
     end
 
     def call
-      hazards.reduce(&:+) / @size
+      100 - mean * HAZARD_PERCENT
     end
 
     private
 
-    def hazards
-      hazards = @components.values
-      hazards.map do |h|
-        index = hazards.index(h) 
-        h / weight(index)
+    def mean
+      weighted.reduce(0.0) do |acc,h| 
+        acc += h.score
+      end / @size.to_f
+    end
+
+    def weighted
+      @hazards.each_with_index.map do |h,i|
+        Hazard::new(h, weight(i))
       end
     end
 
     def weight(index)
-      return 1.0 if index.zero?
-      Math::log(index * @size, 17)
+      Math.log(index+1, @size * WEIGHT_FACTOR)
     end
   end
 end
