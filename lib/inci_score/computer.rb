@@ -7,19 +7,13 @@ require 'inci_score/scorer'
 
 module InciScore
   class Computer
-    TOLERANCE = 50.0
-
-    class UnrecognizedIngredientsError < StandardError; end
-
-    def self.catalog
-      @catalog ||= Parser::new.call
-    end
+    TOLERANCE = 30.0
 
     attr_reader :unrecognized
 
     def initialize(options = {})
       @src = options[:src]
-      @catalog = options.fetch(:catalog) { self.class::catalog }
+      @catalog = options.fetch(:catalog) { Parser::from_yaml }
       @processor = options.fetch(:processor) { Tesseract::new(src: @src) }
       @normalizer = options.fetch(:normalizer) { Normalizer::new(src: @processor.call) }
       @recognized = []
@@ -27,7 +21,7 @@ module InciScore
     end
 
     def call(scorer = Scorer)
-      fail UnrecognizedIngredientsError, @unrecognized.inspect unless valid?
+      warn "unrecognized ingredients: #{@unrecognized}" unless valid?
       hazards = @catalog.select { |k,v| components.include?(k) }.values
       scorer::new(hazards).call
     end
@@ -62,12 +56,19 @@ module InciScore
 
     def find(ingredient)
       return ingredient if @catalog[ingredient]
-      matcher = Matcher::new(ingredient, @unrecognized)
+      matcher = Matcher::new(ingredient)
       components_to_scan(ingredient).each do |component|
         matcher.update!(component)
         return component if matcher.distance.zero?
       end
-      matcher.call
+      matcher.call { |i| try_to_recognize(i) }
+    end
+
+    def try_to_recognize(ingredient)
+      r = Recognizer::new(ingredient, @catalog)
+      return r.component if r.component
+      @unrecognized << ingredient
+      nil
     end
   end
 end

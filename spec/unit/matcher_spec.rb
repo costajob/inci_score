@@ -29,22 +29,21 @@ describe InciScore::Matcher do
     matcher.call.must_equal component
   end
 
-  it 'must return nil and store unrecognized if distance is greater than tollerance' do
+  it 'must ignore block for recognized component' do
+    matcher.update!(component)
+    matcher.call { |i| fail 'doh!' }.must_equal component
+  end
+
+  it 'must return nil if distance is greater than tollerance' do
     matcher.update!(unrecognized)
     refute matcher.call
-    matcher.unrecognized.must_include ingredient 
   end
 
-  it 'must collect unreconized ingredients if no component is found' do
+  it 'must call the passed block in case of unrcognized component' do
     matcher = InciScore::Matcher::new(short)
     matcher.update!(component)
-    matcher.call
-    matcher.unrecognized.must_include short
-  end
-
-  it 'must collect unrecognized ingredients only once' do
-    matcher.update!(unrecognized)
-    2.times { refute matcher.call }
-    matcher.unrecognized.size.must_equal 1
+    unfound = []
+    matcher.call { |ingredient| unfound << ingredient  }
+    unfound.must_include short
   end
 end

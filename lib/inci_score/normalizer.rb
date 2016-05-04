@@ -13,7 +13,7 @@ module InciScore
     ]
     TITLE_SEP = ':'.freeze
     SPACERS = %w[, - ']
-    REMOVALS = /[^\w\s\/\\]/.freeze
+    REMOVALS = /[^\w\s\/\\]|_/.freeze
 
     class NoentRuleError < NameError; end
 

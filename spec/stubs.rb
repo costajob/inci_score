@@ -60,7 +60,7 @@ module Stubs
     extend self
 
     def ingredients
-      ["aqua", "disodium laureth sulfosuccinate", "cocamidopropiyl betaine", "disodium cocoamphodiacetate", "giyceryi laurate", "pegj glyceryi cocoate", "sodium lactate", "parfum", "niacinamide", "glycine", "magnesium aspanate", "aianine", "lysine", "leucine", "allantoin", "peg150 e distearate", "peg120 methyl glucose dioleate", "phenoxyethanoi", "ci 61570", "50"]
+      ["aqua/water", "disodium laureth sulfosuccinate", "cocamidopropiyl betaine", "disodium cocoamphodiacetate", "giyceryi laurate", "pegj glyceryi cocoate", "sodium lactate", "parfum", "niacinamide", "glycine", "magnesium aspanate", "aianine", "lysine", "leucine", "allantoin", "peg150 e distearate", "peg120 methyl glucose dioleate", "phenoxyethanoi", "ci 61570", "50", "caprylvglvceryl c1 15510/0range 4"]
     end
 
     def catalog
@@ -95,6 +95,7 @@ module Stubs
     def components
       [Stub::new('aqua/water', 'aqua'),
        Stub::new('ci 47005/acid yellow 3', 'ci 47005'),
+       Stub::new('i 47005', 'ci 47005'),
        Stub::new('olea europaea oil i 0 6100 stearate', 'olea europea'),
        Stub::new('paraffinum unumum mineral oil', 'paraffinum liquidum'),
        Stub::new('caprylvglvceryl c1 15510/0range 4', 'capryl glycol')]

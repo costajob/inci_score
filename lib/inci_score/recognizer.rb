@@ -7,18 +7,28 @@ module InciScore
 
     def initialize(ingredient, catalog)
       @ingredient = ingredient
-      @first_token = first_token
-      @component = compute(catalog)
+      @token = token
+      @digits = @ingredient[0,MEANINGFUL_DIGITS]
+      @component = compute_by_token(catalog) || compute_by_digits(catalog)
     end
 
     private
 
-    def compute(catalog)
-      catalog.keys.detect { |component| component.match(/^#{@first_token}/) }
+    def compute_by_token(catalog)
+      compute(catalog, /^#{Regexp::escape(@token)}/)
     end
 
-    def first_token
-      @ingredient.split(separator).first[0,MEANINGFUL_DIGITS]
+    def compute_by_digits(catalog)
+      return if @digits.size < MEANINGFUL_DIGITS
+      compute(catalog, /#{Regexp::escape(@digits)}/)
+    end
+
+    def compute(catalog, regexp)
+      catalog.keys.detect { |component| component.match(regexp) }
+    end
+
+    def token
+      @ingredient.split(separator).first
     end
 
     def separator

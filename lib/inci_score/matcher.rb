@@ -4,12 +4,11 @@ module InciScore
   class Matcher
     TOLERANCE = 3
 
-    attr_reader :distance, :component, :unrecognized
+    attr_reader :distance, :component
 
-    def initialize(ingredient, unrecognized = [])
+    def initialize(ingredient)
       @ingredient = ingredient
       @distance = ingredient.size
-      @unrecognized = unrecognized
     end
 
     def update!(component)
@@ -21,16 +20,10 @@ module InciScore
 
     def call
       return @component if valid?
-      manage_unrecognized
+      yield(@ingredient) if block_given?
     end
 
     private
-
-    def manage_unrecognized
-      return if @unrecognized.include? @ingredient
-      @unrecognized << @ingredient 
-      nil
-    end
 
     def valid?
       return false unless @component

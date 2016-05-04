@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'inci_score/normalizer'
 
 describe InciScore::Normalizer do
-  let(:ingredients) { "Aqua, Disodium Laureth Sulfosuccinate, Cocamidopropiyl\nBetaine, Giyceryi Laurate, PEGJ\nGlyceryi  Cocoate, Sodium Lactate" }
+  let(:ingredients) { "Aqua, Disodium Laureth Sulfosuccinate, Cocamidopropiyl\nBetaine, Giyceryi Laurate, PEGJ\nGlyceryi  Cocoate, Sodium Lactate_" }
 
   it 'must raise an argument error for missing src' do
     -> { InciScore::Normalizer::new }.must_raise ArgumentError
