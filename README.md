@@ -41,5 +41,3 @@ The API of the gem is pretty simple, assuming you have installed Tesseract on yo
 InciScore::Computer::new(src: './sample/01.jpg').call
 => 81.92307163723416
 ```
-
-Consider the library raise an error in case of too many unrecognized components, it's up to the client to deal with it.
