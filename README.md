@@ -12,8 +12,8 @@
 This gem computes the score of cosmetic components basing on the information provided by the [Biodizionario site](http://www.biodizionario.it/) by Fabrizio Zago.
 
 ## INCI catalog
-[INCI](https://en.wikipedia.org/wiki/International_Nomenclature_of_Cosmetic_Ingredients)catalog with a 0-4 hazard score of each component is fetched directly by the bidizionario site and kept in memory.  
-Currently there are more than 5000 components scored.
+[INCI](https://en.wikipedia.org/wiki/International_Nomenclature_of_Cosmetic_Ingredients) catalog is fetched directly by the bidizionario site and kept in memory.  
+Currently there are more than 5000 components with a hazard score that ranges from 0 to 4.
 
 ## Computation
 The computation takes care to score each compoent the cosmetic basing on:
