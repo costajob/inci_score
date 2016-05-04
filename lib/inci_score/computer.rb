@@ -2,6 +2,7 @@ require 'inci_score/parser'
 require 'inci_score/tesseract'
 require 'inci_score/normalizer'
 require 'inci_score/matcher'
+require 'inci_score/recognizer'
 require 'inci_score/scorer'
 
 module InciScore
