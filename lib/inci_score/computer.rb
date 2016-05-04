@@ -6,7 +6,7 @@ require 'inci_score/scorer'
 
 module InciScore
   class Computer
-    TOLERANCE = 30.0
+    TOLERANCE = 50.0
 
     class UnrecognizedIngredientsError < StandardError; end
 
