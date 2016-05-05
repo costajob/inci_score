@@ -6,7 +6,7 @@ describe InciScore::Recognizer do
 
   it 'must compute component' do
     Stubs::Recognizer::components.each do |record|
-      InciScore::Recognizer::new(record.ingredient, catalog).component.must_equal record.component
+      InciScore::Recognizer::new(ingredient: record.ingredient, catalog: catalog).call.must_equal record.component
     end
   end
 end

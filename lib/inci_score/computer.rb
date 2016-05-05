@@ -38,14 +38,16 @@ module InciScore
       end.tap { |c| c.compact! }
     end
 
-    private
-
     def valid?
-      total = ingredients.size
-      unfound = total - components.size
-      percent = unfound / (total / 100.0) 
-      percent <= TOLERANCE
+      @valid ||= begin
+                   total = ingredients.size
+                   unfound = total - components.size
+                   percent = unfound / (total / 100.0) 
+                   percent <= TOLERANCE
+                 end
     end
+
+    private
 
     def components_to_scan(ingredient)
       first_char = ingredient[0]
@@ -65,8 +67,8 @@ module InciScore
     end
 
     def try_to_recognize(ingredient)
-      r = Recognizer::new(ingredient, @catalog)
-      return r.component if r.component
+      r = Recognizer::new(ingredient: ingredient, catalog: @catalog)
+      return r.call if r.call
       @unrecognized << ingredient
       nil
     end

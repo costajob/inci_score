@@ -9,11 +9,13 @@ module InciScore
       ['`', "'"],
       ['‘', "'"],
       ['—', '-'],
-      ['|', 'l']
+      ['|', 'l'],
+      ['/', ' '],
+      ['\\', ' ']
     ]
     TITLE_SEP = ':'.freeze
     SPACERS = %w[, - ']
-    REMOVALS = /[^\w\s\/\\]|_/.freeze
+    REMOVALS = /[^\w\s]|_/.freeze
 
     class NoentRuleError < NameError; end
 
