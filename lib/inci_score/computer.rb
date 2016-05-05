@@ -13,7 +13,7 @@ module InciScore
 
     def initialize(options = {})
       @src = options[:src]
-      @catalog = options.fetch(:catalog) { Parser::from_yaml }
+      @catalog = options.fetch(:catalog) { Parser::by_yaml }
       @processor = options.fetch(:processor) { Tesseract::new(src: @src) }
       @normalizer = options.fetch(:normalizer) { Normalizer::new(src: @processor.call) }
       @recognized = []

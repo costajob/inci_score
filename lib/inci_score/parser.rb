@@ -7,7 +7,7 @@ module InciScore
     SEMAPHORES = %w[vv v g r rr]
     CSS_QUERY = 'table[width="751"] > tr > td img'.freeze
 
-    def self.from_yaml
+    def self.by_yaml
       @catalog ||= YAML::load_file(CATALOG_YAML)
     end
 
