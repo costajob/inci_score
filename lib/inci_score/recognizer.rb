@@ -12,7 +12,10 @@ module InciScore
     end
 
     def call
-      @component ||= apply_rules
+      @component = apply_rules
+      return @component if @component
+      yield(@ingredient) if block_given?
+      nil
     end 
 
     private

@@ -63,14 +63,12 @@ module InciScore
         matcher.update!(component)
         return component if matcher.distance.zero?
       end
-      matcher.call { |i| try_to_recognize(i) }
+      matcher.call { |i| recognize(i) }
     end
 
-    def try_to_recognize(ingredient)
-      r = Recognizer::new(ingredient: ingredient, catalog: @catalog)
-      return r.call if r.call
-      @unrecognized << ingredient
-      nil
+    def recognize(ingredient)
+      recognizer = Recognizer::new(ingredient: ingredient, catalog: @catalog)
+      recognizer.call { |i| @unrecognized << i }
     end
   end
 end
