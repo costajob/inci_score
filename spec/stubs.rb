@@ -59,12 +59,27 @@ module Stubs
   module Computer
     extend self
 
+    Stub = Struct::new(:src, :score)
+
     def ingredients
       ["aqua/water", "disodium laureth sulfosuccinate", "cocamidopropiyl betaine", "disodium cocoamphodiacetate", "giyceryi laurate", "pegj glyceryi cocoate", "sodium lactate", "parfum", "niacinamide", "glycine", "magnesium aspanate", "aianine", "lysine", "leucine", "allantoin", "peg150 e distearate", "peg120 methyl glucose dioleate", "phenoxyethanoi", "ci 61570", "50", "caprylvglvceryl c1 15510/0range 4"]
     end
 
     def catalog
       {"alanine"=>0, "allantoin"=>0, "aqua"=>0, "ci 61570"=>3, "cocamidopropyl betaine"=>1, "disodium cocoamphodiacetate"=>0, "disodium laureth sulfosuccinate"=>2, "glyceryl laurate"=>0, "glycine"=>0, "leucine"=>0, "lysine"=>0, "magnesium aspartate"=>0, "niacinamide"=>0, "peg-120 methyl glucose dioleate"=>3, "peg-150 distearate"=>3, "peg-7 glyceryl cocoate"=>3, "phenoxyethanol"=>2, "sodium lactate"=>0, "paraffinum liquidum"=>3, "ci 47005"=>3, "olea europea"=>0, "capryl glycol"=>2}
+    end
+
+    def sources
+      [Stub::new('01.jpg', 82),
+       Stub::new('02.jpg', 71),
+       Stub::new('03.jpg', 67),
+       Stub::new('04.jpg', 70),
+       Stub::new('05.jpg', 63),
+       Stub::new('06.jpg', 100),
+       Stub::new('07.jpg', 74),
+       Stub::new('08.jpg', 59),
+       Stub::new('09.jpg', 62),
+       Stub::new('10.jpg', 70)]
     end
   end
 

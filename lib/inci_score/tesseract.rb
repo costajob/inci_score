@@ -16,7 +16,7 @@ module InciScore
       `#{bin} #{@src} #{@out} #{@opts}`
     rescue StandardError => e
       Logger::instance.error(e)
-      raise InstallationError, "install tesseract for your platform"
+      raise InstallationError, 'please install tesseract for your platform'
     end
   end
 end
