@@ -66,20 +66,20 @@ module Stubs
     end
 
     def catalog
-      {"alanine"=>0, "allantoin"=>0, "aqua"=>0, "ci 61570"=>3, "cocamidopropyl betaine"=>1, "disodium cocoamphodiacetate"=>0, "disodium laureth sulfosuccinate"=>2, "glyceryl laurate"=>0, "glycine"=>0, "leucine"=>0, "lysine"=>0, "magnesium aspartate"=>0, "niacinamide"=>0, "peg-120 methyl glucose dioleate"=>3, "peg-150 distearate"=>3, "peg-7 glyceryl cocoate"=>3, "phenoxyethanol"=>2, "sodium lactate"=>0, "paraffinum liquidum"=>3, "ci 47005"=>3, "olea europea"=>0, "capryl glycol"=>2, "caprylic/capric triglyceride"=>0}
+      {"alanine"=>0, "allantoin"=>0, "aqua"=>0, "ci 61570"=>3, "cocamidopropyl betaine"=>1, "disodium cocoamphodiacetate"=>0, "disodium laureth sulfosuccinate"=>2, "glyceryl laurate"=>0, "glycine"=>0, "leucine"=>0, "lysine"=>0, "magnesium aspartate"=>0, "niacinamide"=>0, "peg-120 methyl glucose dioleate"=>3, "peg-150 distearate"=>3, "peg-7 glyceryl cocoate"=>3, "phenoxyethanol"=>2, "sodium lactate"=>0, "paraffinum liquidum"=>3, "ci 47005"=>3, "olea europea"=>0, "capryl glycol"=>2, "caprylic/capric triglyceride"=>0, "betula alba leaf water"=>1}
     end
 
     def sources
       [Stub::new('01.jpg', 83),
-       Stub::new('02.jpg', 72),
-       Stub::new('03.jpg', 73),
-       Stub::new('04.jpg', 75),
+       Stub::new('02.jpg', 69),
+       Stub::new('03.jpg', 75),
+       Stub::new('04.jpg', 76),
        Stub::new('05.jpg', 66),
-       Stub::new('06.jpg', 83),
-       Stub::new('07.jpg', 77),
+       Stub::new('06.jpg', 93),
+       Stub::new('07.jpg', 83),
        Stub::new('08.jpg', 59),
-       Stub::new('09.jpg', 65),
-       Stub::new('10.jpg', 68)]
+       Stub::new('09.jpg', 70),
+       Stub::new('10.jpg', 69)]
     end
   end
 

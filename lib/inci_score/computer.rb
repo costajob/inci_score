@@ -21,7 +21,7 @@ module InciScore
     end
 
     def call(scorer = Scorer)
-      warn "unrecognized ingredients: #{@unrecognized}" unless valid?
+      warn "there are unrecognized ingredients!" unless valid?
       hazards = @catalog.select { |k,v| components.include?(k) }.values
       scorer::new(hazards).call
     end

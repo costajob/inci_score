@@ -41,3 +41,18 @@ The API of the gem is pretty simple, assuming you have installed Tesseract on yo
 InciScore::Computer::new(src: 'sample/01.jpg').call
 => 83.06157861428775
 ```
+
+### Unrecognized components
+The API treats unrecognized components as a standard case by just marking the object as not valid and raise a warning in case more than 30% of the ingredients are not found.  
+User can query the object for its state:
+
+```ruby
+inci = InciScore::Computer::new(src: 'sample/07.jpg')
+inci.call
+=> there are unrecognized ingredients!
+=> 83.01184817509042
+inci.valid?
+=> false
+inci.unrecognized
+=> ["ceearylalcohol distearoylethyl annoxvmvwomw methosulfate", "mn", "pighlapunicifouai aceholafruitextract", "f benzoicacid", "wmnome j hcmnmcgmciirusmedicalimonum", "peel extract lemon peel extract", "j prunusarmeniacakerneloil apricot xmaommanmmamm", "oil suybean oil", "fll 04391213"]
+```
