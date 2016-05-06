@@ -43,7 +43,7 @@ OCR](https://github.com/tesseract-ocr/tesseract), calling it directly from ruby 
 The API of the gem is pretty simple, assuming you have installed Tesseract on your device, you can start computing the INCI score by:
 
 ```ruby
-InciScore::Computer::new(src: 'sample/01.jpg').call
+InciScore::Computer::new(src: 'sample/01.jpg').score
 => 83.06157861428775
 ```
 
@@ -53,7 +53,7 @@ User can query the object for its state:
 
 ```ruby
 inci = InciScore::Computer::new(src: 'sample/07.jpg')
-inci.call
+inci.score
 there are unrecognized ingredients!
 => 80.4594069529266
 inci.valid?
