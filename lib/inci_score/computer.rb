@@ -15,7 +15,7 @@ module InciScore
       @catalog = options.fetch(:catalog) { Config::catalog }
       @processor = options.fetch(:processor) { Tesseract::new(src: @src) }
       @normalizer = options.fetch(:normalizer) { Normalizer::new(src: @processor.call) }
-      @rules = options.fetch(:rules) { Recognizer::DEFAULTS }
+      @rules = options[:rules]
       @unrecognized = []
     end
 
@@ -32,7 +32,9 @@ module InciScore
 
     def components
       @components ||= ingredients.map do |ingredient|
-        Recognizer::new(ingredient: ingredient, catalog: @catalog, rules: @rules).call do |i|
+        Recognizer::new(ingredient: ingredient, 
+                        catalog: @catalog, 
+                        rules: @rules).call do |i|
           @unrecognized << i
         end
       end.tap { |c| c.compact! }

@@ -54,8 +54,8 @@ User can query the object for its state:
 ```ruby
 inci = InciScore::Computer::new(src: 'sample/07.jpg')
 inci.call
-=> there are unrecognized ingredients!
-=> 81.2647487565317
+there are unrecognized ingredients!
+=> 80.4594069529266
 inci.valid?
 => false
 inci.unrecognized

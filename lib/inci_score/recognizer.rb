@@ -2,16 +2,15 @@ require 'inci_score/levenshtein'
 
 module InciScore
   class Recognizer
-    DEFAULTS = %w[by_key by_long_digits by_distance by_tokens by_short_digits]
+    DEFAULTS = %w[by_key by_distance by_digits by_tokens]
     TOLERANCE = 3
-    SHORT_DIGITS = 5
-    LONG_DIGITS = 10
+    DIGITS = 6 
 
     def initialize(options = {})
       @ingredient = options.fetch(:ingredient)
       @catalog = options.fetch(:catalog) { {} }
       @components = @catalog.keys
-      @rules = options.fetch(:rules) { DEFAULTS }
+      @rules = options[:rules] || DEFAULTS
     end
 
     def call
@@ -34,7 +33,7 @@ module InciScore
     end
 
     def by_distance
-      min = distances.min_by { |d| d.last }
+      min = min_distance
       return if invalid_distance?(min.last)
       min.first
     end
@@ -43,23 +42,19 @@ module InciScore
       d > TOLERANCE || d >= @ingredient.size 
     end
 
-    def distances
-      @components.map do |component|
-        [component, @ingredient.distance(component)]
+    def min_distance
+      initial = @ingredient[0]
+      @components.reduce([nil, @ingredient.size]) do |min, component|
+        next min unless component.start_with?(initial)
+        d = @ingredient.distance(component)
+        min = [component, d] if d < min.last 
+        min
       end
     end
 
-    def by_short_digits
-      by_digits(SHORT_DIGITS)
-    end
-
-    def by_long_digits
-      by_digits(LONG_DIGITS)
-    end
-
-    def by_digits(n)
-      return if @ingredient.size < n
-      digits = @ingredient[0,n]
+    def by_digits
+      return if @ingredient.size < DIGITS
+      digits = @ingredient[0,DIGITS]
       @components.detect do |component| 
         component.match(/^#{Regexp::escape(digits)}/)
       end

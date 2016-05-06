@@ -67,15 +67,15 @@ module Stubs
     end
 
     def sources
-      [Stub::new('01.jpg', 81),
-       Stub::new('02.jpg', 64),
-       Stub::new('03.jpg', 72),
-       Stub::new('04.jpg', 76),
-       Stub::new('05.jpg', 66),
-       Stub::new('06.jpg', 93),
-       Stub::new('07.jpg', 81),
+      [Stub::new('01.jpg', 83),
+       Stub::new('02.jpg', 72),
+       Stub::new('03.jpg', 74),
+       Stub::new('04.jpg', 75),
+       Stub::new('05.jpg', 69),
+       Stub::new('06.jpg', 89),
+       Stub::new('07.jpg', 80),
        Stub::new('08.jpg', 59),
-       Stub::new('09.jpg', 70),
+       Stub::new('09.jpg', 71),
        Stub::new('10.jpg', 68)]
     end
   end
