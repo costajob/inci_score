@@ -11,12 +11,12 @@ module InciScore
     end
 
     def call
-      100 - mean * HAZARD_PERCENT
+      100 - avg * HAZARD_PERCENT
     end
 
     private
 
-    def mean
+    def avg
       weighted.reduce(0.0) do |acc,h| 
         acc += h.score
       end / @size.to_f

@@ -61,7 +61,7 @@ module InciScore
     end
 
     def by_tokens
-      return @component if first_matching_token
+      return @component if matching_token
       return if same_occurrency?
       occurrencies.max_by { |h,k| k }.to_a.first
     end
@@ -77,7 +77,7 @@ module InciScore
       occurrencies.values.uniq.size == 1
     end
 
-    def first_matching_token
+    def matching_token
       @component = components_by_token.uniq.detect do |component|
         tokens.include?(component)
       end
