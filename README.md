@@ -7,6 +7,7 @@
   * [Sources](#sources)
     * [Tesseract](#tessract)
 * [API](#api)
+ * [Unrecognized components](#unrecognized-components)
 
 ## Scope
 This gem computes the score of cosmetic components basing on the information provided by the [Biodizionario site](http://www.biodizionario.it/) by Fabrizio Zago.
@@ -23,8 +24,12 @@ The computation takes care to score each compoent the cosmetic basing on:
 The total score is then calculated on a percent basis.
 
 ### Component matching
-Since the components list might come from external sources (e.g. scanned image, Web form, etc), the gem uses the [levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance) algorithm to compute a fuzzy matching between two strings.  
-I initially combined the edit distance with the [metaphone](https://en.wikipedia.org/wiki/Metaphone) algorithm, but it resulted too slow for my purposes.
+Since the ingredients list might come from external sources (e.g. scanned image, Web form, etc), the gem tries to fuzzy match the ingredients by using different algorithms:
+1. extact matching
+2. first 10 matching digits 
+3. [edit distance](https://en.wikipedia.org/wiki/Levenshtein_distance) behind a specified tolerance
+4. matching by splitted tokens
+5. first 5 matching digits
 
 ### Sources
 I assume the INCI could come from different sources, although the main one should be a bitmap coming from a mobile device.  
@@ -50,7 +55,7 @@ User can query the object for its state:
 inci = InciScore::Computer::new(src: 'sample/07.jpg')
 inci.call
 => there are unrecognized ingredients!
-=> 83.01184817509042
+=> 81.2647487565317
 inci.valid?
 => false
 inci.unrecognized

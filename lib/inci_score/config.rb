@@ -6,9 +6,14 @@ module InciScore
     extend self
 
     PATH = File::expand_path('../../../config/inci_score.yml', __FILE__)
+    CATALOG_YAML = File::expand_path('../../../config/catalog.yml', __FILE__) 
 
     def data
       @data ||= YAML.load(ERB.new(File.read(PATH)).result)
+    end
+
+    def catalog
+      @catalog ||= YAML::load_file(CATALOG_YAML)
     end
   end
 end

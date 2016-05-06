@@ -2,10 +2,11 @@ require 'spec_helper'
 require 'inci_score/computer'
 
 describe InciScore::Computer do
-  let(:computer) { InciScore::Computer::new(catalog: Stubs::Computer::catalog, normalizer: -> { Stubs::Computer::ingredients }) }
+  let(:ingredients) { ["aqua water", "disodium laureth sulfosuccinate", "cocamidopropiyl betaine", "disodium cocoamphodiacetate", "giyceryi laurate", "pegj glyceryi cocoate", "sodium lactate", "parfum", "niacinamide", "glycine", "magnesium aspanate", "aianine", "lysine", "leucine", "allantoin", "peg150 e distearate", "peg120 methyl glucose dioleate", "phenoxyethanoi", "ci 61570", "50", "caprylvglvceryl c1 15510 0range 4"] }
+  let(:computer) { InciScore::Computer::new(catalog: Stubs::Computer::catalog, normalizer: -> { ingredients }) }
 
   it 'must return ingredients' do
-    computer.ingredients.must_equal Stubs::Computer::ingredients
+    computer.ingredients.must_equal ingredients
   end
 
   it 'must map ingredients with components and collect unrecognized' do
@@ -13,12 +14,11 @@ describe InciScore::Computer do
   end
 
   it 'must collect unrecognized components' do
-    computer.call
+    computer.components
     computer.unrecognized.must_equal %w[parfum 50]
   end
 
   it 'must detect valid state' do
-    computer.call
     assert computer.valid?
   end
 
@@ -28,6 +28,6 @@ describe InciScore::Computer do
   end
 
   it 'must compute the score' do
-    computer.call.must_be_close_to 81.1, 0.1
+    computer.score.must_be_close_to 81.1, 0.1
   end
 end

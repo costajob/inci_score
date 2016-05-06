@@ -1,7 +1,6 @@
-require 'inci_score/parser'
+require 'inci_score/config'
 require 'inci_score/tesseract'
 require 'inci_score/normalizer'
-require 'inci_score/matcher'
 require 'inci_score/recognizer'
 require 'inci_score/scorer'
 
@@ -13,17 +12,18 @@ module InciScore
 
     def initialize(options = {})
       @src = options[:src]
-      @catalog = options.fetch(:catalog) { Parser::by_yaml }
+      @catalog = options.fetch(:catalog) { Config::catalog }
       @processor = options.fetch(:processor) { Tesseract::new(src: @src) }
       @normalizer = options.fetch(:normalizer) { Normalizer::new(src: @processor.call) }
-      @recognized = []
+      @rules = options.fetch(:rules) { Recognizer::DEFAULTS }
       @unrecognized = []
     end
 
-    def call(scorer = Scorer)
+    def score
+      return @score if @score
       warn "there are unrecognized ingredients!" unless valid?
       hazards = @catalog.select { |k,v| components.include?(k) }.values
-      scorer::new(hazards).call
+      @score = Scorer::new(hazards).call
     end
 
     def ingredients
@@ -32,8 +32,8 @@ module InciScore
 
     def components
       @components ||= ingredients.map do |ingredient|
-        find(ingredient).tap do |found| 
-          @recognized << found if found
+        Recognizer::new(ingredient: ingredient, catalog: @catalog, rules: @rules).call do |i|
+          @unrecognized << i
         end
       end.tap { |c| c.compact! }
     end
@@ -45,30 +45,6 @@ module InciScore
                    percent = unfound / (total / 100.0) 
                    percent <= TOLERANCE
                  end
-    end
-
-    private
-
-    def components_to_scan(ingredient)
-      first_char = ingredient[0]
-      (@catalog.keys - @recognized).select do |component|
-        component.start_with?(first_char)
-      end
-    end
-
-    def find(ingredient)
-      return ingredient if @catalog[ingredient]
-      matcher = Matcher::new(ingredient)
-      components_to_scan(ingredient).each do |component|
-        matcher.update!(component)
-        return component if matcher.distance.zero?
-      end
-      matcher.call { |i| recognize(i) }
-    end
-
-    def recognize(ingredient)
-      recognizer = Recognizer::new(ingredient: ingredient, catalog: @catalog)
-      recognizer.call { |i| @unrecognized << i }
     end
   end
 end

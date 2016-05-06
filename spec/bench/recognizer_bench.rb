@@ -2,8 +2,15 @@ require 'bench_helper'
 require 'inci_score/recognizer'
 
 Benchmark::ips do |x| 
-  x.report('apply_rules') do
-    r = InciScore::Recognizer::new(ingredient: 'aqua/water', catalog: Stubs::Computer::catalog)
-    r.send(:apply_rules)
+  InciScore::Recognizer::DEFAULTS.each do |rule|
+    x.report(rule) do
+      InciScore::Recognizer::new(ingredient: 'aqua', catalog: Stubs::Computer::catalog, rules: [rule]).call
+    end
   end
+
+  x.report('all') do
+    InciScore::Recognizer::new(ingredient: 'agua', catalog: Stubs::Computer::catalog).call
+  end
+
+  x.compare!
 end

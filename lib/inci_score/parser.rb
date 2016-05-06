@@ -3,13 +3,8 @@ require 'inci_score/logger'
 
 module InciScore
   class Parser
-    CATALOG_YAML = File::expand_path('../../../config/catalog.yml', __FILE__) 
     SEMAPHORES = %w[vv v g r rr]
     CSS_QUERY = 'table[width="751"] > tr > td img'.freeze
-
-    def self.by_yaml
-      @catalog ||= YAML::load_file(CATALOG_YAML)
-    end
 
     def initialize(src = nil)
       @src = src || Thread::new { open(Config::data['biodizio']['uri']) }
