@@ -1,5 +1,3 @@
-require 'json'
-
 module InciScore
   class Response
     attr_reader :components, :score, :unrecognized, :valid
@@ -13,10 +11,6 @@ module InciScore
 
     def to_h
       { components: @components, score: @score, unrecognized: @unrecognized, valid: @valid }
-    end
-
-    def to_json
-      to_h.to_json
     end
   end
 end
