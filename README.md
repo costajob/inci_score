@@ -12,6 +12,7 @@
 * [Web API](#web-api)
  * [Starting Puma](#starting-puma)
  * [Triggering a request](#triggering-a-request)
+* [Rake tasks](#rake-tasks)
 
 ## Scope
 This gem computes the score of cosmetic components basing on the information provided by the [Biodizionario site](http://www.biodizionario.it/) by Fabrizio Zago.
@@ -93,4 +94,39 @@ You can use the curl utility to trigger a POST request to the Web API:
 ```
 curl --form "file=@sample/01.jpg" http://192.168.33.22:9292/v1/compute
 => {"components":["aqua","disodium laureth sulfosuccinate","cocamidopropyl betaine","disodium cocoamphodiacetate","glyceryl laurate","peg-7 glyceryl cocoate","sodium lactate","parfum","niacinamide","glycine","magnesium aspartate","alanine","lysine","leucine","allantoin","peg-150 distearate","peg-120 methyl glucose dioleate","phenoxyethanol","ci 61570"],"score":83.06157861428775,"unrecognized":["50"],"valid":true}
+```
+
+## Rake tasks
+There is also a command line API via the Rake tool:
+
+### Score
+Compute the total inci score by scanning an image:
+```
+rake inci:score src=sample/01.jpg
+83.06157861428775
+```
+
+### Components
+Fetch the inci components by scanning an image and prind the in a friendly format:
+```
+rake inci:components src=sample/01.jpg
+01 - aqua
+02 - disodium laureth sulfosuccinate
+03 - cocamidopropyl betaine
+04 - disodium cocoamphodiacetate
+05 - glyceryl laurate
+06 - peg-7 glyceryl cocoate
+07 - sodium lactate
+08 - parfum
+09 - niacinamide
+10 - glycine
+11 - magnesium aspartate
+12 - alanine
+13 - lysine
+14 - leucine
+15 - allantoin
+16 - peg-150 distearate
+17 - peg-120 methyl glucose dioleate
+18 - phenoxyethanol
+19 - ci 61570
 ```

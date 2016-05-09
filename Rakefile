@@ -1,6 +1,8 @@
 require 'bundler/gem_tasks'
 require 'rake/testtask'
 
+import 'lib/tasks/inci.rake'
+
 Rake::TestTask.new(:unit) do |t|
   t.libs << 'spec'
   t.libs << 'lib'
