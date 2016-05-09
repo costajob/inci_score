@@ -1,6 +1,7 @@
 ## Table of Contents
 
 * [Scope](#scope)
+* [Vagrant](#vagrant)
 * [INCI catalog](#inci-catalog)
 * [Computation](#computation)
   * [Component matching](#component-matching)
@@ -8,9 +9,22 @@
     * [Tesseract](#tessract)
 * [API](#api)
  * [Unrecognized components](#unrecognized-components)
+* [Web API](#web-api)
+ * [Starting Puma](#starting-puma)
+ * [Triggering a request](#triggering-a-request)
 
 ## Scope
 This gem computes the score of cosmetic components basing on the information provided by the [Biodizionario site](http://www.biodizionario.it/) by Fabrizio Zago.
+
+## Vagrant
+This repository includes a [Vagrant]() configuration to setup a properly configured execution environment.  
+Just run the following command on terminal:
+
+```
+vagrant up
+```
+
+Be sure to check the *Vagrantfile* to adjust CPUs and RAM basing on your host device specs (defaults to 3vCPU and 6GB of RAM).
 
 ## INCI catalog
 [INCI](https://en.wikipedia.org/wiki/International_Nomenclature_of_Cosmetic_Ingredients) catalog is fetched directly by the bidizionario site and kept in memory.  
@@ -49,16 +63,34 @@ inci.score
 => 83.06157861428775
 ```
 
+As you see the results are wrapped by a *InciScore::Response* object, this is useful when dealing with the Web API (read below).
+
 ### Unrecognized components
 The API treats unrecognized components as a standard case by just marking the object as not valid and raise a warning in case more than 30% of the ingredients are not found.  
 User can query the object for its state:
 
 ```ruby
 inci = InciScore::Computer::new(src: 'sample/07.jpg').call
-there are unrecognized ingredients!
 => #<InciScore::Response:0x00000002614ca0 @components=["water", "octyldecanol 1-", "niacin", "linalool", "caprylyl glycol", "animal tissue extract", "parfum"], @score=80.4594069529266, @unrecognized=["ceearylalcohol distearoylethyl annoxvmvwomw methosulfate", "mn", "pighlapunicifouai aceholafruitextract", "camellnasatnaoll f camelinasativaseedoilcameluaslnensls extract camelliasinensisleafextract", "f benzoicacid", "wmnome j hcmnmcgmciirusmedicalimonum", "peel extract lemon peel extract", "j prunusarmeniacakerneloil apricot xmaommanmmamm", "oil suybean oil", "fll 04391213"], @valid=false>
 inci.valid
 => false
 inci.unrecognized
 => ["ceearylalcohol distearoylethyl annoxvmvwomw methosulfate", "mn", "pighlapunicifouai aceholafruitextract", "f benzoicacid", "wmnome j hcmnmcgmciirusmedicalimonum", "peel extract lemon peel extract", "j prunusarmeniacakerneloil apricot xmaommanmmamm", "oil suybean oil", "fll 04391213"]
+```
+
+## Web API
+The Web API exposes the *InciScore* library by a HTTP layer via the [Roda](http://roda.jeremyevans.net/) framework and the [Puma](http://puma.io/) app server.
+
+### Starting Puma
+Simply start Puma via the *config.ru* file included in the repository:
+```
+bundle exec puma -w 3 -t 16:32 -q
+```
+
+### Triggering a request
+The Web API responds with a JSON object representing the original *InciScore::Response* one.  
+You can use the curl utility to trigger a POST request to the Web API:
+```
+curl --form "file=@sample/01.jpg" http://192.168.33.22:9292/v1/compute
+=> {"components":["aqua","disodium laureth sulfosuccinate","cocamidopropyl betaine","disodium cocoamphodiacetate","glyceryl laurate","peg-7 glyceryl cocoate","sodium lactate","parfum","niacinamide","glycine","magnesium aspartate","alanine","lysine","leucine","allantoin","peg-150 distearate","peg-120 methyl glucose dioleate","phenoxyethanol","ci 61570"],"score":83.06157861428775,"unrecognized":["50"],"valid":true}
 ```
