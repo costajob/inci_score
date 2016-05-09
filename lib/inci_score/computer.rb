@@ -3,21 +3,28 @@ require 'inci_score/tesseract'
 require 'inci_score/normalizer'
 require 'inci_score/recognizer'
 require 'inci_score/scorer'
+require 'inci_score/response'
 
 module InciScore
   class Computer
     TOLERANCE = 30.0
-
-    attr_reader :unrecognized
 
     def initialize(options = {})
       @src = options[:src]
       @catalog = options.fetch(:catalog) { Config::catalog }
       @processor = options.fetch(:processor) { Tesseract::new(src: @src) }
       @normalizer = options.fetch(:normalizer) { Normalizer::new(src: @processor.call) }
-      @rules = options[:rules]
       @unrecognized = []
     end
+
+    def call
+      @response ||= Response::new(valid: valid?,
+                                  components: components,
+                                  unrecognized: @unrecognized,
+                                  score: score)
+    end
+
+    private
 
     def score
       return @score if @score
@@ -32,9 +39,7 @@ module InciScore
 
     def components
       @components ||= ingredients.map do |ingredient|
-        Recognizer::new(ingredient: ingredient, 
-                        catalog: @catalog, 
-                        rules: @rules).call do |i|
+        Recognizer::new(ingredient: ingredient, catalog: @catalog).call do |i|
           @unrecognized << i
         end
       end.tap { |c| c.compact! }

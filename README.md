@@ -43,7 +43,9 @@ OCR](https://github.com/tesseract-ocr/tesseract), calling it directly from ruby 
 The API of the gem is pretty simple, assuming you have installed Tesseract on your device, you can start computing the INCI score by:
 
 ```ruby
-InciScore::Computer::new(src: 'sample/01.jpg').score
+inci = InciScore::Computer::new(src: 'sample/01.jpg').call
+=> #<InciScore::Response:0x0000000289b7a8 @components=["aqua", "disodium laureth sulfosuccinate", "cocamidopropyl betaine", "disodium cocoamphodiacetate", "glyceryl laurate", "peg-7 glyceryl cocoate", "sodium lactate", "parfum", "niacinamide", "glycine", "magnesium aspartate", "alanine", "lysine", "leucine", "allantoin", "peg-150 distearate", "peg-120 methyl glucose dioleate", "phenoxyethanol", "ci 61570"], @score=83.06157861428775, @unrecognized=["50"], @valid=true>
+inci.score
 => 83.06157861428775
 ```
 
@@ -52,11 +54,10 @@ The API treats unrecognized components as a standard case by just marking the ob
 User can query the object for its state:
 
 ```ruby
-inci = InciScore::Computer::new(src: 'sample/07.jpg')
-inci.score
+inci = InciScore::Computer::new(src: 'sample/07.jpg').call
 there are unrecognized ingredients!
-=> 80.4594069529266
-inci.valid?
+=> #<InciScore::Response:0x00000002614ca0 @components=["water", "octyldecanol 1-", "niacin", "linalool", "caprylyl glycol", "animal tissue extract", "parfum"], @score=80.4594069529266, @unrecognized=["ceearylalcohol distearoylethyl annoxvmvwomw methosulfate", "mn", "pighlapunicifouai aceholafruitextract", "camellnasatnaoll f camelinasativaseedoilcameluaslnensls extract camelliasinensisleafextract", "f benzoicacid", "wmnome j hcmnmcgmciirusmedicalimonum", "peel extract lemon peel extract", "j prunusarmeniacakerneloil apricot xmaommanmmamm", "oil suybean oil", "fll 04391213"], @valid=false>
+inci.valid
 => false
 inci.unrecognized
 => ["ceearylalcohol distearoylethyl annoxvmvwomw methosulfate", "mn", "pighlapunicifouai aceholafruitextract", "f benzoicacid", "wmnome j hcmnmcgmciirusmedicalimonum", "peel extract lemon peel extract", "j prunusarmeniacakerneloil apricot xmaommanmmamm", "oil suybean oil", "fll 04391213"]
