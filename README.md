@@ -110,23 +110,25 @@ rake inci:score src=sample/01.jpg
 Fetch the inci components by scanning an image and prind the in a friendly format:
 ```
 rake inci:components src=sample/01.jpg
-01 - aqua
-02 - disodium laureth sulfosuccinate
-03 - cocamidopropyl betaine
-04 - disodium cocoamphodiacetate
-05 - glyceryl laurate
-06 - peg-7 glyceryl cocoate
-07 - sodium lactate
-08 - parfum
-09 - niacinamide
-10 - glycine
-11 - magnesium aspartate
-12 - alanine
-13 - lysine
-14 - leucine
-15 - allantoin
-16 - peg-150 distearate
-17 - peg-120 methyl glucose dioleate
-18 - phenoxyethanol
-19 - ci 61570
+0 - aqua
+2 - sodium laureth sulfate
+2 - sodium chlorate
+1 - guanine
+0 - gluconolactone
+0 - glycerin
+2 - guar hydroxypropyltrimonium chloride
+4 - dimethiconol
+0 - parfum
+3 - tea-dodecylbenzenesulfonate
+0 - mica
+0 - albumen
+3 - ppg-12
+0 - citric acid
+0 - sodium acetate
+1 - sodium benzoate
+3 - dmdm hydantoin
+3 - methylisothiazolinone
+4 - butylparaben
+3 - ci 47005
+0 - ci 77891
 ```

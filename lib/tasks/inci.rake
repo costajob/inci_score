@@ -13,6 +13,7 @@ namespace :inci do
 
   desc 'fetch the inci components by reading an img: rake inci_score:compute src=sample/01.jpg'
   task :components => :compute do
-    puts @res.components.each_with_index.map { |c,i| "#{(i+1).to_s.rjust(2,'0')} - #{c}" }
+    catalog = InciScore::Config::catalog
+    puts @res.components.map { |component| "#{catalog[component]} - #{component}" }
   end
 end
