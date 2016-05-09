@@ -87,6 +87,7 @@ module Stubs
 
     def hazards
       [Stub::new([0,1], 92),
+       Stub::new([], 0),
        Stub::new(Array::new(10) { 0 }, 100),
        Stub::new(Array::new(5) { 4 }, 9),
        Stub::new([4,3,4,4,1,1,0], 47),
