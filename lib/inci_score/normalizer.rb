@@ -2,9 +2,10 @@ require 'inci_score/logger'
 
 module InciScore
   class Normalizer
-    DEFAULTS = %w{inline replace down spacers behead split synonym purge strip}
+    DEFAULTS = %w{inline replace down behead spacers split synonym purge strip}
     SPACER = ','.freeze
     TITLE_SEP = ':'
+    SEP_MAX_INDEX = 50
     REPLACEMENTS = [
       ['‘', "'"],
       ['—', '-'],
@@ -14,7 +15,7 @@ module InciScore
       ['|', 'l'],
       [' I ', '/']
     ]
-    SPACERS = ["; ", ". ", " ' ", " - "]
+    SPACERS = ["; ", ". ", " ' ", " - ", " : "]
     REMOVALS = /[^\w\s]/.freeze
 
     class NoentRuleError < NameError; end
@@ -50,16 +51,16 @@ module InciScore
       @src.downcase!
     end
 
+    def behead
+      sep_index = @src.index(TITLE_SEP)
+      return if !sep_index || sep_index > SEP_MAX_INDEX
+      @src = @src[sep_index+1, @src.size]
+    end
+
     def spacers
       SPACERS.each do |spacer|
         @src.gsub!(spacer, SPACER)
       end
-    end
-
-    def behead
-      sep_index = @src.index(TITLE_SEP)
-      return unless sep_index
-      @src = @src[sep_index+1, @src.size]
     end
 
     def split
