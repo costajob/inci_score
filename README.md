@@ -96,7 +96,7 @@ curl --form "src=@sample/01.jpg" http://192.168.33.22:9292/v1/compute
 ```
 
 ## Rake tasks
-There is also a command line API via the Rake tool:
+The API is also exposed as Rake tasks:
 
 ### Score
 Compute the total INCI score by scanning an image:
