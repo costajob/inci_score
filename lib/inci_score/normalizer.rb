@@ -2,20 +2,20 @@ require 'inci_score/logger'
 
 module InciScore
   class Normalizer
-    DEFAULTS = %w{inline down replace behead split purge strip}
+    DEFAULTS = %w{inline replace down spacers behead split synonym purge strip}
+    SPACER = ','.freeze
+    TITLE_SEP = ':'
     REPLACEMENTS = [
-      [';', ','],
-      ['.', ','],
-      ['`', "'"],
       ['‘', "'"],
       ['—', '-'],
+      ['(', 'C'],
+      ['_', ' '],
+      ['~', '-'],
       ['|', 'l'],
-      ['/', ' '],
-      ['\\', ' ']
+      [' I ', '/']
     ]
-    TITLE_SEP = ':'.freeze
-    SPACERS = %w[, - ']
-    REMOVALS = /[^\w\s]|_/.freeze
+    SPACERS = ["; ", ". ", " ' ", " - "]
+    REMOVALS = /[^\w\s]/.freeze
 
     class NoentRuleError < NameError; end
 
@@ -37,43 +37,45 @@ module InciScore
     private
 
     def inline
-      @src.tr!("\n", " ")
+      @src.tr!("\n\t", " ")
+    end
+
+    def replace
+      REPLACEMENTS.each do |r|
+        @src.gsub!(r[0], r[1]) if @src.index(r[0])
+      end
     end
 
     def down
       @src.downcase!
     end
 
-    def replace
-      REPLACEMENTS.each do |r|
-        @src.tr!(r[0], r[1]) if @src.index(r[0])
+    def spacers
+      SPACERS.each do |spacer|
+        @src.gsub!(spacer, SPACER)
       end
     end
 
     def behead
+      sep_index = @src.index(TITLE_SEP)
       return unless sep_index
       @src = @src[sep_index+1, @src.size]
     end
 
-    def sep_index
-      @src.index(TITLE_SEP)
-    end
-
     def split
-      counted = SPACERS.reduce({}) { |acc,s| acc[s] = @src.count(s); acc }
-      return if counted.values.all?(&:zero?)
-      spacer = counted.max_by(&:last).first
-      @src = @src.split(spacer)
+      @src = @src.split(SPACER)
     end
 
-    def strip
-      @src = Array(@src)
-      @src.each { |token| token.strip!; token.gsub!(/\s{2,}/, ' ')}
-      @src.reject!(&:empty?)
+    def synonym
+      Array(@src).each { |s| s.sub!(/\/.*/, '') }
     end
 
     def purge
       Array(@src).each { |s| s.gsub!(REMOVALS, '') }
+    end
+
+    def strip
+      Array(@src).each { |s| s.strip!; s.gsub!(/\s{2,}/, ' ') }.reject!(&:empty?)
     end
   end
 end

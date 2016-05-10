@@ -10,12 +10,11 @@ module InciScore
         route do |r|
           r.on 'v1' do
 
-            @file = r['file']
-            break unless @file
+            @src = r['src']
+            break unless @src
 
             r.post 'compute' do
-              src = @file.fetch(:tempfile).path
-              c = InciScore::Computer::new(src: src)
+              c = InciScore::Computer::new(src: @src.fetch(:tempfile).path)
               c.call.to_h
             end
           end

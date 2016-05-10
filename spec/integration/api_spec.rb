@@ -13,11 +13,12 @@ describe InciScore::API::V1::App do
   Stubs::Computer::sources.each do |record|
     it "should post #{record.src} imge to API to get inci score of #{record.score}" do
       upload = Rack::Test::UploadedFile::new(File::join(path, record.src))
-      post '/v1/compute', file: upload
+      post '/v1/compute', src: upload
       assert last_response.ok?
       last_response.content_type.must_equal 'application/json'
       body = JSON::parse(last_response.body)
       body.fetch('score').must_be_close_to record.score, 0.5
+      body.fetch('valid').must_equal record.valid
     end
   end
 end

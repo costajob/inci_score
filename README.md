@@ -72,18 +72,18 @@ User can query the object for its state:
 
 ```ruby
 inci = InciScore::Computer::new(src: 'sample/07.jpg').call
-=> #<InciScore::Response:0x00000002614ca0 @components=["water", "octyldecanol 1-", "niacin", "linalool", "caprylyl glycol", "animal tissue extract", "parfum"], @score=80.4594069529266, @unrecognized=["ceearylalcohol distearoylethyl annoxvmvwomw methosulfate", "mn", "pighlapunicifouai aceholafruitextract", "camellnasatnaoll f camelinasativaseedoilcameluaslnensls extract camelliasinensisleafextract", "f benzoicacid", "wmnome j hcmnmcgmciirusmedicalimonum", "peel extract lemon peel extract", "j prunusarmeniacakerneloil apricot xmaommanmmamm", "oil suybean oil", "fll 04391213"], @valid=false>
+=> #<InciScore::Response:0x00000004039d10 @components=["aqua", "octyldecanol 1-", "niacin", "linalool", "caprylyl glycol", "parfum"], @score=92.08137986008471, @unrecognized=["ceearylalcohol distearoylethyl annoxvmvwomw methosulfate", "mnpighlapunicifouai", "aceholafruitextract", "camellnasatnaoll", "f benzoicacid", "5 cadryuucaprictriglvcerideeyrusm", "wmnome j hcmnmcgmciirusmedicalimonum", "peel extract", "j prunusarmeniacakerneloil", "oil", "cfll 04391213"], @valid=false>
 inci.valid
 => false
 inci.unrecognized
-=> ["ceearylalcohol distearoylethyl annoxvmvwomw methosulfate", "mn", "pighlapunicifouai aceholafruitextract", "f benzoicacid", "wmnome j hcmnmcgmciirusmedicalimonum", "peel extract lemon peel extract", "j prunusarmeniacakerneloil apricot xmaommanmmamm", "oil suybean oil", "fll 04391213"]
+=> ["ceearylalcohol distearoylethyl annoxvmvwomw methosulfate", "mnpighlapunicifouai", "aceholafruitextract", "camellnasatnaoll", "f benzoicacid", "5 cadryuucaprictriglvcerideeyrusm", "wmnome j hcmnmcgmciirusmedicalimonum", "peel extract", "j prunusarmeniacakerneloil", "oil", "cfll 04391213"]
 ```
 
 ## Web API
 The Web API exposes the *InciScore* library by a HTTP layer via the [Roda](http://roda.jeremyevans.net/) framework and the [Puma](http://puma.io/) app server.
 
 ### Starting Puma
-Simply start Puma via the *config.ru* file included in the repository:
+Simply start Puma via the *config.ru* file included in the repository by spawning how many workers as your current workstation can support:
 ```
 bundle exec puma -w 3 -t 16:32 -q
 ```
@@ -92,7 +92,7 @@ bundle exec puma -w 3 -t 16:32 -q
 The Web API responds with a JSON object representing the original *InciScore::Response* one.  
 You can use the curl utility to trigger a POST request to the Web API:
 ```
-curl --form "file=@sample/01.jpg" http://192.168.33.22:9292/v1/compute
+curl --form "src=@sample/01.jpg" http://192.168.33.22:9292/v1/compute
 => {"components":["aqua","disodium laureth sulfosuccinate","cocamidopropyl betaine","disodium cocoamphodiacetate","glyceryl laurate","peg-7 glyceryl cocoate","sodium lactate","parfum","niacinamide","glycine","magnesium aspartate","alanine","lysine","leucine","allantoin","peg-150 distearate","peg-120 methyl glucose dioleate","phenoxyethanol","ci 61570"],"score":83.06157861428775,"unrecognized":["50"],"valid":true}
 ```
 
