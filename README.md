@@ -32,26 +32,25 @@ Be sure to check the *Vagrantfile* to adjust CPUs and RAM basing on your host de
 Currently there are more than 5000 components with a hazard score that ranges from 0 (safe) to 4 (dangerous).
 
 ## Computation
-The computation takes care to score each component the cosmetic basing on:
+The computation takes care to score each component of the cosmetic basing on:
 * its hazard basing on the biodizionario score
 * its position on the list of ingredients
 
 The total score is then calculated on a percent basis.
 
 ### Component matching
-Since the ingredients list might come from external sources (e.g. scanned image, Web form, etc), the gem tries to fuzzy match the ingredients by using different algorithms:
+Since the ingredients list could come from an unreliable source (e.g. scanned image, Web form, etc), the gem tries to fuzzy match the ingredients by using different algorithms:
 * exact matching
 * [edit distance](https://en.wikipedia.org/wiki/Levenshtein_distance) behind a specified tolerance
 * first relevant matching digits 
-* matching by splitted tokens
+* matching splitted tokens
 
 ### Sources
-I assume the INCI could come from different sources, although the main one should be a bitmap coming from a mobile device.  
+The library accepts the list of ingredients from different sources, although the main one should be a bitmap captured by a mobile device.  
 
 #### Tesseract
-Extracting text from a bitmap is a hard task, since cosmetics often prints their INCI with small characters and/or the printed surface is not flat. 
-After some test i decided to rely on the [Tesseract
-OCR](https://github.com/tesseract-ocr/tesseract), calling it directly from ruby instead of relying on some juggernaut wrapper.
+Extracting text from a bitmap is a hard task, since cosmetics often prints their INCI with small characters and/or with colorful backgrounds on non-flat surface. 
+After some test i decided to use the [Tesseract OCR](https://github.com/tesseract-ocr/tesseract), calling it directly from ruby instead of relying on some juggernaut wrapper.
 
 ## API
 The API of the gem is pretty simple, assuming you have installed Tesseract on your device, you can start computing the INCI score by:
@@ -63,14 +62,15 @@ inci.score
 => 83.06157861428775
 ```
 
-As you see the results are wrapped by a *InciScore::Response* object, this is useful when dealing with the Web API (read below).
+As you see the results are wrapped by an *InciScore::Response* object, this is useful when dealing with the Web API (read below).
 
 ### Unrecognized components
-The API treats unrecognized components as a standard case by just marking the object as not valid and raise a warning in case more than 30% of the ingredients are not found.  
+The API treats unrecognized components as a common case by just marking the object as non valid and raise a warning in case more than 30% of the ingredients are not found.  
 User can query the object for its state:
 
 ```ruby
 inci = InciScore::Computer::new(src: 'sample/07.jpg').call
+there are unrecognized ingredients!
 => #<InciScore::Response:0x00000004039d10 @components=["aqua", "octyldecanol 1-", "niacin", "linalool", "caprylyl glycol", "parfum"], @score=92.08137986008471, @unrecognized=["ceearylalcohol distearoylethyl annoxvmvwomw methosulfate", "mnpighlapunicifouai", "aceholafruitextract", "camellnasatnaoll", "f benzoicacid", "5 cadryuucaprictriglvcerideeyrusm", "wmnome j hcmnmcgmciirusmedicalimonum", "peel extract", "j prunusarmeniacakerneloil", "oil", "cfll 04391213"], @valid=false>
 inci.valid
 => false
@@ -79,10 +79,10 @@ inci.unrecognized
 ```
 
 ## Web API
-The Web API exposes the *InciScore* library by a HTTP layer via the [Roda](http://roda.jeremyevans.net/) framework and the [Puma](http://puma.io/) app server.
+The Web API exposes the *InciScore* library over HTTP via the [Roda](http://roda.jeremyevans.net/) framework and the [Puma](http://puma.io/) application server.
 
 ### Starting Puma
-Simply start Puma via the *config.ru* file included in the repository by spawning how many workers as your current workstation can support:
+Simply start Puma via the *config.ru* file included in the repository by spawning how many workers as your current workstation supports:
 ```
 bundle exec puma -w 3 -t 16:32 -q
 ```
@@ -106,7 +106,7 @@ rake inci:score src=sample/01.jpg
 ```
 
 ### Components
-Fetch the INCI components by scanning an image and print the in a friendly hazard-name format:
+Fetch the INCI components by scanning an image and print them in the hazard-name format:
 ```
 rake inci:components src=sample/01.jpg
 0 - aqua
