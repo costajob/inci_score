@@ -41,10 +41,9 @@ The total score is then calculated on a percent basis.
 ### Component matching
 Since the ingredients list might come from external sources (e.g. scanned image, Web form, etc), the gem tries to fuzzy match the ingredients by using different algorithms:
 * extact matching
-* first 10 matching digits 
 * [edit distance](https://en.wikipedia.org/wiki/Levenshtein_distance) behind a specified tolerance
+* first relevant matching digits 
 * matching by splitted tokens
-* first 5 matching digits
 
 ### Sources
 I assume the INCI could come from different sources, although the main one should be a bitmap coming from a mobile device.  
