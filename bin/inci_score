@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+require 'bundler/setup'
+require 'inci_score'
+
+src = ARGV.fetch(0) { fail ArgumentError, "please specify a src argument" }
+
+res = InciScore::Computer::new(src: src).call
+puts res

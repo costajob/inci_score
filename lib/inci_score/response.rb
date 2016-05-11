@@ -12,5 +12,18 @@ module InciScore
     def to_h
       { components: @components, score: @score, unrecognized: @unrecognized, valid: @valid }
     end
+
+    def to_s
+      %Q{
+TOTAL SCORE:
+      \t#{@score}
+VALID STATE:
+      \t#{@valid}
+COMPONENTS: 
+      #{@components.map { |c| "\t#{c}" }.join("\n")}
+UNRECOGNIZED:
+      #{@unrecognized.map { |c| "\t#{c}" }.join("\n")}i
+      }
+    end
   end
 end
