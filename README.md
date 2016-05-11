@@ -58,7 +58,7 @@ The API of the gem is pretty simple, assuming you have installed Tesseract on yo
 
 ```ruby
 inci = InciScore::Computer::new(src: 'sample/01.jpg').call
-=> #<InciScore::Response:0x0000000289b7a8 @components=["aqua", "disodium laureth sulfosuccinate", "cocamidopropyl betaine", "disodium cocoamphodiacetate", "glyceryl laurate", "peg-7 glyceryl cocoate", "sodium lactate", "parfum", "niacinamide", "glycine", "magnesium aspartate", "alanine", "lysine", "leucine", "allantoin", "peg-150 distearate", "peg-120 methyl glucose dioleate", "phenoxyethanol", "ci 61570"], @score=82.52110249964151, @unrecognized=["50"], @valid=true>
+=> #<InciScore::Response:0x00000003cc01e8 @components={"aqua"=>0, "disodium laureth sulfosuccinate"=>2, "cocamidopropyl betaine"=>1, "disodium cocoamphodiacetate"=>0, "glyceryl laurate"=>0, "peg-7 glyceryl cocoate"=>3, "sodium lactate"=>0, "parfum"=>0, "niacinamide"=>0, "glycine"=>0, "magnesium aspartate"=>0, "alanine"=>0, "lysine"=>0, "leucine"=>0, "allantoin"=>0, "peg-150 distearate"=>3, "peg-120 methyl glucose dioleate"=>3, "phenoxyethanol"=>2, "ci 61570"=>3}, @score=82.52110249964151, @unrecognized=["50"], @valid=true>
 inci.score
 => 82.52110249964151
 ```
@@ -72,7 +72,7 @@ User can query the object for its state:
 ```ruby
 inci = InciScore::Computer::new(src: 'sample/07.jpg').call
 there are unrecognized ingredients!
-=> #<InciScore::Response:0x00000004039d10 @components=["aqua", "octyldecanol 1-", "niacin", "linalool", "caprylyl glycol", "parfum"], @score=90.49765583210164, @unrecognized=["ceearylalcohol distearoylethyl annoxvmvwomw methosulfate", "mnpighlapunicifouai", "aceholafruitextract", "camellnasatnaoll", "f benzoicacid", "5 cadryuucaprictriglvcerideeyrusm", "wmnome j hcmnmcgmciirusmedicalimonum", "peel extract", "j prunusarmeniacakerneloil", "oil", "cfll 04391213"], @valid=false>
+=> #<InciScore::Response:0x00000003d1e8d8 @components={"aqua"=>0, "octyldecanol 1-"=>1, "niacin"=>0, "linalool"=>2, "caprylyl glycol"=>0, "parfum"=>0}, @score=90.49765583210164, @unrecognized=["ceearylalcohol distearoylethyl annoxvmvwomw methosulfate", "mnpighlapunicifouai", "aceholafruitextract", "camellnasatnaoll", "extract", "f benzoicacid", "5 cadryuucaprictriglvcerideeyrusm", "wmnome j hcmnmcgmciirusmedicalimonum", "peel extract", "j prunusarmeniacakerneloil", "oil", "cfll 04391213"], @valid=false>
 inci.valid
 => false
 inci.unrecognized
@@ -93,7 +93,7 @@ The Web API responds with a JSON object representing the original *InciScore::Re
 You can use the curl utility to trigger a POST request to the Web API:
 ```
 curl --form "src=@sample/01.jpg" http://192.168.33.22:9292/v1/compute
-=> {"components":["aqua","disodium laureth sulfosuccinate","cocamidopropyl betaine","disodium cocoamphodiacetate","glyceryl laurate","peg-7 glyceryl cocoate","sodium lactate","parfum","niacinamide","glycine","magnesium aspartate","alanine","lysine","leucine","allantoin","peg-150 distearate","peg-120 methyl glucose dioleate","phenoxyethanol","ci 61570"],"score":82.52110249964151,"unrecognized":["50"],"valid":true}
+=> {"components":{"aqua":0,"disodium laureth sulfosuccinate":2,"cocamidopropyl betaine":1,"disodium cocoamphodiacetate":0,"glyceryl laurate":0,"peg-7 glyceryl cocoate":3,"sodium lactate":0,"parfum":0,"niacinamide":0,"glycine":0,"magnesium aspartate":0,"alanine":0,"lysine":0,"leucine":0,"allantoin":0,"peg-150 distearate":3,"peg-120 methyl glucose dioleate":3,"phenoxyethanol":2,"ci 61570":3},"score":82.52110249964151,"unrecognized":["50"],"valid":true}
 ```
 
 ## CLI API
