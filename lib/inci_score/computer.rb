@@ -1,5 +1,4 @@
 require 'inci_score/config'
-require 'inci_score/tesseract'
 require 'inci_score/normalizer'
 require 'inci_score/recognizer'
 require 'inci_score/scorer'
@@ -12,7 +11,7 @@ module InciScore
     def initialize(options = {})
       @src = options[:src]
       @catalog = options.fetch(:catalog) { Config::catalog }
-      @processor = options.fetch(:processor) { Tesseract::new(src: @src) }
+      @processor = options.fetch(:processor) { -> { @src } }
       @normalizer = options.fetch(:normalizer) { Normalizer::new(src: @processor.call) }
       @unrecognized = []
     end

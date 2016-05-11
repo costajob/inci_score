@@ -10,11 +10,15 @@ module InciScore
         route do |r|
           r.on 'v1' do
 
-            @src = r['src']
-            break unless @src
+            r.get 'compute' do
+              c = Computer::new(src: r['src'])
+              c.call.to_h
+            end
 
-            r.post 'compute' do
-              c = InciScore::Computer::new(src: @src.fetch(:tempfile).path)
+            r.post 'tesseract' do
+              src = r['src'].fetch(:tempfile).path
+              t = Tesseract::new(src: src)
+              c = Computer::new(processor: t)
               c.call.to_h
             end
           end
