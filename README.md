@@ -9,6 +9,7 @@
     * [Tesseract](#tessract)
 * [API](#api)
  * [Unrecognized components](#unrecognized-components)
+* [CLI API](#cli-api)
 * [Web API](#web-api)
  * [Starting Puma](#starting-puma)
  * [Triggering a request](#triggering-a-request)
@@ -76,6 +77,40 @@ inci.valid
 => false
 inci.unrecognized
 => ["ceearylalcohol distearoylethyl annoxvmvwomw methosulfate", "mnpighlapunicifouai", "aceholafruitextract", "camellnasatnaoll", "f benzoicacid", "5 cadryuucaprictriglvcerideeyrusm", "wmnome j hcmnmcgmciirusmedicalimonum", "peel extract", "j prunusarmeniacakerneloil", "oil", "cfll 04391213"]
+```
+
+## CLI API
+You can collect INCI data by uisng the available binary:
+
+```
+./bin/inci_score sample/01.jpg
+
+TOTAL SCORE:
+        83.06157861428775
+VALID STATE:
+        true
+COMPONENTS: 
+        aqua
+        disodium laureth sulfosuccinate
+        cocamidopropyl betaine
+        disodium cocoamphodiacetate
+        glyceryl laurate
+        peg-7 glyceryl cocoate
+        sodium lactate
+        parfum
+        niacinamide
+        glycine
+        magnesium aspartate
+        alanine
+        lysine
+        leucine
+        allantoin
+        peg-150 distearate
+        peg-120 methyl glucose dioleate
+        phenoxyethanol
+        ci 61570
+UNRECOGNIZED:
+        50
 ```
 
 ## Web API
