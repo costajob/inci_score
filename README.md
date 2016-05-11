@@ -9,10 +9,10 @@
     * [Tesseract](#tessract)
 * [API](#api)
  * [Unrecognized components](#unrecognized-components)
-* [CLI API](#cli-api)
 * [Web API](#web-api)
  * [Starting Puma](#starting-puma)
  * [Triggering a request](#triggering-a-request)
+* [CLI API](#cli-api)
 * [Rake tasks](#rake-tasks)
 
 ## Scope
@@ -58,9 +58,9 @@ The API of the gem is pretty simple, assuming you have installed Tesseract on yo
 
 ```ruby
 inci = InciScore::Computer::new(src: 'sample/01.jpg').call
-=> #<InciScore::Response:0x0000000289b7a8 @components=["aqua", "disodium laureth sulfosuccinate", "cocamidopropyl betaine", "disodium cocoamphodiacetate", "glyceryl laurate", "peg-7 glyceryl cocoate", "sodium lactate", "parfum", "niacinamide", "glycine", "magnesium aspartate", "alanine", "lysine", "leucine", "allantoin", "peg-150 distearate", "peg-120 methyl glucose dioleate", "phenoxyethanol", "ci 61570"], @score=83.06157861428775, @unrecognized=["50"], @valid=true>
+=> #<InciScore::Response:0x0000000289b7a8 @components=["aqua", "disodium laureth sulfosuccinate", "cocamidopropyl betaine", "disodium cocoamphodiacetate", "glyceryl laurate", "peg-7 glyceryl cocoate", "sodium lactate", "parfum", "niacinamide", "glycine", "magnesium aspartate", "alanine", "lysine", "leucine", "allantoin", "peg-150 distearate", "peg-120 methyl glucose dioleate", "phenoxyethanol", "ci 61570"], @score=82.52110249964151, @unrecognized=["50"], @valid=true>
 inci.score
-=> 83.06157861428775
+=> 82.52110249964151
 ```
 
 As you see the results are wrapped by an *InciScore::Response* object, this is useful when dealing with the Web API (read below).
@@ -72,45 +72,11 @@ User can query the object for its state:
 ```ruby
 inci = InciScore::Computer::new(src: 'sample/07.jpg').call
 there are unrecognized ingredients!
-=> #<InciScore::Response:0x00000004039d10 @components=["aqua", "octyldecanol 1-", "niacin", "linalool", "caprylyl glycol", "parfum"], @score=92.08137986008471, @unrecognized=["ceearylalcohol distearoylethyl annoxvmvwomw methosulfate", "mnpighlapunicifouai", "aceholafruitextract", "camellnasatnaoll", "f benzoicacid", "5 cadryuucaprictriglvcerideeyrusm", "wmnome j hcmnmcgmciirusmedicalimonum", "peel extract", "j prunusarmeniacakerneloil", "oil", "cfll 04391213"], @valid=false>
+=> #<InciScore::Response:0x00000004039d10 @components=["aqua", "octyldecanol 1-", "niacin", "linalool", "caprylyl glycol", "parfum"], @score=90.49765583210164, @unrecognized=["ceearylalcohol distearoylethyl annoxvmvwomw methosulfate", "mnpighlapunicifouai", "aceholafruitextract", "camellnasatnaoll", "f benzoicacid", "5 cadryuucaprictriglvcerideeyrusm", "wmnome j hcmnmcgmciirusmedicalimonum", "peel extract", "j prunusarmeniacakerneloil", "oil", "cfll 04391213"], @valid=false>
 inci.valid
 => false
 inci.unrecognized
 => ["ceearylalcohol distearoylethyl annoxvmvwomw methosulfate", "mnpighlapunicifouai", "aceholafruitextract", "camellnasatnaoll", "f benzoicacid", "5 cadryuucaprictriglvcerideeyrusm", "wmnome j hcmnmcgmciirusmedicalimonum", "peel extract", "j prunusarmeniacakerneloil", "oil", "cfll 04391213"]
-```
-
-## CLI API
-You can collect INCI data by uisng the available binary:
-
-```
-./bin/inci_score sample/01.jpg
-
-TOTAL SCORE:
-        83.06157861428775
-VALID STATE:
-        true
-COMPONENTS: 
-        aqua
-        disodium laureth sulfosuccinate
-        cocamidopropyl betaine
-        disodium cocoamphodiacetate
-        glyceryl laurate
-        peg-7 glyceryl cocoate
-        sodium lactate
-        parfum
-        niacinamide
-        glycine
-        magnesium aspartate
-        alanine
-        lysine
-        leucine
-        allantoin
-        peg-150 distearate
-        peg-120 methyl glucose dioleate
-        phenoxyethanol
-        ci 61570
-UNRECOGNIZED:
-        50
 ```
 
 ## Web API
@@ -127,42 +93,72 @@ The Web API responds with a JSON object representing the original *InciScore::Re
 You can use the curl utility to trigger a POST request to the Web API:
 ```
 curl --form "src=@sample/01.jpg" http://192.168.33.22:9292/v1/compute
-=> {"components":["aqua","disodium laureth sulfosuccinate","cocamidopropyl betaine","disodium cocoamphodiacetate","glyceryl laurate","peg-7 glyceryl cocoate","sodium lactate","parfum","niacinamide","glycine","magnesium aspartate","alanine","lysine","leucine","allantoin","peg-150 distearate","peg-120 methyl glucose dioleate","phenoxyethanol","ci 61570"],"score":83.06157861428775,"unrecognized":["50"],"valid":true}
+=> {"components":["aqua","disodium laureth sulfosuccinate","cocamidopropyl betaine","disodium cocoamphodiacetate","glyceryl laurate","peg-7 glyceryl cocoate","sodium lactate","parfum","niacinamide","glycine","magnesium aspartate","alanine","lysine","leucine","allantoin","peg-150 distearate","peg-120 methyl glucose dioleate","phenoxyethanol","ci 61570"],"score":82.52110249964151,"unrecognized":["50"],"valid":true}
+```
+
+## CLI API
+You can collect INCI data by uisng the available binary:
+
+```
+bin/inci_score sample/01.jpg
+
+TOTAL SCORE:
+        82.52110249964151
+VALID STATE:
+        true
+COMPONENTS (hazard - name): 
+        0 - aqua
+        2 - disodium laureth sulfosuccinate
+        1 - cocamidopropyl betaine
+        0 - disodium cocoamphodiacetate
+        0 - glyceryl laurate
+        3 - peg-7 glyceryl cocoate
+        0 - sodium lactate
+        0 - parfum
+        0 - niacinamide
+        0 - glycine
+        0 - magnesium aspartate
+        0 - alanine
+        0 - lysine
+        0 - leucine
+        0 - allantoin
+        3 - peg-150 distearate
+        3 - peg-120 methyl glucose dioleate
+        2 - phenoxyethanol
+        3 - ci 61570
+UNRECOGNIZED:
+        50
+```
+
+This client allow to pass multiple src:
+```
+bin/inci_score sample/01.jpg sample/03.jpg ...
+...
 ```
 
 ## Rake tasks
-The API is also exposed as Rake tasks:
+Alternately you can use the available rake task to get the same results (for one sorce at time):
 
-### Score
-Compute the total INCI score by scanning an image:
 ```
-rake inci:score src=sample/01.jpg
-83.06157861428775
-```
+rake inci_score:compute src=sample/04.jpg
 
-### Components
-Fetch the INCI components by scanning an image and print them in the hazard-name format:
-```
-rake inci:components src=sample/01.jpg
-0 - aqua
-2 - sodium laureth sulfate
-2 - sodium chlorate
-1 - guanine
-0 - gluconolactone
-0 - glycerin
-2 - guar hydroxypropyltrimonium chloride
-4 - dimethiconol
-0 - parfum
-3 - tea-dodecylbenzenesulfonate
-0 - mica
-0 - albumen
-3 - ppg-12
-0 - citric acid
-0 - sodium acetate
-1 - sodium benzoate
-3 - dmdm hydantoin
-3 - methylisothiazolinone
-4 - butylparaben
-3 - ci 47005
-0 - ci 77891
+TOTAL SCORE:
+        70.28040283495838
+VALID STATE:
+        true
+COMPONENTS (hazard - name): 
+        2 - capryl glycol
+        1 - isopropyl palmitate
+        2 - isopropyl myristate
+        0 - parfum
+        2 - benzyl alcohol
+        2 - benzyl salicylate
+        2 - coumarin
+        2 - hexyl cinnamal
+        2 - limonene
+        2 - linalool
+        0 - olea europaea
+UNRECOGNIZED:
+        pentaerythrityl tetraditbutyl hydroxyhydrocinnamaie
+        11317540710
 ```

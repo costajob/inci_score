@@ -15,7 +15,7 @@ module InciScore
 
     def call
       @component = apply_rules
-      return @component if @component
+      return [@component, @catalog[@component]] if @component
       yield(@ingredient) if block_given?
       nil
     end 

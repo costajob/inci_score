@@ -3,7 +3,8 @@
 require 'bundler/setup'
 require 'inci_score'
 
-src = ARGV.fetch(0) { fail ArgumentError, "please specify a src argument" }
+fail ArgumentError, "please specify at least a src argument" if ARGV.empty?
 
-res = InciScore::Computer::new(src: src).call
-puts res
+ARGV.each do |src|
+  puts InciScore::Computer::new(src: src).call
+end

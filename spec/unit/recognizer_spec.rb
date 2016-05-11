@@ -9,30 +9,30 @@ describe InciScore::Recognizer do
     dont_allow(recognizer).by_distance
     dont_allow(recognizer).by_digits
     dont_allow(recognizer).by_tokens
-    recognizer.call.must_equal 'ci 61570'
+    recognizer.call.must_equal ['ci 61570', 3]
   end
 
   it 'must fallback to distance rule' do
     recognizer = InciScore::Recognizer::new(ingredient: 'agua', catalog: catalog)
     dont_allow(recognizer).by_digits
     dont_allow(recognizer).by_tokens
-    recognizer.call.must_equal 'aqua'
+    recognizer.call.must_equal ['aqua', 0]
   end
 
   it 'must fallback to digits rule' do
     recognizer = InciScore::Recognizer::new(ingredient: 'olea europaea oil i 0 6100 stearate', catalog: catalog)
     dont_allow(recognizer).by_tokens
-    recognizer.call.must_equal 'olea europea'
+    recognizer.call.must_equal ['olea europea', 0]
   end
 
   it 'must fallback to tokens rule' do
     recognizer = InciScore::Recognizer::new(ingredient: 'f588 capric triglyceride', catalog: catalog)
-    recognizer.call.must_equal 'caprylic/capric triglyceride'
+    recognizer.call.must_equal ['caprylic/capric triglyceride', 0]
   end
 
   it 'must ignore block for recognized component' do
     recognizer = InciScore::Recognizer::new(ingredient: 'aqua 2000', catalog: catalog)
-    recognizer.call { |i| fail 'doh!' }.must_equal 'aqua'
+    recognizer.call { |i| fail 'doh!' }.must_equal ['aqua', 0]
   end
 
   it 'must call the passed block in case of unrcognized component' do

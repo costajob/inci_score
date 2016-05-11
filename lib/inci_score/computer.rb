@@ -29,8 +29,7 @@ module InciScore
     def score
       return @score if @score
       warn "there are unrecognized ingredients!" unless valid?
-      hazards = @catalog.select { |k,v| components.include?(k) }.values
-      @score = Scorer::new(hazards).call
+      @score = Scorer::new(components.values).call
     end
 
     def ingredients
@@ -38,11 +37,11 @@ module InciScore
     end
 
     def components
-      @components ||= ingredients.map do |ingredient|
+      @components ||= Hash[ingredients.map do |ingredient|
         Recognizer::new(ingredient: ingredient, catalog: @catalog).call do |i|
           @unrecognized << i
         end
-      end.tap { |c| c.compact! }
+      end.tap { |c| c.compact! }]
     end
 
     def valid?

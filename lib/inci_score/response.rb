@@ -19,10 +19,10 @@ TOTAL SCORE:
       \t#{@score}
 VALID STATE:
       \t#{@valid}
-COMPONENTS: 
-      #{@components.map { |c| "\t#{c}" }.join("\n")}
+COMPONENTS (hazard - name): 
+      #{@components.map { |k,v| "\t#{v} - #{k}" }.join("\n")}
 UNRECOGNIZED:
-      #{@unrecognized.map { |c| "\t#{c}" }.join("\n")}i
+      #{@unrecognized.map { |c| "\t#{c}" }.join("\n")}
       }
     end
   end
