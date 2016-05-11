@@ -40,7 +40,7 @@ The computation takes care to score each component of the cosmetic basing on:
 The total score is then calculated on a percent basis.
 
 ### Component matching
-Since the ingredients list could come from an unreliable source (e.g. scanned image, Web form, etc), the gem tries to fuzzy match the ingredients by using different algorithms:
+Since the ingredients list could come from an unreliable source, the gem tries to fuzzy match the ingredients by using different algorithms:
 * exact matching
 * [edit distance](https://en.wikipedia.org/wiki/Levenshtein_distance) behind a specified tolerance
 * first relevant matching digits 
@@ -97,7 +97,7 @@ curl --form "src=@sample/01.jpg" http://192.168.33.22:9292/v1/compute
 ```
 
 ## CLI API
-You can collect INCI data by uisng the available binary:
+You can collect INCI data by using the available binary:
 
 ```
 bin/inci_score sample/01.jpg
@@ -137,7 +137,7 @@ bin/inci_score sample/01.jpg sample/03.jpg ...
 ```
 
 ## Rake tasks
-Alternately you can use the available rake task to get the same results (for one sorce at time):
+Alternately you can use the available rake task to get the same results (one source at time):
 
 ```
 rake inci_score:compute src=sample/04.jpg
