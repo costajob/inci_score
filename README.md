@@ -126,6 +126,21 @@ curl --form "src=@sample/01.jpg" http://192.168.33.22:9292/v1/tesseract
 You can collect INCI data by using the available binary:
 
 ```
+bin/inci_score "aqua,dimethicone"
+
+TOTAL SCORE:
+        54.83566009043177
+VALID STATE:
+        true
+COMPONENTS (hazard - name): 
+        0 - aqua
+        4 - dimethicone
+UNRECOGNIZED:
+```
+
+Both ingredients list and image path are recognized:
+
+```
 bin/inci_score sample/01.jpg
 
 TOTAL SCORE:
@@ -154,18 +169,4 @@ COMPONENTS (hazard - name):
         3 - ci 61570
 UNRECOGNIZED:
         50
-```
-Both ingredients list and image path are recognized:
-
-```
-bin/inci_score "aqua,dimethicone"
-
-TOTAL SCORE:
-        54.83566009043177
-VALID STATE:
-        true
-COMPONENTS (hazard - name): 
-        0 - aqua
-        4 - dimethicone
-UNRECOGNIZED:
 ```
