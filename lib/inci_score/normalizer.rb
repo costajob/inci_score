@@ -23,7 +23,7 @@ module InciScore
     attr_reader :src, :rules
 
     def initialize(options = {})
-      @src = options.fetch(:src) { fail ArgumentError, 'missing src' }
+      @src = options[:src] || fail(ArgumentError, 'missing src')
       @rules = options.fetch(:rules) { DEFAULTS }
     end
 
