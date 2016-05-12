@@ -9,10 +9,9 @@ module InciScore
     TOLERANCE = 30.0
 
     def initialize(options = {})
-      @src = options[:src]
       @catalog = options.fetch(:catalog) { Config::catalog }
-      @processor = options.fetch(:processor) { -> { @src } }
-      @normalizer = options.fetch(:normalizer) { Normalizer::new(src: @processor.call) }
+      @processor = options.fetch(:processor) { -> { options[:src] } }
+      @src = @processor.call
       @unrecognized = []
     end
 
@@ -32,7 +31,7 @@ module InciScore
     end
 
     def ingredients
-      @ingredients ||= @normalizer.call
+      @ingredients ||= Normalizer::new(src: @src).call
     end
 
     def components

@@ -16,7 +16,6 @@
     * [GET request](#get-request)
     * [POST request](#post-request)
 * [CLI API](#cli-api)
-* [Rake tasks](#rake-tasks)
 
 ## Scope
 This gem computes the score of cosmetic components basing on the information provided by the [Biodizionario site](http://www.biodizionario.it/) by Fabrizio Zago.
@@ -156,36 +155,17 @@ COMPONENTS (hazard - name):
 UNRECOGNIZED:
         50
 ```
-
-This client allow to pass multiple src:
-```
-bin/inci_score sample/01.jpg sample/03.jpg ...
-...
-```
-
-## Rake tasks
-Alternately you can use the available rake task to get the same results (one source at time):
+Both ingredients list and image path are recognized:
 
 ```
-rake inci_score:compute src=sample/04.jpg
+bin/inci_score "aqua,dimethicone"
 
 TOTAL SCORE:
-        70.28040283495838
+        54.83566009043177
 VALID STATE:
         true
 COMPONENTS (hazard - name): 
-        2 - capryl glycol
-        1 - isopropyl palmitate
-        2 - isopropyl myristate
-        0 - parfum
-        2 - benzyl alcohol
-        2 - benzyl salicylate
-        2 - coumarin
-        2 - hexyl cinnamal
-        2 - limonene
-        2 - linalool
-        0 - olea europaea
+        0 - aqua
+        4 - dimethicone
 UNRECOGNIZED:
-        pentaerythrityl tetraditbutyl hydroxyhydrocinnamaie
-        11317540710
 ```
