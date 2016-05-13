@@ -39,7 +39,7 @@ module InciScore
         Recognizer::new(ingredient: ingredient, catalog: @catalog).call do |i|
           @unrecognized << i
         end
-      end.tap { |c| c.compact! }]
+      end.compact]
     end
 
     def valid?
