@@ -52,18 +52,19 @@ Since the ingredients list could come from an unreliable source (e.g. data scann
 The library accepts the list of ingredients from different sources, although the main one should be a bitmap captured by a mobile device.  
 
 #### Plain text
-This library fetches the source as plain text as default. The ingredients are expressed as a single string of data, typically separated by comma, such as:
+This library fetches the source as plain text as default.  
+The ingredients are expressed as a single string of data, typically separated by comma, case and new lines are normalized:
 
 ```
-"Ingredients: Aqua, Disodium Laureth Sulfosuccinate, Cocamidopropiyl\nBetaine, Disodium Cocoamphodiacetate, Giyceryi Laurate, PEGJ\nGlyceryi Cocoate, Sodium Lactate, Parfum,\n\nNiacinamide, Glycine, Magnesium Aspanate,\n\nAianine, Lysine, Leucine,A||antoin, PEG-150 E‘—\n\nDistearate, PEG-120 Methyl Glucose Dioleate, ——\n\nPhenoxyethanoi, CI 61570. 50\n\n \n\n"
+"Ingredients: Aqua, Disodium Laureth Sulfosuccinate, Cocamidopropiyl\nBetaine"
 ```
 
 #### Tesseract
-The library includes an OCR module based on the [Tesseract OCR](https://github.com/tesseract-ocr/tesseract).  
-Tesseract is called directly from ruby (via *system*), but has proved to not scale very nicely when requests starts to accumulate. 
+The library includes an OCR module based on the [Tesseract OCR](https://github.com/tesseract-ocr/tesseract) to allow reading directly from a scanned bitmap.  
+Tesseract is called directly from ruby (via *system*): unfortunately this approach has proven to be unreliable when dealing with an high number of requests, so i advise to use it only for testing.
 
 ## API
-The API of the gem is pretty simple, assuming you have installed Tesseract on your device, you can start computing the INCI score by:
+The API of the gem is pretty simple, you can open irb by *bundle console* and start computing the INCI score:
 
 ```ruby
 inci = InciScore::Computer::new(src: 'aqua, dimethicone').call
@@ -72,14 +73,14 @@ inci.score
 => 54.83566009043177
 ```
 
-Alternatively you can rely on your Tesseract installation and pass directly an image path to be scanned:
+Alternatively you can rely on the Tesseract processor to pass directly an image as the source:
 ```ruby
 t = Tesseract::new(src: 'sample/01.jpg')
 InciScore::Computer::new(processor: t).call
 => #<InciScore::Response:0x00000003cc01e8 @components={"aqua"=>0, "disodium laureth sulfosuccinate"=>2, "cocamidopropyl betaine"=>1, "disodium cocoamphodiacetate"=>0, "glyceryl laurate"=>0, "peg-7 glyceryl cocoate"=>3, "sodium lactate"=>0, "parfum"=>0, "niacinamide"=>0, "glycine"=>0, "magnesium aspartate"=>0, "alanine"=>0, "lysine"=>0, "leucine"=>0, "allantoin"=>0, "peg-150 distearate"=>3, "peg-120 methyl glucose dioleate"=>3, "phenoxyethanol"=>2, "ci 61570"=>3}, @score=82.52110249964151, @unrecognized=["50"], @valid=true>
 ```
 
-As you see the results are wrapped by an *InciScore::Response* object, this is useful when dealing with the Web API (read below).
+As you see the results are wrapped by an *InciScore::Response* object, this is useful when dealing with the Web API (read below) and when printing them to standard output.
 
 ### Unrecognized components
 The API treats unrecognized components as a common case by just marking the object as non valid and raise a warning in case more than 30% of the ingredients are not found.  
@@ -102,7 +103,7 @@ The Web API exposes the *InciScore* library over HTTP via the [Roda](http://roda
 ### Starting Puma
 Simply start Puma via the *config.ru* file included in the repository by spawning how many workers as your current workstation supports:
 ```
-bundle exec puma -w 3 -t 16:32 -q
+bundle exec puma -w 2 -t 16:32 -q
 ```
 
 ### Triggering a request
@@ -110,13 +111,15 @@ The Web API responds with a JSON object representing the original *InciScore::Re
 
 #### GET request
 You can pass the source string directly as a HTTP parameter:
+
 ```
 curl http://192.168.33.22:9292/v1/compute?src=ingredients:aqua,dimethicone
 => {"components":{"aqua":0,"dimethicone":4},"score":54.83566009043177,"unrecognized":[],"valid":true}
 ```
 
 #### POST request
-Alternatively you can use curl to upload an image via a POST request, the Tesseract processor is used:
+Alternatively you can use curl to upload an image via a POST request, the Tesseract processor is used (unreliable):
+
 ```
 curl --form "src=@sample/01.jpg" http://192.168.33.22:9292/v1/tesseract
 => {"components":{"aqua":0,"disodium laureth sulfosuccinate":2,"cocamidopropyl betaine":1,"disodium cocoamphodiacetate":0,"glyceryl laurate":0,"peg-7 glyceryl cocoate":3,"sodium lactate":0,"parfum":0,"niacinamide":0,"glycine":0,"magnesium aspartate":0,"alanine":0,"lysine":0,"leucine":0,"allantoin":0,"peg-150 distearate":3,"peg-120 methyl glucose dioleate":3,"phenoxyethanol":2,"ci 61570":3},"score":82.52110249964151,"unrecognized":["50"],"valid":true}
