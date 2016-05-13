@@ -1,14 +1,17 @@
+require 'inci_score/config'
 require 'inci_score/levenshtein'
 
 module InciScore
   class Recognizer
     DEFAULTS = %w[by_key by_distance by_digits by_tokens]
     TOLERANCE = 3
-    DIGITS = 6 
+    MEANINGFUL_DIGITS = 7
+    UNMATCHABLE = %w[extract oil sodium acid sulfate]
+    SEPARATOR = "/".freeze
 
     def initialize(options = {})
       @ingredient = options.fetch(:ingredient)
-      @catalog = options.fetch(:catalog) { {} }
+      @catalog = options.fetch(:catalog) { Config::catalog }
       @components = @catalog.keys
       @rules = options[:rules] || DEFAULTS
     end
@@ -33,66 +36,34 @@ module InciScore
     end
 
     def by_distance
-      min = min_distance
-      return if invalid_distance?(min.last)
-      min.first
-    end
-
-    def invalid_distance?(d)
-      d > TOLERANCE || d >= @ingredient.size 
-    end
-
-    def min_distance
       initial = @ingredient[0]
-      @components.reduce([nil, @ingredient.size]) do |min, component|
+      min_distance = @components.reduce([nil, @ingredient.size]) do |min, component|
         next min unless component.start_with?(initial)
-        d = @ingredient.distance(component)
-        min = [component, d] if d < min.last 
+        match = (n = component.index(SEPARATOR)) ? component[0, n] : component
+        d = @ingredient.distance(match)
+        min = [component, d] if d < min[1]
         min
       end
+      return if min_distance[1] > TOLERANCE || min_distance[1] >= (@ingredient.size-1)
+      min_distance[0]
     end
 
     def by_digits
-      return if @ingredient.size < DIGITS
-      digits = @ingredient[0,DIGITS]
+      return if @ingredient.size < TOLERANCE
+      digits = @ingredient[0,MEANINGFUL_DIGITS]
       @components.detect do |component| 
         component.match(/^#{Regexp::escape(digits)}/)
       end
     end
 
     def by_tokens
-      return @component if matching_token
-      return if same_occurrency?
-      occurrencies.max_by { |h,k| k }.to_a.first
-    end
-
-    def occurrencies
-      @occurrencies ||= components_by_token.reduce(Hash::new(0)) do |acc,component|
-        acc[component] += 1; acc
-      end
-    end
-
-    def same_occurrency?
-      return false if occurrencies.size == 1
-      occurrencies.values.uniq.size == 1
-    end
-
-    def matching_token
-      @component = components_by_token.uniq.detect do |component|
-        tokens.include?(component)
-      end
-    end
-
-    def components_by_token
-      @components_by_token ||= tokens.map do |token|
-        @components.select do |component|
-          component.match(/#{Regexp::escape(token)}/)
+      tokens = (@ingredient.split(" ") - UNMATCHABLE).reject { |t| t.size < TOLERANCE }.sort_by!(&:size).reverse!
+      tokens.each do |token|
+        @components.each do |component| 
+          return component if component.match(/\b#{Regexp::escape(token)}\b/)
         end
-      end.flatten
-    end
-
-    def tokens
-      @tokens ||= @ingredient.split(' ').reject { |token| token.size < TOLERANCE }
+      end
+      nil
     end
   end
 end

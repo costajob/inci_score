@@ -20,7 +20,7 @@ describe InciScore::Recognizer do
   end
 
   it 'must fallback to digits rule' do
-    recognizer = InciScore::Recognizer::new(ingredient: 'olea europaea oil i 0 6100 stearate', catalog: catalog)
+    recognizer = InciScore::Recognizer::new(ingredient: 'olea europaea oil', catalog: catalog)
     dont_allow(recognizer).by_tokens
     recognizer.call.must_equal ['olea europea', 0]
   end
@@ -30,13 +30,28 @@ describe InciScore::Recognizer do
     recognizer.call.must_equal ['caprylic/capric triglyceride', 0]
   end
 
+  it 'must ignore invlid distances' do
+    recognizer = InciScore::Recognizer::new(ingredient: 'de u', catalog: catalog, rules: %w[by_distance])
+    refute recognizer.call
+  end
+
+  it 'must match first part of component only' do
+    recognizer = InciScore::Recognizer::new(ingredient: 'acrylamide', catalog: catalog, rules: %w[by_distance])
+    recognizer.call.must_equal ["acrylamide/sodium acrylate copolymer", 3]
+  end
+
+  it 'must ignore unmatchable tokens' do
+    recognizer = InciScore::Recognizer::new(ingredient: 'selaginella lepidophylla aerial extract', catalog: catalog, rules: %w[by_tokens])
+    refute recognizer.call
+  end
+
   it 'must ignore block for recognized component' do
-    recognizer = InciScore::Recognizer::new(ingredient: 'aqua 2000', catalog: catalog)
+    recognizer = InciScore::Recognizer::new(ingredient: 'aqua', catalog: catalog)
     recognizer.call { |i| fail 'doh!' }.must_equal ['aqua', 0]
   end
 
   it 'must call the passed block in case of unrcognized component' do
-    noent = 'aquascout'
+    noent = 'noent'
     recognizer = InciScore::Recognizer::new(ingredient: noent, catalog: catalog)
     unfound = []
     recognizer.call { |ingredient| unfound << ingredient  }

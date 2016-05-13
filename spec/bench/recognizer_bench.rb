@@ -1,4 +1,4 @@
-require 'bench_helper'
+require 'spec_helper'
 require 'inci_score/recognizer'
 
 Benchmark::ips do |x| 

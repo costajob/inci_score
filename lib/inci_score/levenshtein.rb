@@ -1,12 +1,8 @@
 module InciScore
   class Levenshtein
-    def self.encode(s)
-      String(s).downcase.encode(Encoding::UTF_8).unpack("U*")
-    end
-
-    def initialize(t, s)
-      @t = self.class.encode(t)
-      @s = self.class.encode(s)
+    def initialize(s, t)
+      @s = s.downcase.unpack("U*")
+      @t = t.downcase.unpack("U*")
     end
 
     def call
@@ -22,19 +18,18 @@ module InciScore
       n.times do |i|
         e = i + 1
         m.times do |j|
-          cost = @s[i] == @t[j] ? 0 : 1
-          insertion = d[j + 1] + 1
-          deletion = e + 1
-          substitution = d[j] + cost
-          x = insertion < deletion ? insertion : deletion
-          x = substitution if substitution < x
+          c = @s[i] == @t[j] ? 0 : 1
+          ins = d[j + 1] + 1
+          del = e + 1
+          sub = d[j] + c
+          x = ins < del ? ins : del
+          x = sub if sub < x
           d[j] = e
           e = x
         end
         d[m] = x
       end
-
-      return x
+      x
     end
   end
 end
