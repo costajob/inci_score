@@ -25,8 +25,4 @@ describe InciScore::Levenshtein do
       InciScore::Levenshtein::new(record.s, record.t).call.must_equal record.distance
     end
   end
-
-  it 'must extend string with distance method' do
-    'elvis'.distance('Elviz').must_equal 1
-  end
 end

@@ -4,6 +4,3 @@ require 'rack/test'
 require 'rr'
 require 'benchmark/ips'
 require 'stubs'
-require 'inci_score/logger'
-
-InciScore::Logger::logger = Logger::new(nil)

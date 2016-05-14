@@ -16,10 +16,10 @@ module InciScore
     end
 
     def call
-      @response ||= Response::new(valid: valid?,
-                                  components: components,
+      @response ||= Response::new(components: components,
                                   unrecognized: @unrecognized,
-                                  score: score)
+                                  score: score,
+                                  valid: valid?)
     end
 
     private
@@ -43,12 +43,7 @@ module InciScore
     end
 
     def valid?
-      @valid ||= begin
-                   total = ingredients.size
-                   unfound = total - components.size
-                   percent = unfound / (total / 100.0) 
-                   percent <= TOLERANCE
-                 end
+      @valid ||= @unrecognized.size / (ingredients.size / 100.0) <= TOLERANCE
     end
   end
 end

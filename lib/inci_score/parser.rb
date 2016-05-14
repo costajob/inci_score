@@ -1,5 +1,4 @@
 require 'nokogiri'
-require 'inci_score/logger'
 
 module InciScore
   class Parser
@@ -35,7 +34,6 @@ module InciScore
       node.text.strip.downcase
     end
 
-    # adjust displaying issues on biodizionario
     def swap?(desc)
       return false if desc.empty?
       desc == desc.upcase

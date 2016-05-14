@@ -1,8 +1,6 @@
-require 'inci_score/logger'
-
 module InciScore
   class Normalizer
-    DEFAULTS = %w{inline replace down behead spacers split synonym purge strip}
+    DEFAULTS = %w{inline replace down behead spacers split extra purge strip}
     SPACER = ','.freeze
     TITLE_SEP = ':'
     SEP_MAX_INDEX = 50
@@ -18,8 +16,6 @@ module InciScore
     SPACERS = ["; ", ". ", " ' ", " - ", " : "]
     REMOVALS = /[^\w\s]/.freeze
 
-    class NoentRuleError < NameError; end
-
     attr_reader :src, :rules
 
     def initialize(options = {})
@@ -30,9 +26,6 @@ module InciScore
     def call
       return @src if @src.instance_of?(Array)
       @rules.each { |rule| send(rule) }; @src
-    rescue NameError => e
-      Logger::instance.error(e)
-      raise NoentRuleError, e, e.backtrace
     end
 
     private
@@ -67,7 +60,7 @@ module InciScore
       @src = @src.split(SPACER)
     end
 
-    def synonym
+    def extra
       Array(@src).each { |s| s.sub!(/\/.*/, '') }
     end
 

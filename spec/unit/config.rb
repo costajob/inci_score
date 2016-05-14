@@ -7,7 +7,7 @@ describe InciScore::Config do
   end
 
   it 'must fetch data properly' do
-    %w[logger biodizio tesseract].each do |k|
+    %w[biodizio tesseract].each do |k|
       assert InciScore::Config::data.has_key?(k)
     end
   end

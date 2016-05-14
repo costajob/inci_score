@@ -1,9 +1,3 @@
-logger:
-  file: <%= File::expand_path('../log/inci_score.log', __FILE__) %>
-  left: 5
-  size: <%= 1024**3 %>
-  level: 1
-
 biodizio:
   uri: http://www.biodizionario.it/biodizio.php
 

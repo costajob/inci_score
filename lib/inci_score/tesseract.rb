@@ -1,5 +1,3 @@
-require 'inci_score/logger'
-
 module InciScore
   class Tesseract
     BIN = File::join(Config::data['tesseract']['bin']).freeze
@@ -15,7 +13,6 @@ module InciScore
     def call(bin = BIN)
       `#{bin} #{@src} #{@out} #{@opts}`
     rescue StandardError => e
-      Logger::instance.error(e)
       raise InstallationError, 'please install tesseract for your platform'
     end
   end
