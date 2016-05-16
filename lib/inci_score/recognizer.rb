@@ -40,7 +40,7 @@ module InciScore
       min_distance = @components.reduce([nil, @ingredient.size]) do |min, component|
         next min unless component.start_with?(initial)
         match = (n = component.index(SEPARATOR)) ? component[0, n] : component
-        d = Levenshtein::new(@ingredient, match).call
+        d = @ingredient.distance(match)
         min = [component, d] if d < min[1]
         min
       end
