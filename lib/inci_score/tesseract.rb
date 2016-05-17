@@ -1,3 +1,5 @@
+require 'inci_score/config'
+
 module InciScore
   class Tesseract
     BIN = File::join(Config::data['tesseract']['bin']).freeze
