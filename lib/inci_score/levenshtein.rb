@@ -6,9 +6,9 @@ module InciScore
     end
 
     def call
-      n = @s.length
-      m = @t.length
+      n, m = @s.length, @t.length
 
+      return 0 if @s == @t
       return m if n.zero?
       return n if m.zero?
 

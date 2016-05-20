@@ -9,6 +9,8 @@ module Stubs
 
     def records
       [Stub::new('', '', 0),
+       Stub::new('elvis', '', 5),
+       Stub::new('', 'elvis', 5),
        Stub::new('elvis', 'elvis', 0),
        Stub::new('elvis', 'ELVIS', 0),
        Stub::new('elvis', 'elviz', 1),
