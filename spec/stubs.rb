@@ -7,7 +7,7 @@ module Stubs
 
     Stub = Struct::new(:s, :t, :distance)
 
-    def records
+    def strings
       [Stub::new('', '', 0),
        Stub::new('elvis', '', 5),
        Stub::new('', 'elvis', 5),
@@ -18,14 +18,14 @@ module Stubs
        Stub::new('graceland', 'disneyland', 5)]
     end
 
-    def records_multiple
+    def utf8_strings
       [Stub::new("föo", 'foo', 1),
        Stub::new("français", "francais", 1),
        Stub::new("français", "franæais", 1),
        Stub::new("私の名前はポールです", "ぼくの名前はポールです", 2)]
     end
 
-    def records_special
+    def raw_strings
       [Stub::new("elvis\n", 'elvis', 1),
        Stub::new("\rking\n", "\nking", 2),
        Stub::new('teddybear', "\t\tteddybear\n", 3)]

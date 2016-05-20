@@ -18,7 +18,6 @@ describe InciScore::Computer do
 
   it 'must detect invalid state' do
     computer = InciScore::Computer::new(src: 'ingredients: aqua, noent1, noent2', catalog: Stubs::Computer::catalog)
-    def computer.warn(msg); end
     refute computer.call.valid
   end
 

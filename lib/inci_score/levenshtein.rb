@@ -1,4 +1,14 @@
+require 'inline'
+
 module InciScore
+  class LevenshteinC
+    C_PROGRAM = File::expand_path('../../../ext/levenshtein.c', __FILE__)
+
+    inline(:C) do |builder|
+      builder.c File::read(C_PROGRAM) 
+    end
+  end
+
   class Levenshtein
     def initialize(s, t)
       @s = s.downcase.unpack("U*")
@@ -35,7 +45,11 @@ module InciScore
 end
 
 String::class_eval do
-  def distance(t)
+  def distance_utf8(t)
     InciScore::Levenshtein::new(self, t).call
+  end
+
+  def distance(t)
+    InciScore::LevenshteinC::new.call(self.downcase, self.size, t.downcase, t.size)
   end
 end
