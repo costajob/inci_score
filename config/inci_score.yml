@@ -1,5 +1,0 @@
-biodizio:
-  uri: http://www.biodizionario.it/biodizio.php
-
-tesseract:
-  bin: <%= ENV.fetch('TESSERACT_BIN') { '/usr/bin/tesseract' } %>

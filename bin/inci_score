@@ -6,5 +6,4 @@ require 'inci_score'
 fail ArgumentError, "please specify at least a src argument" if ARGV.empty?
 
 src = ARGV[0].dup
-processor = File::exist?(src) ? InciScore::Tesseract::new(src: src) : -> { src }
-puts InciScore::Computer::new(processor: processor).call
+puts InciScore::Computer::new(src: src).call

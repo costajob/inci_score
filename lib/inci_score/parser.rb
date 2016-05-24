@@ -1,4 +1,5 @@
 require 'nokogiri'
+require 'inci_score/config'
 
 module InciScore
   class Parser
@@ -6,7 +7,7 @@ module InciScore
     CSS_QUERY = 'table[width="751"] > tr > td img'.freeze
 
     def initialize(src = nil)
-      @src = src || Thread::new { open(Config::data['biodizio']['uri']) }
+      @src = src || Thread::new { open(Config::BIODIZIO_URI) }
     end
 
     def call

@@ -9,16 +9,8 @@ module InciScore
 
         route do |r|
           r.on 'v1' do
-
             r.get 'compute' do
               c = Computer::new(src: r['src'])
-              c.call.to_h
-            end
-
-            r.post 'tesseract' do
-              src = r['src'].fetch(:tempfile).path
-              t = Tesseract::new(src: src)
-              c = Computer::new(processor: t)
               c.call.to_h
             end
           end
