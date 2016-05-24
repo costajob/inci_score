@@ -107,7 +107,8 @@ UNRECOGNIZED:
 
 ## Performance
 Roda is one of the fastest Ruby Web micro-framework out there. Said that i noticed the APIs slow down dramatically when dealing with unrecognized components to fuzzy match on.  
-After some profiling (suing the essential [benchmark-ips](https://github.com/evanphx/benchmark-ips) gem) i found the bottleneck was the pure Ruby implementation of the Levenshtein distance algorithm. After some pointless optimization, i replaced this routine with a pure C implementation: i opted for the straightforward [Ruby Inline](https://github.com/seattlerb/rubyinline) library.  
+I profiled the code by using the [benchmark-ips](https://github.com/evanphx/benchmark-ips) gem, finding the bottleneck was the pure Ruby implementation of the Levenshtein distance algorithm.  
+After some pointless optimization, i replaced this routine with a C implementation: i opted for the straightforward [Ruby Inline](https://github.com/seattlerb/rubyinline) library to call the C code straight from Ruby.  
 As a result i've got a 10x increment of the throughput, all without scarifying code readability.
 
 ### Numbers
