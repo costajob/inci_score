@@ -11,6 +11,8 @@
   * [Starting Puma](#starting-puma)
   * [Triggering a request](#triggering-a-request)
 * [CLI API](#cli-api)
+* [Performance](#performance)
+  * [Numbers](#numbers)
 
 ## Scope
 This gem computes the score of cosmetic components basing on the information provided by the [Biodizionario site](http://www.biodizionario.it/) by Fabrizio Zago.
@@ -34,10 +36,8 @@ Since the ingredients list could come from an unreliable source (e.g. data scann
 * matching splitted tokens
 
 ### Sources
-The library accepts the list of ingredients as a single string of text.  
-Since the source text might come from an OCR program, the library performs a normalization by stripping invalid characters and removing the unimportant parts.
-
-The ingredients are expressed as a single string of data, typically separated by comma:
+The library accepts the list of ingredients as a single string of text. Since this source could come from an OCR program, the library performs a normalization by stripping invalid characters and removing the unimportant parts.  
+The ingredients are typically separated by comma, although normalizer will detect the most appropriate separator:
 
 ```
 "Ingredients: Aqua, Disodium Laureth Sulfosuccinate, Cocamidopropiyl\nBetaine"
@@ -76,7 +76,7 @@ The Web API exposes the *InciScore* library over HTTP via the [Roda](http://roda
 ### Starting Puma
 Simply start Puma via the *config.ru* file included in the repository by spawning how many workers as your current workstation supports:
 ```
-bundle exec puma -w 2 -t 16:32 -q
+bundle exec puma -w 4 -t 16:32
 ```
 
 ### Triggering a request
@@ -104,3 +104,18 @@ COMPONENTS (hazard - name):
         4 - dimethicone
 UNRECOGNIZED:
 ```
+
+## Performance
+Roda is one of the fastest Ruby Web micro-framework out there. Said that i noticed the APIs slow down dramatically when there are some unrecognized components to fuzzy match on.  
+After some profiling i found the bottleneck was the pure Ruby implementation of the Levenshtein distance algorithm. After some useless optimization, i tried to replace this piece of code with a pure C implementation, by using the straightforward [Ruby Inline](https://github.com/seattlerb/rubyinline) library.  
+
+I immediately get a 10x increment of the throughput, all without scarifying code readability: after all i am extending String object and the C implementation is not much different from the Ruby code.
+
+### Numbers
+Here are some numbers i recorded on my MacBook PRO, i7 quad-core 2.2Ghz, 8GB DDR3:
+
+| Ingredients              | Throughput (req/s) | Latency in ms (avg/stdev/max) |
+| :----------------------- | -----------------: | ----------------------------: |
+| aqua                     |           3310.05  |           16.94/20.45/450.39  |
+| agua                     |           1286.89  |           75.57/49.60/597.59  |
+| aqua,dimethicone,peg-10  |            659.22  |           142.11/100.72/1160  |
