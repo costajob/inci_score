@@ -114,10 +114,10 @@ After some pointless optimization, i replaced this routine with a C implementati
 As a result i've got a 10x increment of the throughput, all without scarifying code readability.
 
 ### Numbers
-Here are some numbers i recorded on my MacBook PRO, i7 quad-core 2.2Ghz, 8GB DDR3:
+Here are some numbers i recorded on my MacBook PRO, i7 quad-core 2.2Ghz, 8GB DDR3 by running Ruby 2.3:
 
 | Ingredients              | Throughput (req/s) | Latency in ms (avg/stdev/max) |
 | :----------------------- | -----------------: | ----------------------------: |
-| aqua                     |           3310.05  |           16.94/20.45/450.39  |
-| agua                     |           1286.89  |           75.57/49.60/597.59  |
-| aqua,dimethicone,peg-10  |            659.22  |           142.11/100.72/1160  |
+| aqua                     |           7691.83  |           13.61/8.81/125.24  |
+| agua                     |           1603.44  |           64.76/39.75/417.33  |
+| aqua,dimethicone,peg-10  |            943.14  |          109.88/67.85/671.08  |
