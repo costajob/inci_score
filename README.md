@@ -50,7 +50,7 @@ The API of the gem is pretty simple, you can open irb by *bundle console* and st
 inci = InciScore::Computer::new(src: 'aqua, dimethicone').call
 => #<InciScore::Response:0x000000029f8100 @components={"aqua"=>0, "dimethicone"=>4}, @score=54.83566009043177, @unrecognized=[], @valid=true>
 inci.score
-=> 54.83566009043177
+=> 50.0
 ```
 
 As you see the results are wrapped by an *InciScore::Response* object, this is useful when dealing with the Web API (read below) and when printing them to standard output.
@@ -93,16 +93,18 @@ curl http://192.168.33.22:9292/v1/compute?src=ingredients:aqua,dimethicone
 You can collect INCI data by using the available binary:
 
 ```
-bin/inci_score "aqua,dimethicone"
+bin/inci_score "aqua,dimethicone,pej-10,noent"
 
 TOTAL SCORE:
-        54.83566009043177
+        41.666666666666664
 VALID STATE:
         true
 COMPONENTS (hazard - name): 
         0 - aqua
         4 - dimethicone
+        3 - peg-10
 UNRECOGNIZED:
+        noent
 ```
 
 ## Performance
