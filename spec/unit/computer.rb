@@ -22,6 +22,6 @@ describe InciScore::Computer do
   end
 
   it 'must compute the score' do
-    computer.call.score.must_equal 81.93798393576364
+    computer.call.score.must_equal 81.97262611831569
   end
 end

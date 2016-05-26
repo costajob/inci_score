@@ -3,8 +3,7 @@ require 'inci_score/hazard'
 module InciScore
   class Scorer
     HAZARD_PERCENT = 25
-    WEIGHT_FACTOR = 3
-    MAX_PRESERVE_HAZARD_INDEX = 3
+    WEIGHT_FACTOR = 5
 
     def initialize(hazards)
       @hazards = Array(hazards)
@@ -40,7 +39,6 @@ module InciScore
     end
 
     def weight(index)
-      return 0.0 if index <= MAX_PRESERVE_HAZARD_INDEX
       Math.log(index+1, @size * WEIGHT_FACTOR)
     end
   end

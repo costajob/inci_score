@@ -48,9 +48,9 @@ The API of the gem is pretty simple, you can open irb by *bundle console* and st
 
 ```ruby
 inci = InciScore::Computer::new(src: 'aqua, dimethicone').call
-=> #<InciScore::Response:0x000000029f8100 @components={"aqua"=>0, "dimethicone"=>4}, @score=54.83566009043177, @unrecognized=[], @valid=true>
+=> #<InciScore::Response:0x000000029f8100 @components={"aqua"=>0, "dimethicone"=>4}, @score=53.762874945799766, @unrecognized=[], @valid=true>
 inci.score
-=> 50.0
+=> 53.762874945799766
 ```
 
 As you see the results are wrapped by an *InciScore::Response* object, this is useful when dealing with the Web API (read below) and when printing them to standard output.
@@ -86,7 +86,7 @@ You can pass the source string directly as a HTTP parameter:
 
 ```
 curl http://192.168.33.22:9292/v1/compute?src=ingredients:aqua,dimethicone
-=> {"components":{"aqua":0,"dimethicone":4},"score":54.83566009043177,"unrecognized":[],"valid":true}
+=> {"components":{"aqua":0,"dimethicone":4},"score":53.762874945799766,"unrecognized":[],"valid":true}
 ```
 
 ## CLI API
@@ -96,7 +96,7 @@ You can collect INCI data by using the available binary:
 bin/inci_score "aqua,dimethicone,pej-10,noent"
 
 TOTAL SCORE:
-        41.666666666666664
+        47.18034913243358
 VALID STATE:
         true
 COMPONENTS (hazard - name): 
