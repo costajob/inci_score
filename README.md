@@ -118,6 +118,6 @@ Here are some numbers i recorded on my MacBook PRO, i7 quad-core 2.2Ghz, 8GB DDR
 
 | Ingredients              | Throughput (req/s) | Latency in ms (avg/stdev/max) |
 | :----------------------- | -----------------: | ----------------------------: |
-| aqua                     |           7691.83  |           13.61/8.81/125.24  |
-| agua                     |           1603.44  |           64.76/39.75/417.33  |
-| aqua,dimethicone,peg-10  |            943.14  |          109.88/67.85/671.08  |
+| aqua                     |           7938.12  |              7.86/4.60/46.41  |
+| agua                     |           1613.95  |           35.42/21.99/224.61  |
+| aqua,dimethicone,parfum  |           5394.48  |             11.21/6.92/95.27  |

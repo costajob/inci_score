@@ -1,10 +1,11 @@
 module InciScore
   class Normalizer
-    DEFAULTS = %w{inline replace down behead spacers split extra purge strip}
+    DEFAULTS = %w{replace down behead spacers split tokens}
     SPACER = ','.freeze
     TITLE_SEP = ':'
     SEP_MAX_INDEX = 50
     REPLACEMENTS = [
+      [/\n+|\t+/, ' '],
       ['‘', "'"],
       ['—', '-'],
       ['(', 'C'],
@@ -29,10 +30,6 @@ module InciScore
     end
 
     private
-
-    def inline
-      @src.tr!("\n\t", " ")
-    end
 
     def replace
       REPLACEMENTS.each do |r|
@@ -60,16 +57,13 @@ module InciScore
       @src = @src.split(SPACER)
     end
 
-    def extra
-      Array(@src).each { |s| s.sub!(/\/.*/, '') }
-    end
-
-    def purge
-      Array(@src).each { |s| s.gsub!(REMOVALS, '') }
-    end
-
-    def strip
-      Array(@src).each { |s| s.strip!; s.gsub!(/\s{2,}/, ' ') }.reject!(&:empty?)
+    def tokens
+      Array(@src).reject! do |token| 
+        token.sub!(/\/.*/, '') if token.index('/')
+        token.gsub!(REMOVALS, '')
+        token.strip!
+        token.empty?
+      end
     end
   end
 end
