@@ -15,7 +15,7 @@ module InciScore
       [' I ', '/']
     ]
     SPACERS = ["; ", ". ", " ' ", " - ", " : "]
-    REMOVALS = /[^\w\s]/.freeze
+    INVALID_CHARS = /[^\w\s-]/
 
     attr_reader :src, :rules
 
@@ -60,7 +60,7 @@ module InciScore
     def tokens
       Array(@src).reject! do |token| 
         token.sub!(/\/.*/, '') if token.index('/')
-        token.gsub!(REMOVALS, '')
+        token.gsub!(INVALID_CHARS, '')
         token.strip!
         token.empty?
       end
