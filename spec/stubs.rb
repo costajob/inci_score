@@ -73,9 +73,9 @@ module Stubs
 
     def sources
       [Stub::new("key", "aqua"),
-       Stub::new("key,dist", "agua"),
-       Stub::new("key,dist,digits", "olea europaea 1100"),
-       Stub::new("all", "hexylene glycol")]
+       Stub::new("key+dist", "agua"),
+       Stub::new("key+dist+digits", "olea europaea 1100"),
+       Stub::new("key+dist+digits+tokens", "hexylene glycol")]
     end
   end
 

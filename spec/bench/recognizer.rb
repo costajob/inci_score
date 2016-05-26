@@ -8,9 +8,5 @@ Benchmark::ips do |x|
     end
   end
 
-  x.report('all') do
-    InciScore::Recognizer::new(ingredient: 'agua', catalog: Stubs::Computer::catalog).call
-  end
-
   x.compare!
 end
