@@ -25,9 +25,10 @@ module InciScore
     private
 
     def score
-      return @score if @score
-      warn "there are unrecognized ingredients!" unless valid?
-      @score = Scorer::new(components.values).call
+      @score ||= begin
+                   warn "there are unrecognized ingredients!" unless valid?
+                   Scorer::new(components.values).call
+                 end
     end
 
     def ingredients
