@@ -12,7 +12,8 @@
   * [Triggering a request](#triggering-a-request)
 * [CLI API](#cli-api)
 * [Performance](#performance)
-  * [Numbers](#numbers)
+  * [Wrk](#wrk)
+  * [Records](#records)
 
 ## Scope
 This gem computes the score of cosmetic components basing on the information provided by the [Biodizionario site](http://www.biodizionario.it/) by Fabrizio Zago.
@@ -76,7 +77,7 @@ The Web API exposes the *InciScore* library over HTTP via the [Roda](http://roda
 ### Starting Puma
 Simply start Puma via the *config.ru* file included in the repository by spawning how many workers as your current workstation supports:
 ```
-bundle exec puma -w 4 -t 16:32
+bundle exec puma -w 8 -t 16:32 --preload
 ```
 
 ### Triggering a request
@@ -85,7 +86,7 @@ The Web API responds with a JSON object representing the original *InciScore::Re
 You can pass the source string directly as a HTTP parameter:
 
 ```
-curl http://192.168.33.22:9292/v1/compute?src=ingredients:aqua,dimethicone
+curl http://127.0.0.1:9292/v1/compute?src=ingredients:aqua,dimethicone
 => {"components":{"aqua":0,"dimethicone":4},"score":53.762874945799766,"unrecognized":[],"valid":true}
 ```
 
@@ -113,11 +114,20 @@ I profiled the code by using the [benchmark-ips](https://github.com/evanphx/benc
 After some pointless optimization, i replaced this routine with a C implementation: i opted for the straightforward [Ruby Inline](https://github.com/seattlerb/rubyinline) library to call the C code straight from Ruby.  
 As a result i've got a 10x increment of the throughput, all without scarifying code readability.
 
-### Numbers
+### Wrk
+I used [wrk](https://github.com/wg/wrk) as the loading tool.
+I measured each application server three times, picking the best lap.  
+The following script commands were used:
+
+```
+wrk -t 4 -c 100 -d 30s --timeout 2000 http://127.0.0.1:9292/v1/compute?src=<list_of_ingredients>
+```
+
+### Records
 Here are some numbers i recorded on my MacBook PRO, i7 quad-core 2.2Ghz, 8GB DDR3 by running Ruby 2.3:
 
 | Ingredients              | Throughput (req/s) | Latency in ms (avg/stdev/max) |
 | :----------------------- | -----------------: | ----------------------------: |
-| aqua                     |           7938.12  |              7.86/4.60/46.41  |
-| agua                     |           1657.39  |           33.46/20.78/208.08  |
-| aqua,dimethicone,peg-10  |           5432.99  |             11.69/7.09/83.96  |
+| aqua                     |           8899.04  |           13.47/12.95/267.63  |
+| agua                     |           2123.28  |           54.04/55.93/530.25  |
+| aqua,dimethicone,peg-10  |           5577.47  |           22.00/21.41/216.99  |
