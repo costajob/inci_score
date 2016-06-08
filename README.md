@@ -117,7 +117,7 @@ As a result i've got a 10x increment of the throughput, all without scarifying c
 ### Wrk
 I used [wrk](https://github.com/wg/wrk) as the loading tool.
 I measured each application server three times, picking the best lap.  
-The following script commands were used:
+The following script command is used:
 
 ```
 wrk -t 4 -c 100 -d 30s --timeout 2000 http://127.0.0.1:9292/v1/compute?src=<list_of_ingredients>
