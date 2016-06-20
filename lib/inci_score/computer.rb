@@ -16,10 +16,10 @@ module InciScore
     end
 
     def call
-      @response ||= Response.new(components: components,
-                                  unrecognized: @unrecognized,
-                                  score: score,
-                                  valid: valid?)
+      @response ||= Response.new(components: components.map(&:first),
+                                 unrecognized: @unrecognized,
+                                 score: score,
+                                 valid: valid?)
     end
 
     private
@@ -27,7 +27,7 @@ module InciScore
     def score
       @score ||= begin
                    warn "there are unrecognized ingredients!" unless valid?
-                   Scorer.new(components.values).call
+                   Scorer.new(components.map(&:last)).call
                  end
     end
 
@@ -36,11 +36,11 @@ module InciScore
     end
 
     def components
-      @components ||= Hash[ingredients.map do |ingredient|
-        Recognizer.new(ingredient: ingredient, catalog: @catalog).call do |i|
-          @unrecognized << i
+      @components ||= ingredients.map do |ingredient|
+        Recognizer.new(src: ingredient, catalog: @catalog).call.tap do |component|
+          @unrecognized << ingredient unless component
         end
-      end.compact]
+      end.compact
     end
 
     def valid?
