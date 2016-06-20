@@ -6,4 +6,4 @@ require 'inci_score'
 fail ArgumentError, "please specify at least a src argument" if ARGV.empty?
 
 src = ARGV[0].dup
-puts InciScore::Computer::new(src: src).call
+puts InciScore::Computer.new(src: src).call

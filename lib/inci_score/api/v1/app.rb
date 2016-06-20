@@ -10,7 +10,7 @@ module InciScore
         route do |r|
           r.on 'v1' do
             r.get 'compute' do
-              c = Computer::new(src: r['src'])
+              c = Computer.new(src: r['src'])
               c.call.to_h
             end
           end

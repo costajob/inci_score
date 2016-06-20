@@ -22,7 +22,7 @@ module InciScore
       return m if n.zero?
       return n if m.zero?
 
-      d = Array::new(m+1) { |i| i }
+      d = Array.new(m+1) { |i| i }
       x = nil
 
       n.times do |i|
@@ -46,10 +46,10 @@ end
 
 String::class_eval do
   def distance_utf8(t)
-    InciScore::Levenshtein::new(self, t).call
+    InciScore::Levenshtein.new(self, t).call
   end
 
   def distance(t)
-    InciScore::LevenshteinC::new.call(self.downcase, self.size, t.downcase, t.size)
+    InciScore::LevenshteinC.new.call(self.downcase, self.size, t.downcase, t.size)
   end
 end

@@ -1,4 +1,4 @@
-require 'inci_score/hazard'
+require 'inci_score/score'
 
 module InciScore
   class Scorer
@@ -23,8 +23,8 @@ module InciScore
 
     def avg_weighted
       return @hazards.reduce(&:+) if same_hazard?
-      weighted.reduce(0.0) do |acc,h| 
-        acc += h.score
+      weighted.reduce(0.0) do |acc,score| 
+        acc += score.value
       end
     end
 
@@ -34,7 +34,7 @@ module InciScore
 
     def weighted
       @hazards.each_with_index.map do |h,i|
-        Hazard::new(h, weight(i))
+        Score.new(h, weight(i))
       end
     end
 

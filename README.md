@@ -48,7 +48,7 @@ The ingredients are typically separated by comma, although normalizer will detec
 The API of the gem is pretty simple, you can open irb by *bundle console* and start computing the INCI score:
 
 ```ruby
-inci = InciScore::Computer::new(src: 'aqua, dimethicone').call
+inci = InciScore::Computer.new(src: 'aqua, dimethicone').call
 => #<InciScore::Response:0x000000029f8100 @components={"aqua"=>0, "dimethicone"=>4}, @score=53.762874945799766, @unrecognized=[], @valid=true>
 inci.score
 => 53.762874945799766
@@ -62,7 +62,7 @@ In such case the score is computed anyway by considering only recognized compone
 Is still possible to query the object for its state:
 
 ```ruby
-inci = InciScore::Computer::new(src: 'ingredients:aqua,noent1,noent2').call
+inci = InciScore::Computer.new(src: 'ingredients:aqua,noent1,noent2').call
 there are unrecognized ingredients!
 => #<InciScore::Response:0x000000030c16d0 @components={"aqua"=>0}, @score=100.0, @unrecognized=["noent1", "noent2"], @valid=false>
 inci.valid

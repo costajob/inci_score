@@ -7,7 +7,7 @@ module InciScore
     CSS_QUERY = 'table[width="751"] > tr > td img'.freeze
 
     def initialize(src = nil)
-      @src = src || Thread::new { open(Config::BIODIZIO_URI) }
+      @src = src || Thread.new { open(Config::BIODIZIO_URI) }
     end
 
     def call
