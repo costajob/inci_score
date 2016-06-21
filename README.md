@@ -12,7 +12,7 @@
   * [Triggering a request](#triggering-a-request)
 * [CLI API](#cli-api)
 * [Performance](#performance)
-  * [Wrk](#wrk)
+  * [Levenshtein in C](#levenshtein-in-c)
   * [Records](#records)
 
 ## Scope
@@ -109,25 +109,14 @@ UNRECOGNIZED:
 ```
 
 ## Performance
-Roda is one of the fastest Ruby Web micro-framework out there. Said that i noticed the APIs slow down dramatically when dealing with unrecognized components to fuzzy match on.  
+Roda is one of the fastest Ruby Web micro-framework out there. 
+Said that i noticed the APIs slow down dramatically when dealing with unrecognized components to fuzzy match on.  
+
+
+### Levenshtein in C
 I profiled the code by using the [benchmark-ips](https://github.com/evanphx/benchmark-ips) gem, finding the bottleneck was the pure Ruby implementation of the Levenshtein distance algorithm.  
 After some pointless optimization, i replaced this routine with a C implementation: i opted for the straightforward [Ruby Inline](https://github.com/seattlerb/rubyinline) library to call the C code straight from Ruby.  
 As a result i've got a 10x increment of the throughput, all without scarifying code readability.
 
-### Wrk
-I used [wrk](https://github.com/wg/wrk) as the loading tool.
-I measured each application server three times, picking the best lap.  
-The following script command is used:
-
-```
-wrk -t 4 -c 100 -d 30s --timeout 2000 http://127.0.0.1:9292/v1/compute?src=<list_of_ingredients>
-```
-
-### Records
-Here are some numbers i recorded on my MacBook PRO, i7 quad-core 2.2Ghz, 8GB DDR3 by running Ruby 2.3:
-
-| Ingredients              | Throughput (req/s) | Latency in ms (avg/stdev/max) |
-| :----------------------- | -----------------: | ----------------------------: |
-| aqua                     |           8899.04  |           13.47/12.95/267.63  |
-| agua                     |           2123.28  |           54.04/55.93/530.25  |
-| aqua,dimethicone,peg-10  |           5577.47  |           22.00/21.41/216.99  |
+### Numbers
+I moved the benchmark numbers to the [Crystal porting](https://github.com/costajob/inci_score.cr) of the InciScore library, please look there.
