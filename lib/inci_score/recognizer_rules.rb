@@ -57,11 +57,12 @@ module InciScore
         UNMATCHABLE = %w[extract oil sodium acid sulfate]
       
         def call
-          @components.detect do |component| 
-            tokens.detect do |token|
-              component.match(/\b#{Regexp::escape(token)}\b/)
+          tokens.each do |token|
+            @components.each do |component| 
+              return component if component.match(/\b#{Regexp.escape(token)}\b/)
             end
           end
+          nil
         end
 
         private 
