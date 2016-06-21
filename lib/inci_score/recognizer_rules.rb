@@ -64,7 +64,9 @@ module InciScore
           end
         end
 
-        private def tokens
+        private 
+        
+        def tokens
           (@src.split(' ') - UNMATCHABLE).reject { |t| t.size < TOLERANCE }.sort_by!(&:size).reverse!
         end
       end
