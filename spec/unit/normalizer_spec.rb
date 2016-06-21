@@ -7,9 +7,8 @@ describe InciScore::Normalizer do
   end
 
   it 'must apply all rules to fetch ingredients' do
-    Stubs::Normalizer::sources.each do |record|
-      norm = InciScore::Normalizer.new(src: record.src)
-      norm.call.must_equal record.ingredients
+    Stubs.sources.each_with_index do |src, i|
+      InciScore::Normalizer.new(src: src).call.must_equal Stubs.ingredients[i]
     end
   end
 end

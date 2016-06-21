@@ -9,7 +9,7 @@ module InciScore
     TOLERANCE = 30.0
 
     def initialize(options = {})
-      @catalog = options.fetch(:catalog) { Config::catalog }
+      @catalog = options.fetch(:catalog) { Config.catalog }
       @processor = options.fetch(:processor) { -> { options[:src] } }
       @src = @processor.call
       @unrecognized = []
@@ -37,7 +37,7 @@ module InciScore
 
     def components
       @components ||= ingredients.map do |ingredient|
-        Recognizer.new(src: ingredient, catalog: @catalog).call.tap do |component|
+        Recognizer.new(ingredient, @catalog).call.tap do |component|
           @unrecognized << ingredient unless component
         end
       end.compact

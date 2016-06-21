@@ -5,10 +5,10 @@ module InciScore
   class Recognizer
     DEFAULT_RULES = Rules.constants - [:Base]
 
-    def initialize(options = {})
-      @src = options.fetch(:src)
-      @catalog = options.fetch(:catalog) { Config::catalog }
-      @rules = options[:rules] || DEFAULT_RULES
+    def initialize(src, catalog = Config.catalog, rules = DEFAULT_RULES)
+      @src = src
+      @catalog = catalog
+      @rules = rules
     end
 
     def call

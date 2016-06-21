@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'inci_score/parser'
 
 describe InciScore::Parser do
-  let(:parser) { InciScore::Parser.new(Stubs::Parser::html) }
+  let(:parser) { InciScore::Parser.new(Stubs.html) }
 
   it 'must replace duplicate entries' do
     parser.call.size.must_equal 6

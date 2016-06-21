@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'inci_score/recognizer_rules'
 
 describe InciScore::Recognizer::Rules do
-  let(:catalog) { Stubs::Computer::catalog }
+  let(:catalog) { Stubs.catalog }
 
   it 'must recognize component by key' do
     rule = InciScore::Recognizer::Rules::Key.new('ci 61570', catalog)
