@@ -1,3 +1,3 @@
-require 'inci_score/api/v1/app'
+require 'inci_score/api/app'
 
-run InciScore::API::V1::App.freeze.app
+run InciScore::API::App

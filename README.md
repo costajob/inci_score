@@ -72,7 +72,7 @@ inci.unrecognized
 ```
 
 ## Web API
-The Web API exposes the *InciScore* library over HTTP via the [Roda](http://roda.jeremyevans.net/) framework and the [Puma](http://puma.io/) application server.
+The Web API exposes the *InciScore* library over HTTP via the [Puma](http://puma.io/) application server.
 
 ### Starting Puma
 Simply start Puma via the *config.ru* file included in the repository by spawning how many workers as your current workstation supports:
@@ -86,8 +86,8 @@ The Web API responds with a JSON object representing the original *InciScore::Re
 You can pass the source string directly as a HTTP parameter:
 
 ```
-curl http://127.0.0.1:9292/v1/compute?src=ingredients:aqua,dimethicone
-=> {"components":{"aqua":0,"dimethicone":4},"score":53.762874945799766,"unrecognized":[],"valid":true}
+curl http://127.0.0.1:9292?src=ingredients:aqua,dimethicone
+=> {"components":{"aqua":0,"dimethicone":4},"unrecognized":[],"score":53.762874945799766,"valid":true}
 ```
 
 ## CLI API
@@ -109,11 +109,7 @@ UNRECOGNIZED:
 ```
 
 ## Performance
-Roda is one of the fastest Ruby Web micro-framework out there. 
-Said that i noticed the APIs slow down dramatically when dealing with unrecognized components to fuzzy match on.  
-
-
-### Levenshtein in C
+I noticed the APIs slows down dramatically when dealing with unrecognized components to fuzzy match on.  
 I profiled the code by using the [benchmark-ips](https://github.com/evanphx/benchmark-ips) gem, finding the bottleneck was the pure Ruby implementation of the Levenshtein distance algorithm.  
 After some pointless optimization, i replaced this routine with a C implementation: i opted for the straightforward [Ruby Inline](https://github.com/seattlerb/rubyinline) library to call the C code straight from Ruby.  
 As a result i've got a 10x increment of the throughput, all without scarifying code readability.

@@ -1,20 +1,19 @@
 require 'spec_helper'
-require 'inci_score/api/v1/app'
+require 'inci_score/api/app'
 
 include Rack::Test::Methods
 
 def app
-  InciScore::API::V1::App
+  InciScore::API::App
 end
 
-describe InciScore::API::V1::App do
-  let(:path) { File::expand_path('../../../sample', __FILE__) }
-
+describe InciScore::API::App do
   Stubs.sources.each_with_index do |src, i|
+
     status, score = Stubs.statuses[i], Stubs.scores[i]
 
     it "[#{i}] - must get a proper response" do
-      get '/v1/compute', src: src
+      get '/', src: src
       assert last_response.ok?
       last_response.content_type.must_equal 'application/json'
       body = JSON::parse(last_response.body)

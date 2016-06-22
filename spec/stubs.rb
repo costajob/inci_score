@@ -101,4 +101,8 @@ END
      [[0,1,2,3,4] * 10, 61],
      [[0,1,2,3,4] * 100, 63]]
   end
+
+  def response
+    InciScore::Response.new(components: %w(aqua dimethicone peg-10), score: 47.18034913243358, valid: true)
+  end
 end
