@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'inci_score/computer'
 
 describe InciScore::Computer do
-  let(:computer) { InciScore::Computer.new(src: Stubs.sources[0], catalog: Stubs.catalog) }
+  let(:computer) { InciScore::Computer.new(Stubs.sources[0], Stubs.catalog) }
 
   it 'must collect components' do
     computer.call.components.must_equal(['aqua', 'disodium laureth sulfosuccinate', 'cocamidopropyl betaine', 'disodium cocoamphodiacetate', 'glyceryl laurate', 'peg-7 glyceryl cocoate', 'sodium lactate', 'parfum', 'niacinamide', 'glycine', 'magnesium aspartate', 'alanine', 'lysine', 'leucine', 'allantoin', 'peg-150 distearate', 'peg-120 methyl glucose dioleate', 'phenoxyethanol', 'ci 61570'])
@@ -17,7 +17,7 @@ describe InciScore::Computer do
   end
 
   it 'must detect invalid state' do
-    computer = InciScore::Computer.new(src: 'ingredients: aqua, noent1, noent2', catalog: Stubs.catalog)
+    computer = InciScore::Computer.new('ingredients: aqua, noent1, noent2', Stubs.catalog)
     refute computer.call.valid
   end
 

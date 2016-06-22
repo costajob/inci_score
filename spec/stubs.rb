@@ -3,6 +3,19 @@ require 'yaml'
 module Stubs
   extend self
 
+  def yaml
+    <<-END
+---
+parfum: 0
+phosphatidylcholine: 1
+1-naphthol: 4
+1,2,4-benzenetriacetate: 4
+1,3-bis-(2,4-diaminophenoxy)propane: 4
+1,5-naphthalenediol: 4
+2-aminobutanol: 3
+END
+  end
+
   def distances
     [['', '', 0],
      ['elvis', '', 5],
@@ -39,7 +52,7 @@ module Stubs
   end
   
   def scores
-    [82, 67, 71, 71, 66, 79, 84, 61, 75, 65]
+    [82, 67, 70, 71, 66, 80, 84, 61, 75, 65]
   end
 
   def statuses

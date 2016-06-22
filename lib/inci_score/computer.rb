@@ -1,4 +1,4 @@
-require 'inci_score/config'
+require 'inci_score/catalog'
 require 'inci_score/normalizer'
 require 'inci_score/recognizer'
 require 'inci_score/scorer'
@@ -8,10 +8,9 @@ module InciScore
   class Computer
     TOLERANCE = 30.0
 
-    def initialize(options = {})
-      @catalog = options.fetch(:catalog) { Config.catalog }
-      @processor = options.fetch(:processor) { -> { options[:src] } }
-      @src = @processor.call
+    def initialize(src, catalog = Catalog.fetch)
+      @src = src
+      @catalog = catalog
       @unrecognized = []
     end
 
@@ -25,10 +24,7 @@ module InciScore
     private
 
     def score
-      @score ||= begin
-                   warn "there are unrecognized ingredients!" unless valid?
-                   Scorer.new(components.map(&:last)).call
-                 end
+      Scorer.new(components.map(&:last)).call
     end
 
     def ingredients
@@ -44,7 +40,7 @@ module InciScore
     end
 
     def valid?
-      @valid ||= @unrecognized.size / (ingredients.size / 100.0) <= TOLERANCE
+      @unrecognized.size / (ingredients.size / 100.0) <= TOLERANCE
     end
   end
 end

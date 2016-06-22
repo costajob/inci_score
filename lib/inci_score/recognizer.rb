@@ -1,11 +1,10 @@
-require 'inci_score/config'
 require 'inci_score/recognizer_rules'
 
 module InciScore
   class Recognizer
     DEFAULT_RULES = Rules.constants - [:Base]
 
-    def initialize(src, catalog = Config.catalog, rules = DEFAULT_RULES)
+    def initialize(src, catalog, rules = DEFAULT_RULES)
       @src = src
       @catalog = catalog
       @rules = rules
