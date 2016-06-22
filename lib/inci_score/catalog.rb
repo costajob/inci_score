@@ -1,5 +1,4 @@
 require 'yaml'
-require 'erb'
 
 module InciScore
   module Catalog
@@ -8,7 +7,7 @@ module InciScore
     YAML_PATH = File::expand_path('../../../config/catalog.yml', __FILE__) 
 
     def fetch(src = File.read(YAML_PATH))
-      @catalog ||= YAML::load(src)
+      YAML::load(src)
     end
   end
 end

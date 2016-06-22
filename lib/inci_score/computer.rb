@@ -1,4 +1,3 @@
-require 'inci_score/catalog'
 require 'inci_score/normalizer'
 require 'inci_score/recognizer'
 require 'inci_score/scorer'
@@ -8,7 +7,7 @@ module InciScore
   class Computer
     TOLERANCE = 30.0
 
-    def initialize(src, catalog = Catalog.fetch)
+    def initialize(src, catalog)
       @src = src
       @catalog = catalog
       @unrecognized = []

@@ -63,7 +63,6 @@ Is still possible to query the object for its state:
 
 ```ruby
 inci = InciScore::Computer.new(src: 'ingredients:aqua,noent1,noent2').call
-there are unrecognized ingredients!
 => #<InciScore::Response:0x000000030c16d0 @components={"aqua"=>0}, @score=100.0, @unrecognized=["noent1", "noent2"], @valid=false>
 inci.valid
 => false
@@ -86,7 +85,7 @@ The Web API responds with a JSON object representing the original *InciScore::Re
 You can pass the source string directly as a HTTP parameter:
 
 ```
-curl http://127.0.0.1:9292?src=ingredients:aqua,dimethicone
+curl http://127.0.0.1:9292?src=aqua,dimethicone
 => {"components":{"aqua":0,"dimethicone":4},"unrecognized":[],"score":53.762874945799766,"valid":true}
 ```
 

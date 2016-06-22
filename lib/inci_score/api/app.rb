@@ -6,10 +6,14 @@ module InciScore
     module App
       extend self
 
+      def catalog
+        @catalog ||= Catalog.fetch
+      end
+
       def call(env)
         req = Rack::Request.new(env)
         src = req.params["src"]
-        json = src ? Computer.new(src).call.to_json : %q({"error": "no valid source"})
+        json = src ? Computer.new(src, catalog).call.to_json : %q({"error": "no valid source"})
         ['200', {'Content-Type' => 'application/json'}, [json]]
       end
     end
