@@ -31,12 +31,12 @@ module InciScore
           component, distance = @catalog.reduce([nil, size]) do |min, (component, _)|
             next min unless component.start_with?(initial)
             match = (n = component.index(ALTERNATE_SEP)) ? component[0, n] : component
+            next min if match.size > (size + TOLERANCE)
             dist = @src.distance(match)
             min = [component, dist] if dist < min[1]
             min
           end
-          return if distance > TOLERANCE || distance >= (size-1)
-          component
+          component unless distance > TOLERANCE || distance >= (size-1)
         end
       end
 
