@@ -26,10 +26,8 @@ module InciScore
         ALTERNATE_SEP  = '/'
 
         def call
-          initial = @src[0]
           size = @src.size
           component, distance = @catalog.reduce([nil, size]) do |min, (component, _)|
-            next min unless component.start_with?(initial)
             match = (n = component.index(ALTERNATE_SEP)) ? component[0, n] : component
             next min if match.size > (size + TOLERANCE)
             dist = @src.distance(match)
