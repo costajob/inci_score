@@ -15,7 +15,7 @@ describe InciScore::Recognizer::Rules do
   end
 
   it 'must recognize component by Levenshtein distance' do
-    rule = InciScore::Recognizer::Rules::Levenshtein.new('hagua', catalog)
+    rule = InciScore::Recognizer::Rules::Levenshtein.new('agua', catalog)
     rule.call.must_equal 'aqua'
   end
 
