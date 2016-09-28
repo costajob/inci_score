@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.executables << "inci_score"
   s.require_paths = ["lib"]
   s.license = "MIT"
-  s.required_ruby_version = ">= 2.0.0"
+  s.required_ruby_version = ">= 2.2.2"
 
   s.add_runtime_dependency "nokogiri", "~> 1.6"
   s.add_runtime_dependency "puma", "~> 3"
