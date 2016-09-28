@@ -76,7 +76,7 @@ The Web API exposes the *InciScore* library over HTTP via the [Puma](http://puma
 ### Starting Puma
 Simply start Puma via the *config.ru* file included in the repository by spawning how many workers as your current workstation supports:
 ```
-bundle exec puma -w 8 -t 16:32 --preload
+bundle exec puma -w 7 -t 16:32 --preload
 ```
 
 ### Triggering a request
@@ -93,7 +93,7 @@ curl http://127.0.0.1:9292?src=aqua,dimethicone
 You can collect INCI data by using the available binary:
 
 ```
-bin/inci_score "aqua,dimethicone,pej-10,noent"
+inci_score "aqua,dimethicone,pej-10,noent"
 
 TOTAL SCORE:
         47.18034913243358
