@@ -11,9 +11,11 @@
   * [Starting Puma](#starting-puma)
   * [Triggering a request](#triggering-a-request)
 * [CLI API](#cli-api)
-* [Performance](#performance)
+* [Benchmark](#benchmark)
   * [Levenshtein in C](#levenshtein-in-c)
-  * [Records](#records)
+  * [Platform](#platform)
+  * [Wrk](#wrk)
+  * [Results](#results)
 
 ## Scope
 This gem computes the score of cosmetic components basing on the information provided by the [Biodizionario site](http://www.biodizionario.it/) by Fabrizio Zago.
@@ -76,7 +78,7 @@ The Web API exposes the *InciScore* library over HTTP via the [Puma](http://puma
 ### Starting Puma
 Simply start Puma via the *config.ru* file included in the repository by spawning how many workers as your current workstation supports:
 ```
-bundle exec puma -w 7 -t 16:32 --preload
+bundle exec puma -w 7 -t 0:4 --preload
 ```
 
 ### Triggering a request
@@ -107,11 +109,32 @@ UNRECOGNIZED:
         noent
 ```
 
-## Performance
+## Benchmark
+You can find the benchmark of the Crystal porting of this library [here](https://github.com/costajob/inci_score.cr). 
+
+### Levenshtein in C
 I noticed the APIs slows down dramatically when dealing with unrecognized components to fuzzy match on.  
 I profiled the code by using the [benchmark-ips](https://github.com/evanphx/benchmark-ips) gem, finding the bottleneck was the pure Ruby implementation of the Levenshtein distance algorithm.  
 After some pointless optimization, i replaced this routine with a C implementation: i opted for the straightforward [Ruby Inline](https://github.com/seattlerb/rubyinline) library to call the C code straight from Ruby.  
 As a result i've got a 10x increment of the throughput, all without scarifying code readability.
 
-### Numbers
-I moved the benchmark numbers to the [Crystal porting](https://github.com/costajob/inci_score.cr) of the InciScore library, please look there.
+### Platform
+I registered these benchmarks with a MacBook PRO 15 mid 2015 having these specs:
+* OSX El Captain
+* 2,2 GHz Intel Core i7 (4 cores)
+* 16 GB 1600 MHz DDR3
+
+### Wrk
+As always i used [wrk](https://github.com/wg/wrk) as the loading tool.
+I measured each library three times, picking the best lap.  
+The following script command is used:
+
+```
+wrk -t 4 -c 100 -d 30s --timeout 2000 http://127.0.0.1:9292/?src=<list_of_ingredients>
+```
+
+### Results
+| Ingredients              | Throughput (req/s) | Latency in ms (avg/stdev/max) |
+| :----------------------- | -----------------: | ----------------------------: |
+| aqua,parfum,zeolite      |          23468.52  |              0.58/0.27/39.47  |
+| agua,porfum,zeolithe     |            849.81  |           25.83/17.70/187.51  |
