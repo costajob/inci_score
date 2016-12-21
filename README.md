@@ -78,7 +78,7 @@ The Web API exposes the *InciScore* library over HTTP via the [Puma](http://puma
 ### Starting Puma
 Simply start Puma via the *config.ru* file included in the repository by spawning how many workers as your current workstation supports:
 ```
-bundle exec puma -w 7 -t 0:4 --preload
+bundle exec puma -w 8 -t 0:2 --preload
 ```
 
 ### Triggering a request
@@ -110,7 +110,6 @@ UNRECOGNIZED:
 ```
 
 ## Benchmark
-You can find the benchmark of the Crystal porting of this library [here](https://github.com/costajob/inci_score.cr). 
 
 ### Levenshtein in C
 I noticed the APIs slows down dramatically when dealing with unrecognized components to fuzzy match on.  
@@ -136,5 +135,5 @@ wrk -t 4 -c 100 -d 30s --timeout 2000 http://127.0.0.1:9292/?src=<list_of_ingred
 ### Results
 | Ingredients              | Throughput (req/s) | Latency in ms (avg/stdev/max) |
 | :----------------------- | -----------------: | ----------------------------: |
-| aqua,parfum,zeolite      |          23468.52  |              0.58/0.27/39.47  |
+| aqua,parfum,zeolite      |          24008.11  |              0.68/1.02/85.97  |
 | agua,porfum,zeolithe     |            849.81  |           25.83/17.70/187.51  |
