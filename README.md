@@ -17,7 +17,7 @@
   * [Platform](#platform)
   * [Wrk](#wrk)
   * [Results](#results)
-  * [Ruby 2.4](#ruby-2.4)
+  * [Ruby 2.4](#ruby-24)
 
 ## Scope
 This gem computes the score of cosmetic components basing on the information provided by the [Biodizionario site](http://www.biodizionario.it/) by Fabrizio Zago.
@@ -146,6 +146,6 @@ wrk -t 4 -c 100 -d 30s --timeout 2000 http://127.0.0.1:9292/?src=<list_of_ingred
 | exact matching     | aqua,parfum,zeolite      |           48863.58 |               0.31/0.55/10.82 |
 
 ## Ruby 2.4
-After upgrading to Ruby 2.4 i doubled the throughput of the matcher (24008.11 vs 48863.58 req/s): i assume Ruby optimization to the [Hash access](https://blog.heroku.com/ruby-2-4-features-hashes-integers-rounding) is the driving reason.  
+After upgrading to Ruby 2.4 i doubled the throughput of the matcher (24008.11 vs 48863.58 req/s): i assume Ruby [optimization to the Hash](https://blog.heroku.com/ruby-2-4-features-hashes-integers-rounding#hash-changes) is the driving reason.  
 I also adopted the new #match? method to avoid creating a MatchData object when i am just checking for predicate.  
 In the end Ruby upgrade is a big deal for my gem and i recommend to give it a try!
