@@ -2,7 +2,7 @@ require 'inci_score/normalizer_rules'
 
 module InciScore
   class Normalizer
-    DEFAULT_RULES = Rules.constants - [:Base]
+    DEFAULT_RULES = [Rules::Replacer, Rules::Downcaser, Rules::Beheader, Rules::Separator, Rules::Tokenizer, Rules::Sanitizer, Rules::Desynonymizer]
 
     attr_reader :src
 
@@ -12,9 +12,9 @@ module InciScore
     end
 
     def call
-      @rules.reduce(@src) do |src, name|
-        rule = Rules.const_get(name).new(src)
-        src = rule.call
+      yield(@rules) if block_given?
+      @rules.reduce(@src) do |src, rule|
+        @src = rule.call(src)
       end
     end
   end

@@ -11,11 +11,13 @@
   * [Starting Puma](#starting-puma)
   * [Triggering a request](#triggering-a-request)
 * [CLI API](#cli-api)
+  * [Refresh catalog](#refresh-catalog)
 * [Benchmark](#benchmark)
   * [Levenshtein in C](#levenshtein-in-c)
   * [Platform](#platform)
   * [Wrk](#wrk)
   * [Results](#results)
+  * [Ruby 2.4](#ruby-2.4)
 
 ## Scope
 This gem computes the score of cosmetic components basing on the information provided by the [Biodizionario site](http://www.biodizionario.it/) by Fabrizio Zago.
@@ -77,7 +79,7 @@ The Web API exposes the *InciScore* library over HTTP via the [Puma](http://puma
 
 ### Starting Puma
 Simply start Puma via the *config.ru* file included in the repository by spawning how many workers as your current workstation supports:
-```
+```shell
 bundle exec puma -w 8 -t 0:2 --preload
 ```
 
@@ -86,7 +88,7 @@ The Web API responds with a JSON object representing the original *InciScore::Re
 
 You can pass the source string directly as a HTTP parameter:
 
-```
+```shell
 curl http://127.0.0.1:9292?src=aqua,dimethicone
 => {"components":{"aqua":0,"dimethicone":4},"unrecognized":[],"score":53.762874945799766,"valid":true}
 ```
@@ -94,8 +96,8 @@ curl http://127.0.0.1:9292?src=aqua,dimethicone
 ## CLI API
 You can collect INCI data by using the available binary:
 
-```
-inci_score "aqua,dimethicone,pej-10,noent"
+```shell
+inci_score --src="aqua,dimethicone,pej-10,noent"
 
 TOTAL SCORE:
         47.18034913243358
@@ -107,6 +109,12 @@ COMPONENTS (hazard - name):
         3 - peg-10
 UNRECOGNIZED:
         noent
+```
+
+### Refresh catalog
+When using CLI you have the option to fetch a fresh catalog from remote by specifyng a flag:
+```shell
+inci_score --fresh --src="aqua,dimethicone,pej-10,noent"
 ```
 
 ## Benchmark
@@ -133,7 +141,11 @@ wrk -t 4 -c 100 -d 30s --timeout 2000 http://127.0.0.1:9292/?src=<list_of_ingred
 ```
 
 ### Results
-| Ingredients              | Throughput (req/s) | Latency in ms (avg/stdev/max) |
-| :----------------------- | -----------------: | ----------------------------: |
-| aqua,parfum,zeolite      |          24008.11  |              0.68/1.02/85.97  |
-| agua,porfum,zeolithe     |            849.81  |           25.83/17.70/187.51  |
+| Type               | Ingredients              | Throughput (req/s) | Latency in ms (avg/stdev/max) |
+| :----------------- | :----------------------- | -----------------: | ----------------------------: |
+| exact matching     | aqua,parfum,zeolite      |           48863.58 |               0.31/0.55/10.82 |
+
+## Ruby 2.4
+After upgrading to Ruby 2.4 i doubled the throughput of the matcher: i assume Ruby optimization to the [Hash access](#https://blog.heroku.com/ruby-2-4-features-hashes-integers-rounding) is the driving reason.  
+I also adopted the new #match? method to avoid creating a MatchData object when i am just checking for predicate.  
+In the end Ruby upgrade is a big deal for my gem, give it a try!

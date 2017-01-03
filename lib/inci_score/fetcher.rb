@@ -1,7 +1,7 @@
 require 'nokogiri'
 
 module InciScore
-  class Parser
+  class Fetcher
     BIODIZIO_URI = 'http://www.biodizionario.it/biodizio.php'
     SEMAPHORES = %w[vv v g r rr]
     CSS_QUERY = 'table[width="751"] > tr > td img'

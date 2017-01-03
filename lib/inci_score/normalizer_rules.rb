@@ -1,73 +1,90 @@
 module InciScore
   class Normalizer
     module Rules
-      class Base
-        SEPARATOR = ','
+      SEPARATOR = ','
 
-        def initialize(src)
-          @src = src
-        end
+      module Replacer
+        extend self
 
-        def call
-          fail NotImplementedError
-        end
-      end
-
-      class Replacer < Base
         REPLACEMENTS = [
           [/\n+|\t+/, ' '],
           ['‘', "'"],
           ['—', '-'],
-          ['(', 'C'],
           ['_', ' '],
           ['~', '-'],
           ['|', 'l'],
           [' I ', '/']
         ]
 
-        def call
-          REPLACEMENTS.reduce(@src) do |src, replacement|
+        def call(src)
+          REPLACEMENTS.reduce(src) do |_src, replacement|
             invalid, valid = *replacement
-            src.index(invalid) ? src.gsub(invalid, valid) : src
+            _src.index(invalid) ? _src.gsub(invalid, valid) : _src
           end
         end
       end
 
-      class Downcaser < Base
-        def call 
-          @src.downcase
+      module Downcaser
+        extend self
+
+        def call(src)
+          src.downcase
         end
       end 
 
-      class Beheader < Base
+      module Beheader
+        extend self
+
         TITLE_SEP = ':'
         MAX_INDEX = 50
 
-        def call
-          sep_index = @src.index(TITLE_SEP)
-          return @src if !sep_index || sep_index > MAX_INDEX
-          @src[sep_index+1, @src.size]
+        def call(src)
+          sep_index = src.index(TITLE_SEP)
+          return src if !sep_index || sep_index > MAX_INDEX
+          src[sep_index+1, src.size]
         end
       end
 
-      class Separator < Base
+      module Separator
+        extend self
+
         SEPARATORS = ["; ", ". ", " ' ", " - ", " : "]
 
-        def call
-          SEPARATORS.reduce(@src) do |src, separator|
-            src = src.gsub(separator, SEPARATOR)
+        def call(src)
+          SEPARATORS.reduce(src) do |_src, separator|
+            _src = _src.gsub(separator, SEPARATOR)
           end
         end
       end 
 
-      class Tokenizer < Base
-        INVALID_CHARS = /[^\w\s-]/
+      module Tokenizer
+        extend self
 
-        def call
-          @src.split(SEPARATOR).map do |token|
-            token = token.sub(/\/.*/, '')
-            token = token.gsub(INVALID_CHARS, '')
-            token = token.strip
+        def call(src)
+          src.split(SEPARATOR).map(&:strip)
+        end
+      end
+
+      module Sanitizer
+        extend self
+
+        INVALID_CHARS = /[^\/\(\)\w\s-]/
+
+        def call(src)
+          Array(src).map do |token|
+            token.gsub(INVALID_CHARS, '')
+          end.reject(&:empty?)
+        end
+      end
+
+      module Desynonymizer
+        extend self
+
+        SYNONYM = /\/.*/
+
+        def call(src)
+          Array(src).map do |token|
+            token.sub(SYNONYM, '').strip
           end.reject(&:empty?)
         end
       end

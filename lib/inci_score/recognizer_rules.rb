@@ -28,12 +28,12 @@ module InciScore
         def call
           size = @src.size
           initial = @src[0]
-          component, distance = @catalog.reduce([nil, size]) do |min, (component, _)|
-            next min unless component.start_with?(initial)
-            match = (n = component.index(ALTERNATE_SEP)) ? component[0, n] : component
+          component, distance = @catalog.reduce([nil, size]) do |min, (_component, _)|
+            next min unless _component.start_with?(initial)
+            match = (n = _component.index(ALTERNATE_SEP)) ? _component[0, n] : _component
             next min if match.size > (size + TOLERANCE)
             dist = @src.distance(match)
-            min = [component, dist] if dist < min[1]
+            min = [_component, dist] if dist < min[1]
             min
           end
           component unless distance > TOLERANCE || distance >= (size-1)
@@ -47,7 +47,7 @@ module InciScore
           return if @src.size < TOLERANCE
           digits = @src[0, MIN_MEANINGFUL]
           @catalog.detect do |component, _| 
-            component.match(/^#{Regexp::escape(digits)}/)
+            component.match?(/^#{Regexp::escape(digits)}/)
           end.to_a.first
         end
       end
@@ -58,7 +58,7 @@ module InciScore
         def call
           tokens.each do |token|
             @catalog.each do |component, _| 
-              return component if component.match(/\b#{Regexp.escape(token)}\b/)
+              return component if component.match?(/\b#{Regexp.escape(token)}\b/)
             end
           end
           nil

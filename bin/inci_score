@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
+lib = File.expand_path("../../lib", __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
-require 'bundler/setup'
-require 'inci_score'
+require "inci_score"
 
-fail ArgumentError, "please specify at least a src argument" if ARGV.empty?
-puts InciScore::Computer.new(ARGV[0], InciScore::Catalog.fetch).call
+InciScore::CLI.new(args: ARGV.clone).call

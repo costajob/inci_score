@@ -7,9 +7,11 @@ module InciScore
   class Computer
     TOLERANCE = 30.0
 
-    def initialize(src, catalog)
+    def initialize(src:, catalog:, tolerance: TOLERANCE, rules: Normalizer::DEFAULT_RULES)
       @src = src
       @catalog = catalog
+      @tolerance = Float(tolerance)
+      @rules = rules
       @unrecognized = []
     end
 
@@ -20,17 +22,15 @@ module InciScore
                                  valid: valid?)
     end
 
-    private
-
-    def score
+    private def score
       Scorer.new(components.map(&:last)).call
     end
 
-    def ingredients
-      @ingredients ||= Normalizer.new(src: @src).call
+    private def ingredients
+      @ingredients ||= Normalizer.new(src: @src, rules: @rules).call
     end
 
-    def components
+    private def components
       @components ||= ingredients.map do |ingredient|
         Recognizer.new(ingredient, @catalog).call.tap do |component|
           @unrecognized << ingredient unless component
@@ -38,8 +38,8 @@ module InciScore
       end.compact
     end
 
-    def valid?
-      @unrecognized.size / (ingredients.size / 100.0) <= TOLERANCE
+    private def valid?
+      @unrecognized.size / (ingredients.size / 100.0) <= @tolerance
     end
   end
 end
