@@ -44,12 +44,3 @@ module InciScore
   end
 end
 
-String::class_eval do
-  def distance_utf8(t)
-    InciScore::Levenshtein.new(self, t).call
-  end
-
-  def distance(t)
-    InciScore::LevenshteinC.new.call(self.downcase, self.size, t.downcase, t.size)
-  end
-end

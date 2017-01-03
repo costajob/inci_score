@@ -1,6 +1,7 @@
-require 'inci_score/levenshtein'
+require 'inci_score/refinements'
 
 module InciScore
+  using Refinements
   class Recognizer
     module Rules
       class Base
@@ -47,7 +48,7 @@ module InciScore
           return if @src.size < TOLERANCE
           digits = @src[0, MIN_MEANINGFUL]
           @catalog.detect do |component, _| 
-            component.match?(/^#{Regexp::escape(digits)}/)
+            component.matches?(/^#{Regexp::escape(digits)}/)
           end.to_a.first
         end
       end
@@ -58,7 +59,7 @@ module InciScore
         def call
           tokens.each do |token|
             @catalog.each do |component, _| 
-              return component if component.match?(/\b#{Regexp.escape(token)}\b/)
+              return component if component.matches?(/\b#{Regexp.escape(token)}\b/)
             end
           end
           nil
