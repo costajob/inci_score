@@ -6,6 +6,7 @@ describe InciScore::Server do
     server = InciScore::Server.new(config_klass: Stubs::Configuration, 
                                    launcher_klass: Stubs::Launcher)
     config = server.run
+    config.app.must_equal InciScore::Server::RACKUP_FILE
     config.host.must_equal "tcp://#{InciScore::Server::DEFAULT_HOST}:9292"
     config.min.must_equal "1"
     config.max.must_equal "2"
@@ -19,6 +20,7 @@ describe InciScore::Server do
                                    config_klass: Stubs::Configuration, 
                                    launcher_klass: Stubs::Launcher)
     config = server.run
+    config.app.must_equal InciScore::Server::RACKUP_FILE
     config.host.must_equal "tcp://#{InciScore::Server::DEFAULT_HOST}:9001"
     config.min.must_equal "3"
     config.max.must_equal "6"

@@ -123,10 +123,14 @@ END
   end
 
   class Configuration
-    attr_reader :host, :wrks, :min, :max, :preload 
+    attr_reader :app, :host, :wrks, :min, :max, :preload 
 
     def initialize(opts = {})
       yield(self) if block_given?
+    end
+
+    def rackup(f)
+      @app = f
     end
 
     def bind(host)

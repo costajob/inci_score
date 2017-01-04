@@ -3,6 +3,7 @@ require 'puma'
 
 module InciScore
   class Server
+    RACKUP_FILE = File.expand_path("../../../config.ru", __FILE__)
     DEFAULT_HOST = "0.0.0.0"
 
     def initialize(port: 9292, threads: "1:2", workers: Etc.nprocessors, preload: false, 
@@ -25,6 +26,7 @@ module InciScore
 
     private def config
       @config_klass.new do |c|
+        c.rackup RACKUP_FILE
         c.bind "tcp://#{DEFAULT_HOST}:#{@port}"
         c.workers @workers if @workers > 1
         c.threads *@threads
