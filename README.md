@@ -7,9 +7,9 @@
   * [Sources](#sources)
 * [API](#api)
   * [Unrecognized components](#unrecognized-components)
-* [CLI API](#cli-api)
+* [CLI](#cli)
   * [Refresh catalog](#refresh-catalog)
-  * [Starting Puma](#starting-puma)
+  * [HTTP server](#http-server)
     * [Triggering a request](#triggering-a-request)
   * [Getting help](#getting-help)
 * [Benchmark](#benchmark)
@@ -73,11 +73,11 @@ inci.unrecognized
 => ["noent1", "noent2"]
 ```
 
-## CLI API
+## CLI
 You can collect INCI data by using the available CLI interface:
 
 ```shell
-inci_score --src="aqua,dimethicone,pej-10,noent"
+inci_score --src="ingredients: aqua, dimethicone, pej-10, noent"
 
 TOTAL SCORE:
         47.18034913243358
@@ -92,21 +92,21 @@ UNRECOGNIZED:
 ```
 
 ### Refresh catalog
-When using CLI you have the option to fetch a fresh catalog from remote by specifyng a flag:
+You also have the option to fetch a fresh catalog from www.biodizionario.it  by specifyng a flag:
 ```shell
-inci_score --fresh --src="aqua,dimethicone,pej-10,noent"
+inci_score --fresh --src="aqua, dimethicone"
 ```
 
-### Starting HTTP server
-The Web API exposes the *InciScore* library over HTTP via the [Puma](http://puma.io/) application server.
-The CLI interface will start Puma on the specified port by spawning how many workers as your current workstation supports:
+### HTTP server
+The CLI interface exposes a Web layer based on the [Puma](http://puma.io/) application server.
+The HTTP server is started on the specified port by spawning as many workers as your current workstation supports:
 ```shell
 inci_score --http=9292
 ```
 Consider all other options are discarded when running HTTP server.
 
 #### Triggering a request
-The Web API responds with a JSON object representing the original *InciScore::Response* one.  
+The HTTP server responds with a JSON representation of the original *InciScore::Response* object.  
 You can pass the source string directly as a HTTP parameter:
 
 ```shell
@@ -131,7 +131,6 @@ Usage: ./bin/inci_score --src='aqua, parfum, etc' --fresh
 I noticed the APIs slows down dramatically when dealing with unrecognized components to fuzzy match on.  
 I profiled the code by using the [benchmark-ips](https://github.com/evanphx/benchmark-ips) gem, finding the bottleneck was the pure Ruby implementation of the Levenshtein distance algorithm.  
 After some pointless optimization, i replaced this routine with a C implementation: i opted for the straightforward [Ruby Inline](https://github.com/seattlerb/rubyinline) library to call the C code straight from Ruby.  
-As a result i've got a 10x increment of the throughput, all without scarifying code readability.
 
 ### Platform
 I registered these benchmarks with a MacBook PRO 15 mid 2015 having these specs:
