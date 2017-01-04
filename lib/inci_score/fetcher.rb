@@ -21,21 +21,19 @@ module InciScore
       end
     end
 
-    private
-
-    def doc
+    private def doc
       @src.respond_to?(:value) ? @src.value : @src
     end
 
-    def semaphore(src)
+    private def semaphore(src)
       src.match(/(#{SEMAPHORES.join('|')}).gif$/)[1]
     end
 
-    def normalize(node)
+    private def normalize(node)
       node.text.strip.downcase
     end
 
-    def swap?(desc)
+    private def swap?(desc)
       return false if desc.empty?
       desc == desc.upcase
     end

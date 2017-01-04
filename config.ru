@@ -1,3 +1,3 @@
-require 'inci_score/api/app'
+require 'inci_score/app'
 
-run InciScore::API::App
+run InciScore::App

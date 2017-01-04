@@ -1,13 +1,13 @@
 require 'spec_helper'
-require 'inci_score/api/app'
+require 'inci_score/app'
 
 include Rack::Test::Methods
 
 def app
-  InciScore::API::App
+  InciScore::App
 end
 
-describe InciScore::API::App do
+describe InciScore::App do
   Stubs.sources.each_with_index do |src, i|
 
     status, score = Stubs.statuses[i], Stubs.scores[i]

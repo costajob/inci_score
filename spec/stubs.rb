@@ -121,4 +121,49 @@ END
       end 
     end
   end
+
+  class Configuration
+    attr_reader :host, :wrks, :min, :max, :preload 
+
+    def initialize(opts = {})
+      yield(self) if block_given?
+    end
+
+    def bind(host)
+      @host = host
+    end
+
+    def workers(n)
+      @wrks = n
+    end
+
+    def threads(min, max)
+      @min, @max = min, max
+    end
+
+    def preload_app!
+      @preload = true
+    end
+  end
+
+  class Launcher
+    def initialize(config)
+      @config = config
+    end
+
+    def run
+      @config
+    end
+  end
+
+  class Server
+    def initialize(port:, preload:)
+      @port = port
+      @preload = preload
+    end
+
+    def run
+      :"run_on_port_#{@port}"
+    end
+  end
 end

@@ -7,17 +7,16 @@
   * [Sources](#sources)
 * [API](#api)
   * [Unrecognized components](#unrecognized-components)
-* [Web API](#web-api)
-  * [Starting Puma](#starting-puma)
-  * [Triggering a request](#triggering-a-request)
 * [CLI API](#cli-api)
   * [Refresh catalog](#refresh-catalog)
+  * [Starting Puma](#starting-puma)
+    * [Triggering a request](#triggering-a-request)
+  * [Getting help](#getting-help)
 * [Benchmark](#benchmark)
   * [Levenshtein in C](#levenshtein-in-c)
   * [Platform](#platform)
   * [Wrk](#wrk)
   * [Results](#results)
-  * [Ruby 2.4](#ruby-24)
 
 ## Scope
 This gem computes the score of cosmetic components basing on the information provided by the [Biodizionario site](http://www.biodizionario.it/) by Fabrizio Zago.
@@ -74,27 +73,8 @@ inci.unrecognized
 => ["noent1", "noent2"]
 ```
 
-## Web API
-The Web API exposes the *InciScore* library over HTTP via the [Puma](http://puma.io/) application server.
-
-### Starting Puma
-Simply start Puma via the *config.ru* file included in the repository by spawning how many workers as your current workstation supports:
-```shell
-bundle exec puma -w 8 -t 0:2 --preload
-```
-
-### Triggering a request
-The Web API responds with a JSON object representing the original *InciScore::Response* one.  
-
-You can pass the source string directly as a HTTP parameter:
-
-```shell
-curl http://127.0.0.1:9292?src=aqua,dimethicone
-=> {"components":{"aqua":0,"dimethicone":4},"unrecognized":[],"score":53.762874945799766,"valid":true}
-```
-
 ## CLI API
-You can collect INCI data by using the available binary:
+You can collect INCI data by using the available CLI interface:
 
 ```shell
 inci_score --src="aqua,dimethicone,pej-10,noent"
@@ -115,6 +95,34 @@ UNRECOGNIZED:
 When using CLI you have the option to fetch a fresh catalog from remote by specifyng a flag:
 ```shell
 inci_score --fresh --src="aqua,dimethicone,pej-10,noent"
+```
+
+### Starting HTTP server
+The Web API exposes the *InciScore* library over HTTP via the [Puma](http://puma.io/) application server.
+The CLI interface will start Puma on the specified port by spawning how many workers as your current workstation supports:
+```shell
+inci_score --http=9292
+```
+Consider all other options are discarded when running HTTP server.
+
+#### Triggering a request
+The Web API responds with a JSON object representing the original *InciScore::Response* one.  
+You can pass the source string directly as a HTTP parameter:
+
+```shell
+curl http://127.0.0.1:9292?src=aqua,dimethicone
+=> {"components":{"aqua":0,"dimethicone":4},"unrecognized":[],"score":53.762874945799766,"valid":true}
+```
+
+### Getting help
+You can get CLI interface help by:
+```shell
+inci_score --help
+Usage: ./bin/inci_score --src='aqua, parfum, etc' --fresh
+    -s, --src=SRC                    The INCI list: 'aqua, parfum, etc'
+    -f, --fresh                      Fetch a fresh catalog from remote
+        --http=PORT                  Start Puma server on the specified port
+    -h, --help                       Prints this help
 ```
 
 ## Benchmark
@@ -141,11 +149,7 @@ wrk -t 4 -c 100 -d 30s --timeout 2000 http://127.0.0.1:9292/?src=<list_of_ingred
 ```
 
 ### Results
-| Type               | Ingredients              | Throughput (req/s) | Latency in ms (avg/stdev/max) |
-| :----------------- | :----------------------- | -----------------: | ----------------------------: |
-| exact matching     | aqua,parfum,zeolite      |           48863.58 |               0.31/0.55/10.82 |
-
-## Ruby 2.4
-After upgrading to Ruby 2.4 i doubled the throughput of the matcher (24008.11 vs 48863.58 req/s): i assume Ruby [optimization to the Hash](https://blog.heroku.com/ruby-2-4-features-hashes-integers-rounding#hash-changes) is the driving reason.  
-I also adopted the new #match? method to avoid creating a MatchData object when i am just checking for predicate.  
-In the end Ruby upgrade is a big deal for my gem and i recommend to give it a try!
+| Ingredients              | Throughput (req/s) | Latency in ms (avg/stdev/max) |
+| :----------------------- | -----------------: | ----------------------------: |
+| aqua,parfum,zeolite      |           26054.91 |               0.63/1.03/79.86 |
+| agua,porfum,zaolite      |             953.44 |              14.67/5.15/82.31 |
