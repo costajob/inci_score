@@ -28,10 +28,14 @@ module InciScore
       @config_klass.new do |c|
         c.rackup RACKUP_FILE
         c.bind "tcp://#{DEFAULT_HOST}:#{@port}"
-        c.workers @workers if @workers > 1
+        c.workers @workers if workers?
         c.threads *@threads
         c.preload_app! if @preload
       end
+    end
+
+    private def workers?
+      @workers > 1 && !Puma.jruby? && !Puma.windows?
     end
   end
 end

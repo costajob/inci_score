@@ -57,7 +57,7 @@ inci.score
 => 53.762874945799766
 ```
 
-As you see the results are wrapped by an *InciScore::Response* object, this is useful when dealing with the Web API (read below) and when printing them to standard output.
+As you see the results are wrapped by an *InciScore::Response* object, this is useful when dealing with the CLI and HTTP interfaces (read below).
 
 ### Unrecognized components
 The API treats unrecognized components as a common case by just marking the object as non valid and raise a warning in case more than 30% of the ingredients are not found.  
@@ -84,9 +84,9 @@ TOTAL SCORE:
 VALID STATE:
         true
 COMPONENTS (hazard - name): 
-        0 - aqua
-        4 - dimethicone
-        3 - peg-10
+        aqua
+        dimethicone
+        peg-10
 UNRECOGNIZED:
         noent
 ```
@@ -98,7 +98,7 @@ inci_score --fresh --src="aqua, dimethicone"
 ```
 
 ### HTTP server
-The CLI interface exposes a Web layer based on the [Puma](http://puma.io/) application server.
+The CLI interface exposes a Web layer based on the [Puma](http://puma.io/) application server.  
 The HTTP server is started on the specified port by spawning as many workers as your current workstation supports:
 ```shell
 inci_score --http=9292
@@ -107,7 +107,7 @@ Consider all other options are discarded when running HTTP server.
 
 #### Triggering a request
 The HTTP server responds with a JSON representation of the original *InciScore::Response* object.  
-You can pass the source string directly as a HTTP parameter:
+You can pass the source string directly as a HTTP parameter (URI escaped):
 
 ```shell
 curl http://127.0.0.1:9292?src=aqua,dimethicone
@@ -137,13 +137,14 @@ I registered these benchmarks with a MacBook PRO 15 mid 2015 having these specs:
 * OSX El Captain
 * 2,2 GHz Intel Core i7 (4 cores)
 * 16 GB 1600 MHz DDR3
+* Ruby 2.4
 
 ### Wrk
 As always i used [wrk](https://github.com/wg/wrk) as the loading tool.
-I measured each library three times, picking the best lap.  
+I measured the library three times, picking the best lap.  
 The following script command is used:
 
-```
+```shell
 wrk -t 4 -c 100 -d 30s --timeout 2000 http://127.0.0.1:9292/?src=<list_of_ingredients>
 ```
 
