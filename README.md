@@ -145,11 +145,10 @@ I measured the library three times, picking the best lap.
 The following script command is used:
 
 ```shell
-wrk -t 4 -c 100 -d 30s --timeout 2000 http://127.0.0.1:9292/?src=<list_of_ingredients>
+wrk -t 4 -c 100 -d 30s --timeout 2000 http://127.0.0.1:9292/?src=aqua,parfum,zeolithe
 ```
 
 ### Results
-| Ingredients              | Throughput (req/s) | Latency in ms (avg/stdev/max) |
-| :----------------------- | -----------------: | ----------------------------: |
-| aqua,parfum,zeolite      |           26054.91 |               0.63/1.03/79.86 |
-| agua,porfum,zaolite      |             953.44 |              14.67/5.15/82.31 |
+| Throughput (req/s) | Latency in ms (avg/stdev/max) |
+| -----------------: | ----------------------------: |
+|           50060.92 |                0.31/0.45/3.83 |
