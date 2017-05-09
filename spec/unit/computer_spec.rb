@@ -29,4 +29,9 @@ describe InciScore::Computer do
     computer = InciScore::Computer.new(src: 'ingredients: aqua, noent1, noent2', catalog: Stubs.catalog, tolerance: 75.0)
     assert computer.call.valid
   end
+
+  it 'must collect components precisely' do
+    computer =  InciScore::Computer.new(src: "parfum, anine, ci 61570, ycine, magnesium aspartate, cinamide, peg-120 methyl glucose dioleate", catalog: Stubs.catalog, precise: true)
+    computer.call.unrecognized.must_be_empty
+  end
 end

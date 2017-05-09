@@ -42,4 +42,12 @@ describe InciScore::Recognizer do
     end
     rules.must_equal InciScore::Recognizer::DEFAULT_RULES
   end
+
+  it 'must recognize by key and levenshtein precisely' do
+    recognizer = InciScore::Recognizer.new("i 47005", Stubs.catalog)
+    recognizer.call(true) do |r|
+      rules << r
+    end
+    rules.must_equal InciScore::Recognizer::DEFAULT_RULES[0,2]
+  end
 end

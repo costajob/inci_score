@@ -10,11 +10,11 @@ module InciScore
       @rules = rules
     end
 
-    def call
+    def call(precise = false)
       @component = @rules.reduce(nil) do |component, rule|
         break(component) if component
         yield(rule) if block_given?
-        rule.call(@src, @catalog)
+        rule.call(@src, @catalog, precise)
       end
       [@component, @catalog[@component]] if @component
     end 

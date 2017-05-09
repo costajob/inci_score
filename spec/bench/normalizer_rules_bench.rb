@@ -8,6 +8,7 @@ separator = InciScore::Normalizer::Rules::Separator
 tokenizer = InciScore::Normalizer::Rules::Tokenizer
 sanitizer = InciScore::Normalizer::Rules::Sanitizer
 desynonymizer = InciScore::Normalizer::Rules::Desynonymizer
+uniquifier = InciScore::Normalizer::Rules::Uniquifier
 src = "‘INGREDIENTS‘:\n\nCOCO—BETANE,AQUA/WATER,DIMETHICONE"
 
 Benchmark.ips do |x|
@@ -37,5 +38,9 @@ Benchmark.ips do |x|
 
   x.report("desynonymizer") do
     desynonymizer.call(src)
+  end
+
+  x.report("uniquifier") do
+    uniquifier.call(src)
   end
 end

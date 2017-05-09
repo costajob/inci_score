@@ -107,9 +107,10 @@ END
   end
 
   class Computer
-    def initialize(src:, catalog:)
+    def initialize(src:, catalog:, precise: false)
       @src = src
       @catalog = catalog
+      @precise = precise
     end
 
     def call

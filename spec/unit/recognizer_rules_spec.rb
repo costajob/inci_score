@@ -29,6 +29,11 @@ describe InciScore::Recognizer::Rules do
     refute rule.call('water', catalog)
   end
 
+  it 'must match precisely' do
+    rule = InciScore::Recognizer::Rules::Levenshtein
+    rule.call('i 47005', catalog, true).must_equal 'ci 47005'
+  end
+
   it 'must recognize component by meaningful digits' do
     rule = InciScore::Recognizer::Rules::Digits
     rule.call('olea europaea oil', catalog).must_equal 'olea europea'

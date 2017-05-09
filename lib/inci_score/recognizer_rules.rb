@@ -9,7 +9,7 @@ module InciScore
       module Key
         extend self
 
-        def call(src, catalog)
+        def call(src, catalog, precise = false)
           src if catalog.has_key?(src)
         end
       end
@@ -19,11 +19,11 @@ module InciScore
 
         ALTERNATE_SEP  = '/'
 
-        def call(src, catalog)
+        def call(src, catalog, precise = false)
           size = src.size
           initial = src[0]
           component, distance = catalog.reduce([nil, size]) do |min, (_component, _)|
-            next min unless _component.start_with?(initial)
+            next min unless precise || _component.start_with?(initial)
             match = (n = _component.index(ALTERNATE_SEP)) ? _component[0, n] : _component
             next min if match.size > (size + TOLERANCE)
             dist = src.distance(match)
@@ -39,7 +39,7 @@ module InciScore
 
         MIN_MEANINGFUL = 7
 
-        def call(src, catalog)
+        def call(src, catalog, precise = false)
           return if src.size < TOLERANCE
           digits = src[0, MIN_MEANINGFUL]
           catalog.detect do |component, _| 
@@ -53,7 +53,7 @@ module InciScore
 
         UNMATCHABLE = %w[extract oil sodium acid sulfate]
       
-        def call(src, catalog)
+        def call(src, catalog, precise = false)
           tokens(src).each do |token|
             catalog.each do |component, _| 
               return component if component.matches?(/\b#{Regexp.escape(token)}\b/)
