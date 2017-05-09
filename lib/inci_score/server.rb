@@ -35,7 +35,15 @@ module InciScore
     end
 
     private def workers?
-      @workers > 1 && !Puma.jruby? && !Puma.windows?
+      @workers > 1 && !java? && !windows?
+    end
+
+    private def java?
+      RUBY_VERSION == "java"
+    end
+
+    private def windows?
+      Gem.win_platform?
     end
   end
 end

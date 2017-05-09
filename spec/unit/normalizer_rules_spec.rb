@@ -56,4 +56,10 @@ describe InciScore::Normalizer::Rules do
     rule = InciScore::Normalizer::Rules::Desynonymizer
     rule.call(src).must_equal %w[aqua magnesium parfum]
   end
+
+  it 'must remove duplicates' do
+    src = %w[aqua/water magnesium parfum/fragrance magnesium]
+    rule = InciScore::Normalizer::Rules::Uniquifier
+    rule.call(src).must_equal %w[aqua/water magnesium parfum/fragrance]
+  end
 end

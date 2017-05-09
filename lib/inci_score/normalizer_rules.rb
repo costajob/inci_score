@@ -88,6 +88,14 @@ module InciScore
           end.reject(&:empty?)
         end
       end
+
+      module Uniquifier
+        extend self
+
+        def call(src)
+          Array(src).uniq
+        end
+      end
     end
   end
 end

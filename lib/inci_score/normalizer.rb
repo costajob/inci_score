@@ -2,13 +2,13 @@ require 'inci_score/normalizer_rules'
 
 module InciScore
   class Normalizer
-    DEFAULT_RULES = [Rules::Replacer, Rules::Downcaser, Rules::Beheader, Rules::Separator, Rules::Tokenizer, Rules::Sanitizer, Rules::Desynonymizer]
+    DEFAULT_RULES = [Rules::Replacer, Rules::Downcaser, Rules::Beheader, Rules::Separator, Rules::Tokenizer, Rules::Sanitizer, Rules::Desynonymizer, Rules::Uniquifier]
 
     attr_reader :src
 
-    def initialize(options = {})
-      @src = options[:src] || fail(ArgumentError, 'missing src')
-      @rules = options.fetch(:rules) { DEFAULT_RULES }
+    def initialize(src:, rules: DEFAULT_RULES)
+      @src = src
+      @rules = rules
     end
 
     def call

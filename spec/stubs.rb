@@ -52,7 +52,7 @@ END
   end
   
   def scores
-    [82, 67, 70, 71, 66, 80, 84, 61, 75, 65]
+    [82, 67, 70, 71, 66, 80, 84, 61, 75, 67]
   end
 
   def statuses
@@ -69,7 +69,7 @@ END
      ["aoua", "ceearylalcohol distearoylethyl annoxvmvwomw methosulfate", "octyldodecanuljeamays j starch", "niacinamide r tompherolsaccharumoffiunarumrm f", "mnpighlapunicifouai", "aceholafruitextract", "camellnasatnaoll", "extract", "f benzoicacid", "llnalool", "caprylylglycol", "5 cadryuucaprictriglvcerideeyrusm", "wmnome j hcmnmcgmciirusmedicalimonum", "peel extract", "j prunusarmeniacakerneloil", "oil", "parfum", "(fll 04391213)"],
      ["butane", "isobutane", "propane", "aluminum chlorohydrate", "ppg-14 butyl ether", "cyclopentasiloxane", "parfum", "disteardimonium hectonte", "helianthus annuus seed oil", "c12-15 kvb103te", "octyldodecanol", "bht", "ahcon", "propylene carbonate", "peg4", "esme", "citric acid", "ai ha-isomethyl lonone", "09w", "benzyl alicylate", "butylpheny ap9nal", "citrai", "geraniol", "hexyl lm0nene", "linalool"],
      ["aqua (wae slearate", "propylene glycol", "f588 capric triglyceride", "cocos can wcla (coconul) oil", "isupropyl palmnaew 09m alcohol", "sorbitan palmitate", "pom 40", "parfum (fragrance)", "disodium e carbomer", "limonene", "cum bhr sodium hydroxide", "cums glands", "(grapefruit) fruit extract", "sodium droacetate", "sodium methyl dehy sorbic acid", "tetrasodium elm-a ci 10316 (ext yellow 7)"],
-     ["aqua", "glycerin", "dimethicone", "isohexadeune", "silica", "hvdroxveihyihperazine ethane sulfonic acid", "alcohol denat", "we sly", "-", "svnthetic wax", "ci 77163", "ci 77391", "secale cereale extract", "sodium acrylates copolvmer", "sodium hvaluronate", "phenoxyethanol", "adendsine", "peg-10 dimethicone", "ethylhexyl hydroxvstearate", "nylon-12", "dimethicone", "dlhethicone", "penwlene glycol", "syntheiic fluorphlogopite", "benzvl salicvlate", "benzvl alcohol", "linalool", "benzvl benzoate", "caprvliucapric triglyceride", "caprvlyl glycoi", "dipotassium glvcvrrhizate", "alpinia gaunga leaf extract", "disteardimdniun hectdrite", "disouium edta", "ciironellol", "parfuh", "(fil 3166675)", "iorl mermizioni su m399 v", "wwwlorealpansnt"]]
+     ["aqua", "glycerin", "dimethicone", "isohexadeune", "silica", "hvdroxveihyihperazine ethane sulfonic acid", "alcohol denat", "we sly", "-", "svnthetic wax", "ci 77163", "ci 77391", "secale cereale extract", "sodium acrylates copolvmer", "sodium hvaluronate", "phenoxyethanol", "adendsine", "peg-10 dimethicone", "ethylhexyl hydroxvstearate", "nylon-12", "dlhethicone", "penwlene glycol", "syntheiic fluorphlogopite", "benzvl salicvlate", "benzvl alcohol", "linalool", "benzvl benzoate", "caprvliucapric triglyceride", "caprvlyl glycoi", "dipotassium glvcvrrhizate", "alpinia gaunga leaf extract", "disteardimdniun hectdrite", "disouium edta", "ciironellol", "parfuh", "(fil 3166675)", "iorl mermizioni su m399 v", "wwwlorealpansnt"]]
   end
 
   def components
