@@ -57,6 +57,12 @@ describe InciScore::Normalizer::Rules do
     rule.call(src).must_equal %w[aqua magnesium parfum]
   end
 
+  it "must remove parenthesis" do
+    src = ["aqua (water)", "magnesium", "iron oxides/ci 77492 [ci 77491]"]
+    rule = InciScore::Normalizer::Rules::Deparenthesizer
+    rule.call(src).must_equal ["aqua", "magnesium", "iron oxides/ci 77492"]
+  end
+
   it "must remove duplicates" do
     src = %w[aqua/water magnesium parfum/fragrance magnesium]
     rule = InciScore::Normalizer::Rules::Uniquifier

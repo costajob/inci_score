@@ -68,7 +68,7 @@ module InciScore
       module Sanitizer
         extend self
 
-        INVALID_CHARS = /[^\/\(\)\w\s-]/
+        INVALID_CHARS = /[^\/\[\]\(\)\w\s-]/
 
         def call(src)
           Array(src).map do |token|
@@ -85,6 +85,18 @@ module InciScore
         def call(src)
           Array(src).map do |token|
             token.sub(SYNONYM, '').strip
+          end.reject(&:empty?)
+        end
+      end
+
+      module Deparenthesizer
+        extend self
+
+        PARENTHESIS = /\(.+?\)|\[.+?\]/
+
+        def call(src)
+          Array(src).map do |token|
+            token.sub(PARENTHESIS, '').strip
           end.reject(&:empty?)
         end
       end
