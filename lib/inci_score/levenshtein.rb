@@ -1,8 +1,8 @@
-require 'inline'
+require "inline"
 
 module InciScore
   class LevenshteinC
-    C_PROGRAM = File::expand_path('../../../ext/levenshtein.c', __FILE__)
+    C_PROGRAM = File::expand_path("../../../ext/levenshtein.c", __FILE__)
 
     inline(:C) do |builder|
       builder.c File::read(C_PROGRAM) 

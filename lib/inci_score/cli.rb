@@ -17,15 +17,15 @@ module InciScore
     def call(server_klass: Server, computer_klass: Computer, fetcher: Fetcher.new)
       parser.parse!(@args)
       return server_klass.new(port: @port, preload: true).run if @port
-      return @io.puts("Specify inci list as: --src='aqua, parfum, etc'") unless @src
+      return @io.puts(%q{Specify inci list as: --src="aqua, parfum, etc"}) unless @src
       @io.puts computer_klass.new(src: @src, catalog: catalog(fetcher), precise: @precise).call
     end
 
     private def parser
       OptionParser.new do |opts|
-        opts.banner = %q{Usage: inci_score --src='aqua, parfum, etc' --fresh --precise}
+        opts.banner = %q{Usage: inci_score --src="aqua, parfum, etc" --fresh --precise}
 
-        opts.on("-sSRC", "--src=SRC", "The INCI list: 'aqua, parfum, etc'") do |src|
+        opts.on("-sSRC", "--src=SRC", %q{The INCI list: "aqua, parfum, etc"}) do |src|
           @src = src
         end
 

@@ -1,5 +1,6 @@
-require 'etc'
-require 'puma'
+require "etc"
+require "puma/launcher"
+require "puma/configuration"
 
 module InciScore
   class Server
@@ -29,7 +30,7 @@ module InciScore
         c.rackup RACKUP_FILE
         c.bind "tcp://#{DEFAULT_HOST}:#{@port}"
         c.workers @workers if workers?
-        c.threads *@threads
+        c.threads(*@threads)
         c.preload_app! if @preload
       end
     end

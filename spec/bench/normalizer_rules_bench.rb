@@ -1,5 +1,5 @@
-require 'spec_helper'
-require 'inci_score/normalizer_rules'
+require "spec_helper"
+require "inci_score/normalizer_rules"
 
 replacer = InciScore::Normalizer::Rules::Replacer
 downcaser = InciScore::Normalizer::Rules::Downcaser

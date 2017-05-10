@@ -1,8 +1,8 @@
-require 'spec_helper'
-require 'inci_score/levenshtein'
+require "spec_helper"
+require "inci_score/levenshtein"
 
 describe InciScore::Levenshtein do
-  it 'must compute edit distance for UTF8 characters' do
+  it "must compute edit distance for UTF8 characters" do
     Stubs.distances.each do |args|
       t, s, d = *args
       lev = InciScore::Levenshtein.new(s, t)
@@ -10,7 +10,7 @@ describe InciScore::Levenshtein do
     end
   end
 
-  it 'must compute edit distance' do
+  it "must compute edit distance" do
     Stubs.distances.first(8).each do |args|
       t, s, d = *args
       lev = InciScore::LevenshteinC.new.call(s.downcase, s.size, t.downcase, t.size)

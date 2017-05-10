@@ -1,5 +1,5 @@
-require 'spec_helper'
-require 'inci_score/levenshtein'
+require "spec_helper"
+require "inci_score/levenshtein"
 
 s, t = "agua", "aqua"
 lev_ruby = InciScore::Levenshtein.new(s, t)

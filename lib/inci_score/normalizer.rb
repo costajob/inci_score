@@ -1,4 +1,4 @@
-require 'inci_score/normalizer_rules'
+require "inci_score/normalizer_rules"
 
 module InciScore
   class Normalizer

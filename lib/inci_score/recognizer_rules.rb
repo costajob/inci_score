@@ -1,4 +1,4 @@
-require 'inci_score/refinements'
+require "inci_score/refinements"
 
 module InciScore
   using Refinements
@@ -17,7 +17,7 @@ module InciScore
       module Levenshtein
         extend self
 
-        ALTERNATE_SEP  = '/'
+        ALTERNATE_SEP  = "/"
 
         def call(src, catalog, precise = false)
           size = src.size
@@ -68,7 +68,7 @@ module InciScore
         end
 
         def tokens(src)
-          (src.split(' ') - UNMATCHABLE).reject { |t| t.size < TOLERANCE }.sort_by!(&:size).reverse!
+          (src.split(" ") - UNMATCHABLE).reject { |t| t.size < TOLERANCE }.sort_by!(&:size).reverse!
         end
       end
     end

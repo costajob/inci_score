@@ -1,61 +1,61 @@
-require 'spec_helper'
-require 'inci_score/recognizer_rules'
+require "spec_helper"
+require "inci_score/recognizer_rules"
 
 describe InciScore::Recognizer::Rules do
   let(:catalog) { Stubs.catalog }
 
-  it 'must recognize component by key' do
+  it "must recognize component by key" do
     rule = InciScore::Recognizer::Rules::Key
-    rule.call('ci 61570', catalog).must_equal 'ci 61570'
+    rule.call("ci 61570", catalog).must_equal "ci 61570"
   end
 
-  it 'must return nil for unfound key' do
+  it "must return nil for unfound key" do
     rule = InciScore::Recognizer::Rules::Key
-    refute rule.call('water', catalog)
+    refute rule.call("water", catalog)
   end
 
-  it 'must recognize component by Levenshtein distance' do
+  it "must recognize component by Levenshtein distance" do
     rule = InciScore::Recognizer::Rules::Levenshtein
-    rule.call('agua', catalog).must_equal 'aqua'
+    rule.call("agua", catalog).must_equal "aqua"
   end
 
-  it 'must match on first part of ingredient only' do
+  it "must match on first part of ingredient only" do
     rule = InciScore::Recognizer::Rules::Levenshtein
-    rule.call('acrylamide', catalog).must_equal 'acrylamide/sodium acrylate copolymer'
+    rule.call("acrylamide", catalog).must_equal "acrylamide/sodium acrylate copolymer"
   end
 
-  it 'returns nil if too distant' do
+  it "returns nil if too distant" do
     rule = InciScore::Recognizer::Rules::Levenshtein
-    refute rule.call('water', catalog)
+    refute rule.call("water", catalog)
   end
 
-  it 'must match precisely' do
+  it "must match precisely" do
     rule = InciScore::Recognizer::Rules::Levenshtein
-    rule.call('i 47005', catalog, true).must_equal 'ci 47005'
+    rule.call("i 47005", catalog, true).must_equal "ci 47005"
   end
 
-  it 'must recognize component by meaningful digits' do
+  it "must recognize component by meaningful digits" do
     rule = InciScore::Recognizer::Rules::Digits
-    rule.call('olea europaea oil', catalog).must_equal 'olea europea'
+    rule.call("olea europaea oil", catalog).must_equal "olea europea"
   end
 
-  it 'must return nil with no matchings' do
+  it "must return nil with no matchings" do
     rule = InciScore::Recognizer::Rules::Digits
-    refute rule.call('water', catalog)
+    refute rule.call("water", catalog)
   end
 
-  it 'must recognize component by digits precisely' do
+  it "must recognize component by digits precisely" do
     rule = InciScore::Recognizer::Rules::Digits
-    rule.call('ci 77492', catalog, true).must_equal 'ci 77492'
+    rule.call("ci 77492", catalog, true).must_equal "ci 77492"
   end
 
-  it 'must recognize component by tokens' do
+  it "must recognize component by tokens" do
     rule = InciScore::Recognizer::Rules::Tokens
-    rule.call('f588 capric triglyceride', catalog).must_equal 'caprylic/capric triglyceride'
+    rule.call("f588 capric triglyceride", catalog).must_equal "caprylic/capric triglyceride"
   end
 
-  it 'must return nil with no matchings' do
+  it "must return nil with no matchings" do
     rule = InciScore::Recognizer::Rules::Tokens
-    refute rule.call('agua', catalog)
+    refute rule.call("agua", catalog)
   end
 end

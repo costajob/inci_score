@@ -1,4 +1,4 @@
-require 'inci_score/recognizer_rules'
+require "inci_score/recognizer_rules"
 
 module InciScore
   class Recognizer

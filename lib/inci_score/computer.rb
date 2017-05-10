@@ -1,7 +1,7 @@
-require 'inci_score/normalizer'
-require 'inci_score/recognizer'
-require 'inci_score/scorer'
-require 'inci_score/response'
+require "inci_score/normalizer"
+require "inci_score/recognizer"
+require "inci_score/scorer"
+require "inci_score/response"
 
 module InciScore
   class Computer
