@@ -33,7 +33,7 @@ module InciScore
           @fresh = fresh
         end
 
-        opts.on("-p", "--precise", "Compute levenshtein distance precisely (slower)") do |precise|
+        opts.on("-p", "--precise", "Compute components more precisely (slower)") do |precise|
           @precise = precise
         end
 

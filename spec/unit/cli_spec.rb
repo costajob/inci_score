@@ -13,7 +13,7 @@ describe InciScore::CLI do
     begin
       InciScore::CLI.new(args: %w[--help], io: io, catalog: Stubs.catalog).call
     rescue SystemExit
-      io.string.must_equal "Usage: inci_score --src='aqua, parfum, etc' --fresh --precise\n    -s, --src=SRC                    The INCI list: 'aqua, parfum, etc'\n    -f, --fresh                      Fetch a fresh catalog from remote\n    -p, --precise                    Compute levenshtein distance precisely (slower)\n        --http=PORT                  Start Puma server on the specified port\n    -h, --help                       Prints this help\n"
+      io.string.must_equal "Usage: inci_score --src='aqua, parfum, etc' --fresh --precise\n    -s, --src=SRC                    The INCI list: 'aqua, parfum, etc'\n    -f, --fresh                      Fetch a fresh catalog from remote\n    -p, --precise                    Compute components more precisely (slower)\n        --http=PORT                  Start Puma server on the specified port\n    -h, --help                       Prints this help\n"
     end
   end
 

@@ -41,10 +41,15 @@ module InciScore
 
         def call(src, catalog, precise = false)
           return if src.size < TOLERANCE
-          digits = src[0, MIN_MEANINGFUL]
+          digits = src[0, min_meaningful(precise)]
           catalog.detect do |component, _| 
             component.matches?(/^#{Regexp::escape(digits)}/)
           end.to_a.first
+        end
+
+        def min_meaningful(precise)
+          return MIN_MEANINGFUL unless precise
+          MIN_MEANINGFUL + 2
         end
       end
 

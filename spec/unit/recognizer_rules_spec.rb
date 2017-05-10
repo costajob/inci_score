@@ -44,6 +44,11 @@ describe InciScore::Recognizer::Rules do
     refute rule.call('water', catalog)
   end
 
+  it 'must recognize component by digits precisely' do
+    rule = InciScore::Recognizer::Rules::Digits
+    rule.call('ci 77492', catalog, true).must_equal 'ci 77492'
+  end
+
   it 'must recognize component by tokens' do
     rule = InciScore::Recognizer::Rules::Tokens
     rule.call('f588 capric triglyceride', catalog).must_equal 'caprylic/capric triglyceride'
