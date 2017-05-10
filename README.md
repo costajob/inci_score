@@ -117,10 +117,10 @@ curl http://127.0.0.1:9292?src=aqua,dimethicone
 ### Getting help
 You can get CLI interface help by:
 ```shell
-inci_score --help
-Usage: ./bin/inci_score --src='aqua, parfum, etc' --fresh
-    -s, --src=SRC                    The INCI list: 'aqua, parfum, etc'
+Usage: inci_score --src="aqua, parfum, etc" --fresh --precise
+    -s, --src=SRC                    The INCI list: "aqua, parfum, etc"
     -f, --fresh                      Fetch a fresh catalog from remote
+    -p, --precise                    Compute components more precisely (slower)
         --http=PORT                  Start Puma server on the specified port
     -h, --help                       Prints this help
 ```
