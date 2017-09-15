@@ -8,8 +8,8 @@ describe InciScore::Server do
     config = server.run
     config.app.must_equal InciScore::Server::RACKUP_FILE
     config.host.must_equal "tcp://#{InciScore::Server::DEFAULT_HOST}:9292"
-    config.min.must_equal "1"
-    config.max.must_equal "2"
+    config.min.must_equal "0"
+    config.max.must_equal "#{InciScore::Server::CPUs*4}"
     config.wrks.must_equal Etc.nprocessors
     refute config.preload
   end

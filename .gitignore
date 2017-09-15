@@ -5,7 +5,9 @@
 /coverage/
 /doc/
 /pkg/
+/sample
 /spec/reports/
+/spec/sample
 /tmp/
 /**/.DS_Store
 *.gem

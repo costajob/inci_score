@@ -6,8 +6,9 @@ module InciScore
   class Server
     RACKUP_FILE = File.expand_path("../../../config.ru", __FILE__)
     DEFAULT_HOST = "0.0.0.0"
+    CPUs = Etc.nprocessors
 
-    def initialize(port: 9292, threads: "1:2", workers: Etc.nprocessors, preload: false, 
+    def initialize(port: 9292, threads: "0:#{CPUs*4}", workers: CPUs, preload: false, 
                    config_klass: Puma::Configuration, launcher_klass: Puma::Launcher)
       @port = port
       @workers = workers
