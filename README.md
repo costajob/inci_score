@@ -140,15 +140,13 @@ I registered these benchmarks with a MacBook PRO 15 mid 2015 having these specs:
 * Ruby 2.4
 
 ### Wrk
-As always i used [wrk](https://github.com/wg/wrk) as the loading tool.
+As always i used [wrk](https://github.com/wg/wrk) as the loading tool, executed on a dedicated workstation.
 I measured the library three times, picking the best lap.  
-The following script command is used:
-
 ```shell
-wrk -t 4 -c 100 -d 30s --timeout 2000 http://127.0.0.1:9292/?src=aqua,parfum,zeolithe
+wrk -t 4 -c 100 -d 30s --timeout 2000 http://0.0.0.0:9292/?src=aqua,parfum,zeolithe
 ```
 
 ### Results
-| Throughput (req/s) | Latency in ms (avg/stdev/max) |
-| -----------------: | ----------------------------: |
-|           50060.92 |                0.31/0.45/3.83 |
+| Throughput (req/s) | Latency (avg/stdev/max)   |
+| -----------------: | ------------------------: |
+|            2908.63 |  42.23ms/47.17ms/461.36ms |
