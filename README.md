@@ -8,7 +8,6 @@
 * [API](#api)
   * [Unrecognized components](#unrecognized-components)
 * [CLI](#cli)
-  * [Refresh catalog](#refresh-catalog)
   * [HTTP server](#http-server)
     * [Triggering a request](#triggering-a-request)
   * [Getting help](#getting-help)
@@ -91,12 +90,6 @@ UNRECOGNIZED:
         noent
 ```
 
-### Refresh catalog
-You also have the option to fetch a fresh catalog from www.biodizionario.it  by specifyng a flag:
-```shell
-inci_score --fresh --src="aqua, dimethicone"
-```
-
 ### HTTP server
 The CLI interface exposes a Web layer based on the [Puma](http://puma.io/) application server.  
 The HTTP server is started on the specified port by spawning as many workers as your current workstation supports:
@@ -117,11 +110,10 @@ curl http://127.0.0.1:9292?src=aqua,dimethicone
 ### Getting help
 You can get CLI interface help by:
 ```shell
-Usage: inci_score --src="aqua, parfum, etc" --fresh --precise
+Usage: inci_score --src="aqua, parfum, etc" --precise
     -s, --src=SRC                    The INCI list: "aqua, parfum, etc"
-    -f, --fresh                      Fetch a fresh catalog from remote
     -p, --precise                    Compute components more precisely (slower)
-        --http=PORT                  Start Puma server on the specified port
+        --http=PORT                  Start HTTP server on the specified port
     -h, --help                       Prints this help
 ```
 
