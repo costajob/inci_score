@@ -77,30 +77,6 @@ module InciScore
         end
       end
 
-      module Desynonymizer
-        extend self
-
-        SYNONYM = /\/.*/
-
-        def call(src)
-          Array(src).map do |token|
-            token.sub(SYNONYM, '').strip
-          end.reject(&:empty?)
-        end
-      end
-
-      module Deparenthesizer
-        extend self
-
-        PARENTHESIS = /\(.+?\)|\[.+?\]/
-
-        def call(src)
-          Array(src).map do |token|
-            token.sub(PARENTHESIS, '').strip
-          end.reject(&:empty?)
-        end
-      end
-
       module Uniquifier
         extend self
 

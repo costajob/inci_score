@@ -1,5 +1,4 @@
-require "spec_helper"
-require "inci_score/app"
+require "helper"
 
 include Rack::Test::Methods
 

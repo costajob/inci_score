@@ -1,5 +1,4 @@
-require "spec_helper"
-require "inci_score/cli"
+require "helper"
 
 describe InciScore::CLI do
   let(:io) { StringIO.new }

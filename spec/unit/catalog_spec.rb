@@ -1,5 +1,4 @@
-require "spec_helper"
-require "inci_score/catalog"
+require "helper"
 
 describe InciScore::Catalog do
   it "must return a hash representation" do

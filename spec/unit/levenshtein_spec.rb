@@ -1,5 +1,4 @@
-require "spec_helper"
-require "inci_score/levenshtein"
+require "helper"
 
 describe InciScore::Levenshtein do
   it "must compute edit distance for UTF8 characters" do

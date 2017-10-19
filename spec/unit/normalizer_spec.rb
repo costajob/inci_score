@@ -1,4 +1,4 @@
-require "spec_helper"
+require "helper"
 require "inci_score/normalizer"
 
 describe InciScore::Normalizer do

@@ -1,8 +1,8 @@
-require 'spec_helper'
-require 'inci_score/server'
+require "helper"
+require "inci_score/server"
 
 describe InciScore::Server do
-  it 'must run with default options' do
+  it "must run with default options" do
     server = InciScore::Server.new(config_klass: Stubs::Configuration, 
                                    launcher_klass: Stubs::Launcher)
     config = server.run
@@ -14,7 +14,7 @@ describe InciScore::Server do
     refute config.preload
   end
 
-  it 'must run with custom options' do
+  it "must run with custom options" do
     server = InciScore::Server.new(port: 9001, threads: "3:6", 
                                    workers: 1, preload: true,
                                    config_klass: Stubs::Configuration, 

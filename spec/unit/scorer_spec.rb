@@ -1,8 +1,8 @@
-require 'spec_helper'
-require 'inci_score/scorer'
+require "helper"
+require "inci_score/scorer"
 
 describe InciScore::Scorer do
-  it 'must compute the full score' do
+  it "must compute the full score" do
     Stubs.hazards.each do |args|
       hazards, score = *args
       InciScore::Scorer.new(hazards).call.must_be_close_to score, 0.5

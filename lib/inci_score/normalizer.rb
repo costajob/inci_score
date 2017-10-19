@@ -2,7 +2,7 @@ require "inci_score/normalizer_rules"
 
 module InciScore
   class Normalizer
-    DEFAULT_RULES = [Rules::Replacer, Rules::Downcaser, Rules::Beheader, Rules::Separator, Rules::Tokenizer, Rules::Sanitizer, Rules::Desynonymizer, Rules::Deparenthesizer, Rules::Uniquifier]
+    DEFAULT_RULES = [Rules::Replacer, Rules::Downcaser, Rules::Beheader, Rules::Separator, Rules::Tokenizer, Rules::Sanitizer, Rules::Uniquifier]
 
     attr_reader :src
 

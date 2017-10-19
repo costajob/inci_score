@@ -1,4 +1,4 @@
-require "spec_helper"
+require "helper"
 require "inci_score/recognizer_rules"
 
 describe InciScore::Recognizer::Rules do
@@ -19,19 +19,9 @@ describe InciScore::Recognizer::Rules do
     rule.call("agua", catalog).must_equal "aqua"
   end
 
-  it "must match on first part of ingredient only" do
-    rule = InciScore::Recognizer::Rules::Levenshtein
-    rule.call("acrylamide", catalog).must_equal "acrylamide/sodium acrylate copolymer"
-  end
-
   it "returns nil if too distant" do
     rule = InciScore::Recognizer::Rules::Levenshtein
     refute rule.call("water", catalog)
-  end
-
-  it "must match precisely" do
-    rule = InciScore::Recognizer::Rules::Levenshtein
-    rule.call("i 47005", catalog, true).must_equal "ci 47005"
   end
 
   it "must recognize component by meaningful digits" do
@@ -42,11 +32,6 @@ describe InciScore::Recognizer::Rules do
   it "must return nil with no matchings" do
     rule = InciScore::Recognizer::Rules::Digits
     refute rule.call("water", catalog)
-  end
-
-  it "must recognize component by digits precisely" do
-    rule = InciScore::Recognizer::Rules::Digits
-    rule.call("ci 77492", catalog, true).must_equal "ci 77492"
   end
 
   it "must recognize component by tokens" do

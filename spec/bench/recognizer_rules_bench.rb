@@ -1,5 +1,4 @@
-require "spec_helper"
-require "inci_score/recognizer_rules"
+require "helper"
 
 key = InciScore::Recognizer::Rules::Key
 levenshtein = InciScore::Recognizer::Rules::Levenshtein

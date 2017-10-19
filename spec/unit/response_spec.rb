@@ -1,4 +1,4 @@
-require "spec_helper"
+require "helper"
 require "inci_score/response"
 
 describe InciScore::Response do

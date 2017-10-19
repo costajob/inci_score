@@ -1,5 +1,4 @@
-require "spec_helper"
-require "inci_score/normalizer_rules"
+require "helper"
 
 describe InciScore::Normalizer::Rules do
   it "must replace invalid chars" do
@@ -49,18 +48,6 @@ describe InciScore::Normalizer::Rules do
     src = %w[aqua/water PEG&-10 magnesium$ &/&$$£]
     rule = InciScore::Normalizer::Rules::Sanitizer
     rule.call(src).must_equal %w[aqua/water PEG-10 magnesium /]
-  end
-
-  it "must remove synonyms" do
-    src = %w[aqua/water magnesium parfum/fragrance]
-    rule = InciScore::Normalizer::Rules::Desynonymizer
-    rule.call(src).must_equal %w[aqua magnesium parfum]
-  end
-
-  it "must remove parenthesis" do
-    src = ["aqua (water)", "magnesium", "iron oxides/ci 77492 [ci 77491]"]
-    rule = InciScore::Normalizer::Rules::Deparenthesizer
-    rule.call(src).must_equal ["aqua", "magnesium", "iron oxides/ci 77492"]
   end
 
   it "must remove duplicates" do

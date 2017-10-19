@@ -1,52 +1,34 @@
-require "spec_helper"
-require "inci_score/ingredient"
+require "helper"
 
 describe InciScore::Ingredient do
-  describe "plain name" do
-    let(:ingredient) { InciScore::Ingredient.new("aqua") }
-
-    it "must fetch name" do
-      ingredient.name.must_equal "aqua"
-    end
-
-    it "must fetch synonims" do
-      ingredient.synonims.must_be_empty
-    end
-
-    it "must fetch details" do
-      ingredient.details.must_be_nil
+  it "must create instances in bulk" do
+    InciScore::Ingredient.bulk(Stubs.ingredients.first).each do |ingredient|
+      ingredient.must_be_instance_of InciScore::Ingredient
     end
   end
 
-  describe "with synonims" do
-    let(:ingredient) { InciScore::Ingredient.new("peg-3/ppg-2 glyceryl/sorbitol hydroxystearate/isostearate") }
-
-    it "must fetch name" do
-      ingredient.name.must_equal "peg-3"
-    end
-
-    it "must fetch synonims" do
-      ingredient.synonims.must_equal ["ppg-2 glyceryl", "sorbitol hydroxystearate/isostearate"]
-    end
-
-    it "must fetch details" do
-      ingredient.details.must_be_nil
-    end
+  it "must be represented as a string" do
+    ingredient = InciScore::Ingredient.new("acrylamidopropyltrimonium chloride/acrylates copolymer")
+    ingredient.to_s.must_equal "acrylamidopropyltrimonium chloride/acrylates copolymer"
   end
 
-  describe "with details" do
-    let(:ingredient) { InciScore::Ingredient.new("camelia sinensis (leave on)") }
+  it "must be represented as a string withoud details" do
+    ingredient = InciScore::Ingredient.new("1,3-bis-(2,4-diaminophenoxy)propane")
+    ingredient.to_s.must_equal "1,3-bis-propane"
+  end
 
-    it "must fetch name" do
-      ingredient.name.must_equal "camelia sinensis"
-    end
+  it "must fetch values with plain name" do
+    ingredient = InciScore::Ingredient.new("aqua")
+    ingredient.values.must_equal ["aqua"]
+  end
 
-    it "must fetch synonims" do
-      ingredient.synonims.must_be_empty
-    end
+  it "must fetch values with syninims" do
+    ingredient = InciScore::Ingredient.new("peg-3/ppg-2 glyceryl/sorbitol hydroxystearate/isostearate")
+    ingredient.values.must_equal ["peg-3", "ppg-2 glyceryl", "sorbitol hydroxystearate/isostearate"]
+  end
 
-    it "must fetch details" do
-      ingredient.details.must_equal "leave on"
-    end
+  it "must fetch values with details" do
+    ingredient  = InciScore::Ingredient.new("camelia sinensis (leave on)")
+    ingredient.values.must_equal ["camelia sinensis"]
   end
 end

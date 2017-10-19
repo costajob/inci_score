@@ -1,13 +1,17 @@
+require "inci_score/ingredient"
 require "inci_score/normalizer"
 require "inci_score/recognizer"
-require "inci_score/scorer"
 require "inci_score/response"
+require "inci_score/scorer"
 
 module InciScore
   class Computer
     TOLERANCE = 30.0
 
-    def initialize(src:, catalog:, tolerance: TOLERANCE, rules: Normalizer::DEFAULT_RULES, precise: false)
+    def initialize(src:, catalog:, 
+                   tolerance: TOLERANCE, 
+                   rules: Normalizer::DEFAULT_RULES, 
+                   precise: false)
       @src = src
       @catalog = catalog
       @tolerance = Float(tolerance)
@@ -17,18 +21,21 @@ module InciScore
     end
 
     def call
-      @response ||= Response.new(components: components.map(&:first),
+      @response ||= Response.new(components: components.map(&:name),
                                  unrecognized: @unrecognized,
                                  score: score,
                                  valid: valid?)
     end
 
     private def score
-      Scorer.new(components.map(&:last)).call
+      Scorer.new(components.map(&:hazard)).call
     end
 
     private def ingredients
-      @ingredients ||= Normalizer.new(src: @src, rules: @rules).call
+      @ingredients ||= begin
+                         tokens = Normalizer.new(src: @src, rules: @rules).call
+                         Ingredient.bulk(tokens)
+                       end
     end
 
     private def components
