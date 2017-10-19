@@ -1,4 +1,4 @@
-require 'inci_score/score'
+require "inci_score/score"
 
 module InciScore
   class Scorer
@@ -15,30 +15,28 @@ module InciScore
       100 - avg * HAZARD_PERCENT
     end
 
-    private
-
-    def avg
+    private def avg
       avg_weighted / @size.to_f
     end
 
-    def avg_weighted
+    private def avg_weighted
       return @hazards.reduce(&:+) if same_hazard?
       weighted.reduce(0.0) do |acc,score| 
         acc += score.value
       end
     end
 
-    def same_hazard?
+    private def same_hazard?
       @hazards.uniq.size == 1
     end
 
-    def weighted
+    private def weighted
       @hazards.each_with_index.map do |h,i|
         Score.new(h, weight(i))
       end
     end
 
-    def weight(index)
+    private def weight(index)
       Math.log(index+1, @size * WEIGHT_FACTOR)
     end
   end

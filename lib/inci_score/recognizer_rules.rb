@@ -46,9 +46,7 @@ module InciScore
         def call(src, catalog)
           return if src.size < TOLERANCE
           digits = src[0, MIN_MEANINGFUL]
-          catalog.detect do |component, _| 
-            component.matches?(/^#{Regexp::escape(digits)}/)
-          end.to_a.first
+          catalog.detect { |component, _| component.start_with?(digits) }.to_a.first
         end
       end
 

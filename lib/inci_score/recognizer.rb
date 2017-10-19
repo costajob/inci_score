@@ -16,6 +16,7 @@ module InciScore
     end
 
     def call(precise = false)
+      return if @ingredient.to_s.empty?
       component = find_component(precise)
       return unless component
       Component.new(component, @catalog[component])

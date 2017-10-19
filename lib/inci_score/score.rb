@@ -8,9 +8,7 @@ module InciScore
       @value = compute
     end
 
-    private
-
-    def compute
+    private def compute
       (@hazard - @weight).tap do |s|
         return 0.0 if s < 0
       end

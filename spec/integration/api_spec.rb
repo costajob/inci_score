@@ -3,16 +3,16 @@ require "helper"
 include Rack::Test::Methods
 
 def app
-  InciScore::App
+  InciScore::Api
 end
 
-describe InciScore::App do
+describe InciScore::Api do
   Stubs.sources.each_with_index do |src, i|
 
     status, score = Stubs.statuses[i], Stubs.scores[i]
 
-    it "[#{i}] - must get a proper response" do
-      get "/", src: src
+    it "cosmetic #{i} must get a proper response" do
+      get "/", src: src, precise: true
       assert last_response.ok?
       last_response.content_type.must_equal "application/json"
       body = JSON::parse(last_response.body)

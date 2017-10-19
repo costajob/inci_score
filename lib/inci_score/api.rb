@@ -2,7 +2,7 @@ require "rack"
 require "inci_score"
 
 module InciScore
-  module App
+  module Api
     extend self
 
     def catalog

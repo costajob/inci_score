@@ -1,6 +1,6 @@
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'inci_score/version'
+require "inci_score/version"
 
 Gem::Specification.new do |s|
   s.name = "inci_score"
@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.email = ["costajob@gmail.com"]
   s.summary = %q{A library that computes the hazard of cosmetic products components, based on the Biodizionario data.}
   s.homepage = "https://github.com/costajob/inci_score.git"
-  s.files = %w(README.md Rakefile inci_score.gemspec Gemfile Gemfile.lock bin/inci_score) + Dir["{spec,lib}/**/*.rb"]
+  s.files = %w(README.md Rakefile inci_score.gemspec Gemfile Gemfile.lock config.ru config ext bin/inci_score) + Dir["{spec,lib}/**/*.rb"]
   s.bindir = "bin"
   s.executables << "inci_score"
   s.require_paths = ["lib"]

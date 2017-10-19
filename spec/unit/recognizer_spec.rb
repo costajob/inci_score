@@ -11,6 +11,11 @@ describe InciScore::Recognizer do
     end
   end
 
+  it "must skip recognition for empty ingredient" do
+    recognizer = InciScore::Recognizer.new(nil, Stubs.catalog)
+    recognizer.call.must_be_nil
+  end
+
   it "must recognize by key only" do
     recognizer = InciScore::Recognizer.new("aqua", Stubs.catalog)
     recognizer.call

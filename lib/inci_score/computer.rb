@@ -7,6 +7,7 @@ require "inci_score/scorer"
 module InciScore
   class Computer
     TOLERANCE = 30.0
+    PERCENT = 100.0
 
     def initialize(src:, catalog:, 
                    tolerance: TOLERANCE, 
@@ -47,7 +48,7 @@ module InciScore
     end
 
     private def valid?
-      @unrecognized.size / (ingredients.size / 100.0) <= @tolerance
+      @unrecognized.size / (ingredients.size / PERCENT) <= @tolerance
     end
   end
 end

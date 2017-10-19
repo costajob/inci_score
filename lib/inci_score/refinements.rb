@@ -1,4 +1,4 @@
-require 'inci_score/levenshtein' 
+require "inci_score/levenshtein"
 
 module InciScore
   module Refinements

@@ -14,10 +14,6 @@ Benchmark.ips do |x|
     levenshtein.call("agua", Stubs.catalog)
   end
 
-  x.report("levenshtein (precise)") do
-    levenshtein.call("agua", Stubs.catalog, true)
-  end
-
   x.report("digits") do
     digits.call("olea europaea oil", Stubs.catalog)
   end
