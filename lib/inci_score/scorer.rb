@@ -12,7 +12,7 @@ module InciScore
 
     def call
       return 0 if @hazards.empty?
-      100 - avg * HAZARD_PERCENT
+      (100 - avg * HAZARD_PERCENT).round(4)
     end
 
     private def avg

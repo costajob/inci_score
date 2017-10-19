@@ -51,9 +51,9 @@ The API of the gem is pretty simple, you can open irb by *bundle console* and st
 
 ```ruby
 inci = InciScore::Computer.new(src: 'aqua, dimethicone').call
-=> #<InciScore::Response:0x000000029f8100 @components={"aqua"=>0, "dimethicone"=>4}, @score=53.762874945799766, @unrecognized=[], @valid=true>
+=> #<InciScore::Response:0x000000029f8100 @components={"aqua"=>0, "dimethicone"=>4}, @score=53.7629, @unrecognized=[], @valid=true>
 inci.score
-=> 53.762874945799766
+=> 53.7629
 ```
 
 As you see the results are wrapped by an *InciScore::Response* object, this is useful when dealing with the CLI and HTTP interfaces (read below).
@@ -79,7 +79,7 @@ You can collect INCI data by using the available CLI interface:
 inci_score --src="ingredients: aqua, dimethicone, pej-10, noent"
 
 TOTAL SCORE:
-        47.18034913243358
+        47.1803
 VALID STATE:
         true
 COMPONENTS (hazard - name): 
@@ -104,7 +104,7 @@ You can pass the source string directly as a HTTP parameter (URI escaped):
 
 ```shell
 curl http://127.0.0.1:9292?src=aqua,dimethicone
-=> {"components":{"aqua":0,"dimethicone":4},"unrecognized":[],"score":53.762874945799766,"valid":true}
+=> {"components":{"aqua":0,"dimethicone":4},"unrecognized":[],"score":53.7629,"valid":true}
 ```
 
 ### Getting help
@@ -132,13 +132,15 @@ I registered these benchmarks with a MacBook PRO 15 mid 2015 having these specs:
 * Ruby 2.4
 
 ### Wrk
-As always i used [wrk](https://github.com/wg/wrk) as the loading tool, executed on a dedicated workstation.
+As always i used [wrk](https://github.com/wg/wrk) as the loading tool.
 I measured the library three times, picking the best lap.  
 ```shell
-wrk -t 4 -c 100 -d 30s --timeout 2000 http://0.0.0.0:9292/?src=aqua,parfum,zeolithe
+wrk -t 4 -c 100 -d 30s --timeout 2000 "http://0.0.0.0:9292/?src=<source>&precise=true"
 ```
 
 ### Results
-| Throughput (req/s) | Latency (avg/stdev/max)   |
-| -----------------: | ------------------------: |
-|            2908.63 |  42.23ms/47.17ms/461.36ms |
+| Source                      | Throughput (req/s) |
+| --------------------------: | -----------------: |
+| aqua,parfum,zeolite         |          18784.21  |
+| agua,porfum,zeolithe        |           1087.88  |
+| agua/water,porfum/fragrance |           1599.47  |

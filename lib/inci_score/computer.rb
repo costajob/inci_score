@@ -9,7 +9,8 @@ module InciScore
     TOLERANCE = 30.0
     PERCENT = 100.0
 
-    def initialize(src:, catalog:, 
+    def initialize(src:, 
+                   catalog: Catalog.fetch, 
                    tolerance: TOLERANCE, 
                    rules: Normalizer::DEFAULT_RULES, 
                    precise: false)

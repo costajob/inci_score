@@ -19,7 +19,7 @@ module InciScore
     end
 
     def values
-      synonims.unshift(name).compact
+      @values ||= synonims.unshift(name).compact
     end
 
     private def name
