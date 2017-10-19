@@ -51,9 +51,7 @@ The API of the gem is pretty simple, you can open irb by *bundle console* and st
 
 ```ruby
 inci = InciScore::Computer.new(src: 'aqua, dimethicone').call
-=> #<InciScore::Response:0x000000029f8100 @components={"aqua"=>0, "dimethicone"=>4}, @score=53.7629, @unrecognized=[], @valid=true>
-inci.score
-=> 53.7629
+inci.score # 53.7629
 ```
 
 As you see the results are wrapped by an *InciScore::Response* object, this is useful when dealing with the CLI and HTTP interfaces (read below).
@@ -65,11 +63,8 @@ Is still possible to query the object for its state:
 
 ```ruby
 inci = InciScore::Computer.new(src: 'ingredients:aqua,noent1,noent2').call
-=> #<InciScore::Response:0x000000030c16d0 @components={"aqua"=>0}, @score=100.0, @unrecognized=["noent1", "noent2"], @valid=false>
-inci.valid
-=> false
-inci.unrecognized
-=> ["noent1", "noent2"]
+inci.valid # false
+inci.unrecognized # ["noent1", "noent2"]
 ```
 
 ## CLI
