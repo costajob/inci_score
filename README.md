@@ -135,6 +135,6 @@ wrk -t 4 -c 100 -d 30s --timeout 2000 "http://0.0.0.0:9292/?src=<source>"
 ### Results
 | Source                      | Throughput (req/s) |
 | --------------------------: | -----------------: |
-| aqua,parfum,zeolite         |          18784.21  |
-| agua,porfum,zeolithe        |           1087.88  |
+| aqua,parfum,zeolite         |          20296.75  |
+| agua,porfum,zeolithe        |           1098.45  |
 | agua/water,porfum/fragrance |           1599.47  |
