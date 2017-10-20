@@ -120,7 +120,7 @@ After some pointless optimization, i replaced this routine with a C implementati
 
 ### Platform
 I registered these benchmarks with a MacBook PRO 15 mid 2015 having these specs:
-* OSX El Captain
+* OSX Sierra
 * 2,2 GHz Intel Core i7 (4 cores)
 * 16 GB 1600 MHz DDR3
 * Ruby 2.4
