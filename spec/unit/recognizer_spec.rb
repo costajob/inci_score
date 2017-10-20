@@ -1,5 +1,4 @@
 require "helper"
-require "inci_score/recognizer"
 
 describe InciScore::Recognizer do
   let(:rules) { [] }
@@ -22,6 +21,12 @@ describe InciScore::Recognizer do
     recognizer.applied.must_equal InciScore::Recognizer::DEFAULT_RULES[0,1]
   end
 
+  it "must recognize by key by using synonim" do
+    recognizer = InciScore::Recognizer.new("olio di oliva/olea europea", Stubs.catalog)
+    recognizer.call
+    recognizer.applied.must_equal InciScore::Recognizer::DEFAULT_RULES[0,1]
+  end
+
   it "must recognize by key and levenshtein" do
     recognizer = InciScore::Recognizer.new("agua", Stubs.catalog)
     recognizer.call
@@ -38,12 +43,5 @@ describe InciScore::Recognizer do
     recognizer = InciScore::Recognizer.new("f588 capric triglyceride", Stubs.catalog)
     recognizer.call
     recognizer.applied.must_equal InciScore::Recognizer::DEFAULT_RULES
-  end
-
-  it "must recognize component precisely" do
-    ingredient = InciScore::Ingredient.new("olio di oliva/olea europea")
-    recognizer = InciScore::Recognizer.new(ingredient, Stubs.catalog)
-    recognizer.call(true)
-    recognizer.applied.must_equal InciScore::Recognizer::DEFAULT_RULES[0,1]
   end
 end

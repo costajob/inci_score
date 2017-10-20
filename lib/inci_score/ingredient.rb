@@ -5,13 +5,9 @@ module InciScore
     PARENTHESIS = %w[( ) [ ]]
     DETAILS_RULE = /(\(.+\)|\[.+\])/
 
-    def self.bulk(tokens)
-      tokens.map { |raw| new(raw) }
-    end
-
     def initialize(raw)
-      @raw = raw
-      @tokens = raw.split(SLASH_RULE).map(&:strip)
+      @raw = raw.to_s
+      @tokens = @raw.split(SLASH_RULE).map(&:strip)
     end
 
     def to_s
@@ -28,7 +24,7 @@ module InciScore
     end
 
     private def synonims
-      @tokens[1, @tokens.size]
+      @tokens[1, @tokens.size].to_a
     end
 
     private def details

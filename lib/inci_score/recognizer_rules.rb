@@ -58,14 +58,14 @@ module InciScore
         def call(src, catalog)
           tokens(src).each do |token|
             catalog.each do |component, _| 
-              return component if component.matches?(/\b#{Regexp.escape(token)}\b/)
+              return component if component.include?(token)
             end
           end
           nil
         end
 
         def tokens(src)
-          (src.split(" ") - UNMATCHABLE).reject { |t| t.size < TOLERANCE }.sort_by!(&:size).reverse!
+          (src.split(" ") - UNMATCHABLE).reject { |t| t.size < TOLERANCE }.sort! { |a, b| b.size <=> a.size }
         end
       end
     end

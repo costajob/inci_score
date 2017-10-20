@@ -1,12 +1,6 @@
 require "helper"
 
 describe InciScore::Ingredient do
-  it "must create instances in bulk" do
-    InciScore::Ingredient.bulk(Stubs.ingredients.first).each do |ingredient|
-      ingredient.must_be_instance_of InciScore::Ingredient
-    end
-  end
-
   it "must be represented as a string" do
     ingredient = InciScore::Ingredient.new("acrylamidopropyltrimonium chloride/acrylates copolymer")
     ingredient.to_s.must_equal "acrylamidopropyltrimonium chloride/acrylates copolymer"

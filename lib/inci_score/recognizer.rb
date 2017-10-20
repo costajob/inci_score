@@ -8,30 +8,29 @@ module InciScore
 
     attr_reader :applied
 
-    def initialize(ingredient, catalog, rules = DEFAULT_RULES)
-      @ingredient = ingredient
+    def initialize(ingredient, catalog, rules = DEFAULT_RULES, wrapper = Ingredient)
+      @ingredient = wrapper.new(ingredient)
       @catalog = catalog
       @rules = rules
       @applied = []
     end
 
-    def call(precise = false)
+    def call
       return if @ingredient.to_s.empty?
-      component = find_component(precise)
+      component = find_component
       return unless component
       Component.new(component, @catalog[component])
     end 
 
-    private def find_component(precise)
+    private def find_component
       @rules.reduce(nil) do |component, rule|
         break(component) if component
         applied << rule
-        apply(rule, precise)
+        apply(rule)
       end
     end
 
-    private def apply(rule, precise)
-      return rule.call(@ingredient.to_s, @catalog) unless precise
+    private def apply(rule)
       @ingredient.values.map do |value|
         rule.call(value, @catalog)
       end.find(&:itself)

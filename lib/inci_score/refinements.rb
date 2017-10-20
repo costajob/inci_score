@@ -10,11 +10,6 @@ module InciScore
       def distance(t)
         InciScore::LevenshteinC.new.call(self.downcase, self.size, t.downcase, t.size)
       end
-
-      def matches?(re)
-        return match?(re) if defined?("".match?)
-        match(re)
-      end
     end
   end
 end

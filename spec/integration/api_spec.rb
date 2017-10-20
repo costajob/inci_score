@@ -12,7 +12,7 @@ describe InciScore::Api do
     status, score = Stubs.statuses[i], Stubs.scores[i]
 
     it "cosmetic #{i} must get a proper response" do
-      get "/", src: src, precise: true
+      get "/", src: src
       assert last_response.ok?
       last_response.content_type.must_equal "application/json"
       body = JSON::parse(last_response.body)

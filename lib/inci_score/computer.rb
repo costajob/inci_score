@@ -12,14 +12,12 @@ module InciScore
     def initialize(src:, 
                    catalog: Catalog.fetch, 
                    tolerance: TOLERANCE, 
-                   rules: Normalizer::DEFAULT_RULES, 
-                   precise: false)
+                   rules: Normalizer::DEFAULT_RULES)
       @src = src
       @catalog = catalog
       @tolerance = Float(tolerance)
       @rules = rules
       @unrecognized = []
-      @precise = precise
     end
 
     def call
@@ -34,15 +32,12 @@ module InciScore
     end
 
     private def ingredients
-      @ingredients ||= begin
-                         tokens = Normalizer.new(src: @src, rules: @rules).call
-                         Ingredient.bulk(tokens)
-                       end
+      @ingredients ||= Normalizer.new(src: @src, rules: @rules).call
     end
 
     private def components
       @components ||= ingredients.map do |ingredient|
-        Recognizer.new(ingredient, @catalog).call(@precise).tap do |component|
+        Recognizer.new(ingredient, @catalog).call.tap do |component|
           @unrecognized << ingredient unless component
         end
       end.compact

@@ -105,9 +105,8 @@ curl http://127.0.0.1:9292?src=aqua,dimethicone
 ### Getting help
 You can get CLI interface help by:
 ```shell
-Usage: inci_score --src="aqua, parfum, etc" --precise
+Usage: inci_score --src="aqua, parfum, etc"
     -s, --src=SRC                    The INCI list: "aqua, parfum, etc"
-    -p, --precise                    Compute components more precisely (slower)
         --http=PORT                  Start HTTP server on the specified port
     -h, --help                       Prints this help
 ```
@@ -130,7 +129,7 @@ I registered these benchmarks with a MacBook PRO 15 mid 2015 having these specs:
 As always i used [wrk](https://github.com/wg/wrk) as the loading tool.
 I measured the library three times, picking the best lap.  
 ```shell
-wrk -t 4 -c 100 -d 30s --timeout 2000 "http://0.0.0.0:9292/?src=<source>&precise=true"
+wrk -t 4 -c 100 -d 30s --timeout 2000 "http://0.0.0.0:9292/?src=<source>"
 ```
 
 ### Results

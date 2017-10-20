@@ -12,8 +12,7 @@ module InciScore
     def call(env)
       req = Rack::Request.new(env)
       src = req.params["src"]
-      precise = req.params["precise"]
-      json = src ? Computer.new(src: src, catalog: catalog, precise: !!precise).call.to_json : %q({"error": "no valid source"})
+      json = src ? Computer.new(src: src, catalog: catalog).call.to_json : %q({"error": "no valid source"})
       ["200", {"Content-Type" => "application/json"}, [json]]
     end
   end
