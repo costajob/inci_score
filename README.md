@@ -5,12 +5,10 @@
 * [Computation](#computation)
   * [Component matching](#component-matching)
   * [Sources](#sources)
-* [API](#api)
-  * [Unrecognized components](#unrecognized-components)
-* [CLI](#cli)
-  * [HTTP server](#http-server)
-    * [Triggering a request](#triggering-a-request)
-  * [Getting help](#getting-help)
+* [Installation](#installation)
+* [Usage](#usage)
+  * [Library](#library)
+  * [CLI](#cli)
 * [Benchmark](#benchmark)
   * [Levenshtein in C](#levenshtein-in-c)
   * [Platform](#platform)
@@ -46,17 +44,27 @@ The ingredients are typically separated by comma, although normalizer will detec
 "Ingredients: Aqua, Disodium Laureth Sulfosuccinate, Cocamidopropiyl\nBetaine"
 ```
 
-## API
-The API of the gem is pretty simple, you can open irb by *bundle console* and start computing the INCI score:
+## Installation
+Install the gem from your shell:
+```shell
+gem install galaxy_converter
+```
+
+## Usage
+
+### Library
+You can include this gem into your own library and start computing the INCI score:
 
 ```ruby
+require "inci_score"
+
 inci = InciScore::Computer.new(src: 'aqua, dimethicone').call
 inci.score # 53.7629
 ```
 
 As you see the results are wrapped by an *InciScore::Response* object, this is useful when dealing with the CLI and HTTP interfaces (read below).
 
-### Unrecognized components
+#### Unrecognized components
 The API treats unrecognized components as a common case by just marking the object as non valid and raise a warning in case more than 30% of the ingredients are not found.  
 In such case the score is computed anyway by considering only recognized components.  
 Is still possible to query the object for its state:
@@ -67,7 +75,7 @@ inci.valid # false
 inci.unrecognized # ["noent1", "noent2"]
 ```
 
-## CLI
+### CLI
 You can collect INCI data by using the available CLI interface:
 
 ```shell
@@ -85,7 +93,7 @@ UNRECOGNIZED:
         noent
 ```
 
-### HTTP server
+#### HTTP server
 The CLI interface exposes a Web layer based on the [Puma](http://puma.io/) application server.  
 The HTTP server is started on the specified port by spawning as many workers as your current workstation supports:
 ```shell
@@ -93,7 +101,7 @@ inci_score --http=9292
 ```
 Consider all other options are discarded when running HTTP server.
 
-#### Triggering a request
+##### Triggering a request
 The HTTP server responds with a JSON representation of the original *InciScore::Response* object.  
 You can pass the source string directly as a HTTP parameter (URI escaped):
 
@@ -102,7 +110,7 @@ curl http://127.0.0.1:9292?src=aqua,dimethicone
 => {"components":{"aqua":0,"dimethicone":4},"unrecognized":[],"score":53.7629,"valid":true}
 ```
 
-### Getting help
+#### Getting help
 You can get CLI interface help by:
 ```shell
 Usage: inci_score --src="aqua, parfum, etc"
