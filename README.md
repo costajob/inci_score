@@ -47,7 +47,7 @@ The ingredients are typically separated by comma, although normalizer will detec
 ## Installation
 Install the gem from your shell:
 ```shell
-gem install galaxy_converter
+gem install inci_score
 ```
 
 ## Usage
