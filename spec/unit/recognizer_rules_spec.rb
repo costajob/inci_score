@@ -24,6 +24,11 @@ describe InciScore::Recognizer::Rules do
     refute rule.call("water", catalog)
   end
 
+  it "returns nil for empty ingredient" do
+    rule = InciScore::Recognizer::Rules::Levenshtein
+    refute rule.call("", catalog)
+  end
+
   it "must recognize component by meaningful digits" do
     rule = InciScore::Recognizer::Rules::Digits
     rule.call("olea europaea oil", catalog).must_equal "olea europea"

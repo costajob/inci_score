@@ -24,6 +24,7 @@ module InciScore
         end
 
         def call(src, catalog)
+          return if src.empty?
           size = src.size
           farthest = Result.new(nil, size)
           initial = src[0]
