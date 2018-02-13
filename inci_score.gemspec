@@ -17,6 +17,7 @@ Gem::Specification.new do |s|
   s.required_ruby_version = ">= 2.2.2"
 
   s.add_runtime_dependency "puma", "~> 3"
+  s.add_runtime_dependency "rack", "~> 2"
   s.add_runtime_dependency "RubyInline", "~> 3"
 
   s.add_development_dependency "bundler", "~> 1.11"
