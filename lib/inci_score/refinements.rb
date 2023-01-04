@@ -1,4 +1,6 @@
-require "inci_score/levenshtein"
+# frozen_string_literal: true
+
+require 'inci_score/levenshtein'
 
 module InciScore
   module Refinements

@@ -1,50 +1,52 @@
-require "inci_score/ingredient"
-require "inci_score/normalizer"
-require "inci_score/recognizer"
-require "inci_score/response"
-require "inci_score/scorer"
+# frozen_string_literal: true
+
+require 'inci_score/ingredient'
+require 'inci_score/normalizer'
+require 'inci_score/recognizer'
+require 'inci_score/response'
+require 'inci_score/scorer'
 
 module InciScore
   class Computer
     TOLERANCE = 30.0
     PERCENT = 100.0
 
-    def initialize(src:, 
-                   catalog: Catalog.fetch, 
-                   tolerance: TOLERANCE, 
-                   rules: Normalizer::DEFAULT_RULES)
+    attr_reader :src, :catalog, :tolerance, :rules, :ingredients, :components, :unrecognized
+
+    def initialize(src:, catalog: Catalog.fetch, tolerance: TOLERANCE, rules: Normalizer::DEFAULT_RULES)
+      @unrecognized = []
       @src = src
       @catalog = catalog
       @tolerance = Float(tolerance)
       @rules = rules
-      @unrecognized = []
+      @ingredients = Normalizer.new(src: src, rules: rules).call
+      @components = fetch_components
+      freeze
     end
 
     def call
-      @response ||= Response.new(components: components.map(&:name),
-                                 unrecognized: @unrecognized,
-                                 score: score,
-                                 valid: valid?)
+      Response.new(components: components.map(&:name),
+                   unrecognized: unrecognized,
+                   score: score,
+                   valid: valid?)
     end
 
-    private def score
+    def score
       Scorer.new(components.map(&:hazard)).call
     end
 
-    private def ingredients
-      @ingredients ||= Normalizer.new(src: @src, rules: @rules).call
+    def valid?
+      unrecognized.size / (ingredients.size / PERCENT) <= tolerance
     end
 
-    private def components
-      @components ||= ingredients.map do |ingredient|
-        Recognizer.new(ingredient, @catalog).call.tap do |component|
-          @unrecognized << ingredient unless component
+    private
+
+    def fetch_components
+      ingredients.map do |ingredient|
+        Recognizer.new(ingredient, catalog).call.tap do |component|
+          unrecognized << ingredient unless component
         end
       end.compact
-    end
-
-    private def valid?
-      @unrecognized.size / (ingredients.size / PERCENT) <= @tolerance
     end
   end
 end

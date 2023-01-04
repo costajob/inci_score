@@ -1,4 +1,6 @@
-require "inci_score/refinements"
+# frozen_string_literal: true
+
+require 'inci_score/refinements'
 
 module InciScore
   using Refinements
@@ -54,11 +56,11 @@ module InciScore
       module Tokens
         extend self
 
-        UNMATCHABLE = %w[extract oil sodium acid sulfate]
-      
+        UNMATCHABLE = %w[extract oil sodium acid sulfate].freeze
+
         def call(src, catalog)
           tokens(src).each do |token|
-            catalog.each do |component, _| 
+            catalog.each do |component, _|
               return component if component.include?(token)
             end
           end
@@ -66,7 +68,7 @@ module InciScore
         end
 
         def tokens(src)
-          (src.split(" ") - UNMATCHABLE).reject { |t| t.size < TOLERANCE }.sort! { |a, b| b.size <=> a.size }
+          (src.split(' ') - UNMATCHABLE).reject { |t| t.size < TOLERANCE }.sort! { |a, b| b.size <=> a.size }
         end
       end
     end

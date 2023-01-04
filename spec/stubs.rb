@@ -1,4 +1,6 @@
-require "yaml"
+# frozen_string_literal: true
+
+require 'yaml'
 
 module Stubs
   extend self
@@ -46,7 +48,7 @@ END
      "INGREDIENTS : AQUa (wa‘eﬂ'\nslearate, Propylene glycol, F588\ncapric triglyceride, COCOS can\" ‘Wcla\n(Coconul) oil, Isupropyl palmna‘eW’ 09M\nalcohol, Sorbitan palmitate, pom\n\n40, Parfum (Fragrance), DisodiUm E\nCarbomer. Limonene, cum BHr\nSodium hydroxide, cums glands.\n(Grapefruit) fruit extract, SodiUm\ndroacetate, Sodium methyl dehy‘\n\nSorbic acid, Tetrasodium Elm-A CI\n10316 (Ext Yellow 7)‘\n\n",
      "782208 5‘ » INGREDIEMS: AQUA/WATER ~ GLYCERIN ' DIMETHICONE ' ISOHEXADEUNE ' SILICA\n‘ HVDROXVEIHYIHPERAZINE ETHANE SULFONIC ACID ' ALCOHOL DENAT. ' WE SLY“,- '\nSVNTHETIC WAX ' CI 77163 I BISMUTH OXVCHLORIDE ' CI 77391 / TIIANIUM DIOXIDE ' SECALE\nCEREALE EXTRACT/ RYE SEED EXTRACT ' SODIUM ACRYLATES COPOLVMER ‘ SODIUM\nHVALURONATE ‘ PHENOXYETHANOL ‘ ADENDSINE ~ PEG-10 DIMETHICONE ‘ ETHYLHEXYL\nHYDROXVSTEARATE ' NYLON-12 ' DIMETHICONE/PEG-IO/IS CROSSPOLVMER -\nD|HETHICONE/POLVGLYCERIN-3 CROSSPOLYMER ' PENWLENE GLYCOL ‘ SYNTHEIIC\nFLUORPHLOGOPITE ' BENZVL SALICVLATE - BENZVL ALCOHOL ' LINALOOL ‘ BENZVL BENZOATE '\nCAPRVLIUCAPRIC TRIGLYCERIDE ' CAPRVLYL GLYCOI. ‘ DIPOTASSIUM GLVCVRRHIZATE ' ALPINIA\nGAUNGA LEAF EXTRACT ' DISTEARDIMDNIUN HECTDRITE ' DISOUIUM EDTA - CIIRONELLOL ‘\nPARFUH/ FRAGRANCE. (F.I.L 3166675”).\nIorl MermIzIonI su\n\nM399 V ,\nwww.lorealpans.nt\n\n \n\n \n\n"]
   end
-  
+
   def scores
     [79, 64, 72, 63, 61, 82, 75, 56, 75, 62]
   end
@@ -81,8 +83,8 @@ END
 
   def hazards
     [[[], 0],
-     [[0,1], 91], 
-     [[1,0], 87], 
+     [[0,1], 91],
+     [[1,0], 87],
      [Array.new(10) { 4 }, 0],
      [Array.new(10) { 3 }, 25],
      [Array.new(10) { 2 }, 50],
@@ -103,68 +105,21 @@ END
   end
 
   class Computer
-    def initialize(src:, catalog:, precise: false)
+    attr_reader :src, :catalog
+
+    def initialize(src:, catalog:)
       @src = src
       @catalog = catalog
-      @precise = precise
+      freeze
     end
 
     def call
-      @src.split(",").map(&:strip).reduce({}) do |acc, component|
-        _component = @catalog[component]
+      src.split(",").map(&:strip).reduce({}) do |acc, component|
+        _component = catalog[component]
         next(acc) unless _component
-        acc[component] = _component 
+        acc[component] = _component
         acc
-      end 
-    end
-  end
-
-  class Configuration
-    attr_reader :app, :host, :wrks, :min, :max, :preload 
-
-    def initialize(opts = {})
-      yield(self) if block_given?
-    end
-
-    def rackup(f)
-      @app = f
-    end
-
-    def bind(host)
-      @host = host
-    end
-
-    def workers(n)
-      @wrks = n
-    end
-
-    def threads(min, max)
-      @min, @max = min, max
-    end
-
-    def preload_app!
-      @preload = true
-    end
-  end
-
-  class Launcher
-    def initialize(config)
-      @config = config
-    end
-
-    def run
-      @config
-    end
-  end
-
-  class Server
-    def initialize(port:, preload:)
-      @port = port
-      @preload = preload
-    end
-
-    def run
-      :"run_on_port_#{@port}"
+      end
     end
   end
 end

@@ -1,7 +1,15 @@
+# frozen_string_literal: true
+
 module InciScore
   class Normalizer
     module Rules
       SEPARATOR = ','
+
+      Downcaser = ->(src) { src.downcase }.freeze
+
+      Tokenizer = ->(src) { src.split(SEPARATOR).map(&:strip) }.freeze
+
+      Uniquifier = ->(src) { Array(src).uniq }.freeze
 
       module Replacer
         extend self
@@ -14,7 +22,7 @@ module InciScore
           ['~', '-'],
           ['|', 'l'],
           [' I ', '/']
-        ]
+        ].freeze
 
         def call(src)
           REPLACEMENTS.reduce(src) do |_src, replacement|
@@ -24,14 +32,6 @@ module InciScore
         end
       end
 
-      module Downcaser
-        extend self
-
-        def call(src)
-          src.downcase
-        end
-      end 
-
       module Beheader
         extend self
 
@@ -40,7 +40,8 @@ module InciScore
 
         def call(src)
           sep_index = src.index(TITLE_SEP)
-          return src if !sep_index || sep_index > MAX_INDEX
+          return src unless sep_index
+          return src if sep_index > MAX_INDEX
           src[sep_index+1, src.size]
         end
       end
@@ -48,40 +49,24 @@ module InciScore
       module Separator
         extend self
 
-        SEPARATORS = ["; ", ". ", " ' ", " - ", " : "]
+        SEPARATORS = ['; ', '. ', " ' ", ' - ', ' : '].freeze
 
         def call(src)
           SEPARATORS.reduce(src) do |_src, separator|
             _src = _src.gsub(separator, SEPARATOR)
           end
         end
-      end 
-
-      module Tokenizer
-        extend self
-
-        def call(src)
-          src.split(SEPARATOR).map(&:strip)
-        end
       end
 
       module Sanitizer
         extend self
 
-        INVALID_CHARS = /[^\/\[\]\(\)\w\s-]/
+        INVALID_CHARS = /[^\/\[\]\(\)\w\s-]/.freeze
 
         def call(src)
           Array(src).map do |token|
             token.gsub(INVALID_CHARS, '')
           end.reject(&:empty?)
-        end
-      end
-
-      module Uniquifier
-        extend self
-
-        def call(src)
-          Array(src).uniq
         end
       end
     end

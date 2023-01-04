@@ -1,7 +1,8 @@
 #!/usr/bin/env ruby
 
-require "bundler/setup"
-require "inci_score"
-require "irb"
-require "irb/completion"
+require 'bundler/setup'
+require 'inci_score'
+require 'irb'
+require 'irb/completion'
+
 IRB.start

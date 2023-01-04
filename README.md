@@ -11,9 +11,6 @@
   * [CLI](#cli)
 * [Benchmark](#benchmark)
   * [Levenshtein in C](#levenshtein-in-c)
-  * [Platform](#platform)
-  * [Wrk](#wrk)
-  * [Results](#results)
 
 ## Scope
 This gem computes the score of cosmetic components basing on the information provided by the [Biodizionario site](http://www.biodizionario.it/) by Fabrizio Zago.
@@ -93,29 +90,11 @@ UNRECOGNIZED:
         noent
 ```
 
-#### HTTP server
-The CLI interface exposes a Web layer based on the [Puma](http://puma.io/) application server.  
-The HTTP server is started on the specified port by spawning as many workers as your current workstation supports:
-```shell
-inci_score --http=9292
-```
-Consider all other options are discarded when running HTTP server.
-
-##### Triggering a request
-The HTTP server responds with a JSON representation of the original *InciScore::Response* object.  
-You can pass the source string directly as a HTTP parameter (URI escaped):
-
-```shell
-curl http://127.0.0.1:9292?src=aqua,dimethicone
-=> {"components":{"aqua":0,"dimethicone":4},"unrecognized":[],"score":53.7629,"valid":true}
-```
-
 #### Getting help
 You can get CLI interface help by:
 ```shell
 Usage: inci_score --src="aqua, parfum, etc"
     -s, --src=SRC                    The INCI list: "aqua, parfum, etc"
-        --http=PORT                  Start HTTP server on the specified port
     -h, --help                       Prints this help
 ```
 
@@ -124,25 +103,4 @@ Usage: inci_score --src="aqua, parfum, etc"
 ### Levenshtein in C
 I noticed the APIs slows down dramatically when dealing with unrecognized components to fuzzy match on.  
 I profiled the code by using the [benchmark-ips](https://github.com/evanphx/benchmark-ips) gem, finding the bottleneck was the pure Ruby implementation of the Levenshtein distance algorithm.  
-After some pointless optimization, i replaced this routine with a C implementation: i opted for the straightforward [Ruby Inline](https://github.com/seattlerb/rubyinline) library to call the C code straight from Ruby.  
-
-### Platform
-I registered these benchmarks with a MacBook PRO 15 mid 2015 having these specs:
-* OSX Sierra
-* 2,2 GHz Intel Core i7 (4 cores)
-* 16 GB 1600 MHz DDR3
-* Ruby 2.4
-
-### Wrk
-As always i used [wrk](https://github.com/wg/wrk) as the loading tool.
-I measured the library three times, picking the best lap.  
-```shell
-wrk -t 4 -c 100 -d 30s --timeout 2000 "http://0.0.0.0:9292/?src=<source>"
-```
-
-### Results
-| Source                      | Throughput (req/s) |
-| --------------------------: | -----------------: |
-| aqua,parfum,zeolite         |          20296.75  |
-| agua,porfum,zeolithe        |           1098.45  |
-| agua/water,porfum/fragrance |           1599.47  |
+After some pointless optimization, i replaced this routine with a C implementation: i opted for the straightforward [Ruby Inline](https://github.com/seattlerb/rubyinline) library to call the C code straight from Ruby.

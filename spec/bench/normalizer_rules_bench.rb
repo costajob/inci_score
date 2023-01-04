@@ -1,4 +1,6 @@
-require "helper"
+# frozen_string_literal: true
+
+require 'helper'
 
 replacer = InciScore::Normalizer::Rules::Replacer
 downcaser = InciScore::Normalizer::Rules::Downcaser
@@ -7,34 +9,34 @@ separator = InciScore::Normalizer::Rules::Separator
 tokenizer = InciScore::Normalizer::Rules::Tokenizer
 sanitizer = InciScore::Normalizer::Rules::Sanitizer
 uniquifier = InciScore::Normalizer::Rules::Uniquifier
-src = "‘INGREDIENTS‘:\n\nCOCO—BETANE,AQUA/WATER,DIMETHICONE"
+src = '‘INGREDIENTS‘:\n\nCOCO—BETANE,AQUA/WATER,DIMETHICONE'
 
 Benchmark.ips do |x|
-  x.report("replacer") do
+  x.report('replacer') do
     replacer.call(src)
   end
 
-  x.report("downcaser") do
+  x.report('downcaser') do
     downcaser.call(src)
   end
 
-  x.report("beheader") do
+  x.report('beheader') do
     beheader.call(src)
   end
 
-  x.report("separator") do
+  x.report('separator') do
     separator.call(src)
   end
 
-  x.report("tokenizer") do
+  x.report('tokenizer') do
     tokenizer.call(src)
   end
 
-  x.report("sanitizer") do
+  x.report('sanitizer') do
     sanitizer.call(src)
   end
 
-  x.report("uniquifier") do
+  x.report('uniquifier') do
     uniquifier.call(src)
   end
 end

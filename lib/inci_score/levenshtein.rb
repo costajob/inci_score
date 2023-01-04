@@ -1,24 +1,28 @@
-require "inline"
+# frozen_string_literal: true
+
+require 'inline'
 
 module InciScore
   class LevenshteinC
-    C_PROGRAM = File::expand_path("../../../ext/levenshtein.c", __FILE__)
+    C_PROGRAM = File::expand_path('../../../ext/levenshtein.c', __FILE__)
 
     inline(:C) do |builder|
-      builder.c File::read(C_PROGRAM) 
+      builder.c File::read(C_PROGRAM)
     end
   end
 
   class Levenshtein
+    attr_reader :s, :t
+
     def initialize(s, t)
-      @s = s.downcase.unpack("U*")
-      @t = t.downcase.unpack("U*")
+      @s = s.downcase.unpack('U*')
+      @t = t.downcase.unpack('U*')
     end
 
     def call
-      n, m = @s.length, @t.length
+      n, m = s.length, t.length
 
-      return 0 if @s == @t
+      return 0 if s == t
       return m if n.zero?
       return n if m.zero?
 
@@ -28,7 +32,7 @@ module InciScore
       n.times do |i|
         e = i + 1
         m.times do |j|
-          c = @s[i] == @t[j] ? 0 : 1
+          c = s[i] == t[j] ? 0 : 1
           ins = d[j + 1] + 1
           del = e + 1
           sub = d[j] + c
@@ -43,4 +47,3 @@ module InciScore
     end
   end
 end
-
