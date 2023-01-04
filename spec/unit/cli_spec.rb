@@ -4,24 +4,23 @@ require 'helper'
 
 describe InciScore::CLI do
   let(:io) { StringIO.new }
-  let(:catalog) { Stubs::CATALOG }
 
   it 'must warn if no inci is specified' do
-    InciScore::CLI.new(args: ['aqua'], io: io, catalog: catalog).call
+    InciScore::CLI.new(args: ['aqua'], io: io).call
     _(io.string).must_equal "Specify inci list as: --src='aqua, parfum, etc'\n"
   end
 
   it 'must print the help' do
     begin
-      InciScore::CLI.new(args: %w[--help], io: io, catalog: catalog).call
+      InciScore::CLI.new(args: %w[--help], io: io).call
     rescue SystemExit
       _(io.string).must_equal "Usage: inci_score --src='aqua, parfum, etc'\n    -s, --src=SRC                    The INCI list: 'aqua, parfum, etc'\n    -h, --help                       Prints this help\n"
     end
   end
 
   it 'must call computer' do
-    cli = InciScore::CLI.new(args: ['--src=aqua, parfum, peg-10, bha'], io: io, catalog: catalog)
+    cli = InciScore::CLI.new(args: ['--src=aqua, parfum, peg-10, bha'], io: io)
     cli.call
-    _(io.string).must_equal "\nTOTAL SCORE:\n      \t61.43\nPRECISION:\n      \t100.0\nCOMPONENTS:\n      \taqua (0), parfum (0), generic-hazard (3), bha (4)\nUNRECOGNIZED:\n      \t\n      \n"
+    _(io.string).must_equal "\nTOTAL SCORE:\n      \t44.13\nPRECISION:\n      \t100.0\nCOMPONENTS:\n      \taqua (0), parfum (3), peg-10 (3), bha (4)\nUNRECOGNIZED:\n      \t\n      \n"
   end
 end

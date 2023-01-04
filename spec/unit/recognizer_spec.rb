@@ -4,53 +4,46 @@ require 'helper'
 
 describe InciScore::Recognizer do
   let(:rules) { [] }
-  let(:catalog) { Stubs::CATALOG }
 
   it 'must recognize the components based on applied rules' do
     Stubs::COMPONENTS.each do |ingredient, name|
-      recognizer = InciScore::Recognizer.new(ingredient, catalog)
+      recognizer = InciScore::Recognizer.new(ingredient)
       _(recognizer.call.name).must_equal name
     end
   end
 
   it 'must skip recognition for empty ingredient' do
-    recognizer = InciScore::Recognizer.new(nil, catalog)
+    recognizer = InciScore::Recognizer.new(nil)
     _(recognizer.call).must_be_nil
   end
 
-  it 'must recognize by key only' do
-    recognizer = InciScore::Recognizer.new('aqua', catalog)
-    recognizer.call
-    _(recognizer.applied).must_equal InciScore::Recognizer::DEFAULT_RULES[0,1]
+  it 'must recognize by key' do
+    recognizer = InciScore::Recognizer.new('aqua')
+    _(recognizer.call).must_be_instance_of InciScore::Recognizer::Component
+    _(recognizer.applied.last).must_equal InciScore::Recognizer::Rules::Key
   end
 
-  it 'must recognize by key by using synonim' do
-    recognizer = InciScore::Recognizer.new('olio di oliva/olea europea', catalog)
-    recognizer.call
-    _(recognizer.applied).must_equal InciScore::Recognizer::DEFAULT_RULES[0,1]
+  it 'must recognize by levenshtein' do
+    recognizer = InciScore::Recognizer.new('agua')
+    _(recognizer.call).must_be_instance_of InciScore::Recognizer::Component
+    _(recognizer.applied.last).must_equal InciScore::Recognizer::Rules::Levenshtein
   end
 
-  it 'must recognize by key and levenshtein' do
-    recognizer = InciScore::Recognizer.new('agua', catalog)
-    recognizer.call
-    _(recognizer.applied).must_equal InciScore::Recognizer::DEFAULT_RULES[0,2]
+  it 'must recognize by hazard' do
+    recognizer = InciScore::Recognizer.new('fimethicone')
+    _(recognizer.call).must_be_instance_of InciScore::Recognizer::Component
+    _(recognizer.applied.last).must_equal InciScore::Recognizer::Rules::Hazard
   end
 
-  it 'must recognize by key, levenshtein and digits' do
-    recognizer = InciScore::Recognizer.new('olea europaea oil', catalog)
-    recognizer.call
-    _(recognizer.applied).must_equal InciScore::Recognizer::DEFAULT_RULES[0,3]
+  it 'must recognize by prefix' do
+    recognizer = InciScore::Recognizer.new('olea europaea oil')
+    _(recognizer.call).must_be_instance_of InciScore::Recognizer::Component
+    _(recognizer.applied.last).must_equal InciScore::Recognizer::Rules::Prefix
   end
 
-  it 'must recognize by key, levenshtein, digits and hazard' do
-    recognizer = InciScore::Recognizer.new('amino bispropyl dimethicone', catalog)
-    recognizer.call
-    _(recognizer.applied).must_equal InciScore::Recognizer::DEFAULT_RULES[0,4]
-  end
-
-  it 'must recognize by key, levenshtein, digits, hazard and tokens' do
-    recognizer = InciScore::Recognizer.new('f588 capric triglyceride', catalog)
-    recognizer.call
-    _(recognizer.applied).must_equal InciScore::Recognizer::DEFAULT_RULES[0,5]
+  it 'must recognize by tokens' do
+    recognizer = InciScore::Recognizer.new('f588 capric triglyceride')
+    _(recognizer.call).must_be_instance_of InciScore::Recognizer::Component
+    _(recognizer.applied.last).must_equal InciScore::Recognizer::Rules::Tokens
   end
 end

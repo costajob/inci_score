@@ -4,7 +4,7 @@ require 'helper'
 
 describe InciScore::Config do
   it 'must return catalog data' do
-    _(InciScore::Config::CATALOG.size).must_equal 5018
+    _(InciScore::Config::CATALOG.size).must_equal 5019
   end
 
   it 'must return hazards data' do

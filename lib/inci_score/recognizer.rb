@@ -2,15 +2,14 @@
 
 module InciScore
   class Recognizer
-    DEFAULT_RULES = [Rules::Key, Rules::Levenshtein, Rules::Digits, Rules::Hazard, Rules::Tokens].freeze
+    DEFAULT_RULES = [Rules::Key, Rules::Levenshtein, Rules::Hazard, Rules::Prefix, Rules::Tokens].freeze
 
     Component = Struct.new(:name, :hazard)
 
-    attr_reader :ingredient, :catalog, :rules, :applied
+    attr_reader :ingredient, :rules, :applied
 
-    def initialize(ingredient, catalog, rules = DEFAULT_RULES, wrapper = Ingredient)
+    def initialize(ingredient, rules = DEFAULT_RULES, wrapper = Ingredient)
       @ingredient = wrapper.new(ingredient)
-      @catalog = catalog
       @rules = rules
       @applied = []
       freeze
@@ -20,7 +19,7 @@ module InciScore
       return if ingredient.to_s.empty?
       component = find_component
       return unless component
-      Component.new(component, catalog[component])
+      Component.new(component, Config::CATALOG[component])
     end
 
     private
@@ -35,7 +34,7 @@ module InciScore
 
     def apply(rule)
       ingredient.values.map do |value|
-        rule.call(value, catalog)
+        rule.call(value)
       end.find(&:itself)
     end
   end

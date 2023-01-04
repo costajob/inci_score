@@ -4,29 +4,28 @@ require 'helper'
 
 key = InciScore::Recognizer::Rules::Key
 levenshtein = InciScore::Recognizer::Rules::Levenshtein
-digits = InciScore::Recognizer::Rules::Digits
+prefix = InciScore::Recognizer::Rules::Prefix
 hazard = InciScore::Recognizer::Rules::Hazard
 tokens = InciScore::Recognizer::Rules::Tokens
-catalog = Stubs::CATALOG
 
 Benchmark.ips do |x|
   x.report('key') do
-    key.call('aqua', catalog)
+    key.call('aqua')
   end
 
   x.report('levenshtein') do
-    levenshtein.call('agua', catalog)
+    levenshtein.call('agua')
   end
 
   x.report('hazard') do
-    hazard.call('amino bispropyl dimethicone', catalog)
+    hazard.call('amino bispropyl dimethicone')
   end
 
-  x.report('digits') do
-    digits.call('olea europaea oil', catalog)
+  x.report('prefix') do
+    prefix.call('olea europaea oil')
   end
 
   x.report('tokens') do
-    tokens.call('f588 capric triglyceride', catalog)
+    tokens.call('f588 capric triglyceride')
   end
 end

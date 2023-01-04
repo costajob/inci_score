@@ -1,41 +1,6 @@
 # frozen_string_literal: true
 
 module Stubs
-  CATALOG = {
-      "generic-hazard"=>3,
-      "parfum"=>0,
-      "bha"=>4,
-      "alanine"=>0,
-      "allantoin"=>0,
-      "aqua"=>0,
-      "ci 61570"=>3,
-      "ci 77491"=>0,
-      "ci 77492"=>1,
-      "cocamidopropyl betaine"=>1,
-      "disodium cocoamphodiacetate"=>0,
-      "disodium laureth sulfosuccinate"=>2,
-      "glyceryl laurate"=>0,
-      "glycine"=>0,
-      "leucine"=>0,
-      "lysine"=>0,
-      "magnesium aspartate"=>0,
-      "niacinamide"=>0,
-      "peg-120 methyl glucose dioleate"=>3,
-      "peg-150 distearate"=>3,
-      "peg-7 glyceryl cocoate"=>3,
-      "phenoxyethanol"=>2,
-      "sodium lactate"=>0,
-      "paraffinum liquidum"=>3,
-      "ci 47005"=>3,
-      "olea europea"=>0,
-      "capryl glycol"=>2,
-      "caprylic/capric triglyceride"=>0,
-      "betula alba leaf water"=>1,
-      "connective tissue extract"=>4,
-      "dmhf"=>3,
-      "acrylamide/sodium acrylate copolymer"=>3
-  }.freeze
-
   DISTANCES = [
     ['', '', 0],
     ['elvis', '', 5],
@@ -87,8 +52,8 @@ module Stubs
   COMPONENTS = [
     ["ci 61570", "ci 61570"],
     ["agua", "aqua"],
-    ["olea europaea oil", "olea europea"],
-    ["f588 capric triglyceride", "caprylic/capric triglyceride"]
+    ["olea europaea oil", "olea europaea"],
+    ["f588 capric triglyceride", "c10-18 triglycerides"]
   ].freeze
 
   HAZARDS = [

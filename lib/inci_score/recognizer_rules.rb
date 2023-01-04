@@ -7,9 +7,9 @@ module InciScore
     module Rules
       TOLERANCE = 3
 
-      Key = ->(src, catalog) { src if catalog.has_key?(src) }
+      Key = ->(src) { src if Config::CATALOG.has_key?(src) }
 
-      Hazard = ->(src, _) { 'generic-hazard' if Config::HAZARDS.any? { |h| src.include?(h) } }
+      Hazard = ->(src) { 'generic-hazard' if Config::HAZARDS.any? { |h| src.include?(h) } }
 
       module Levenshtein
         extend self
@@ -20,12 +20,12 @@ module InciScore
           end
         end
 
-        def call(src, catalog)
+        def call(src)
           return if src.empty?
           size = src.size
           farthest = Result.new(nil, size)
           initial = src[0]
-          result = catalog.reduce(farthest) do |nearest, (component, _)|
+          result = Config::CATALOG.reduce(farthest) do |nearest, (component, _)|
             next nearest unless component.start_with?(initial)
             next nearest if component.size > (size + TOLERANCE)
             d = src.distance(component)
@@ -36,15 +36,15 @@ module InciScore
         end
       end
 
-      module Digits
+      module Prefix
         extend self
 
         MIN_MEANINGFUL = 7
 
-        def call(src, catalog)
+        def call(src)
           return if src.size < TOLERANCE
           digits = src[0, MIN_MEANINGFUL]
-          catalog.detect { |component, _| component.start_with?(digits) }.to_a.first
+          Config::CATALOG.detect { |component, _| component.start_with?(digits) }.to_a.first
         end
       end
 
@@ -53,9 +53,10 @@ module InciScore
 
         UNMATCHABLE = %w[extract oil sodium acid sulfate].freeze
 
-        def call(src, catalog)
+        def call(src)
+          return if src.size <= TOLERANCE
           tokens(src).each do |token|
-            catalog.each do |component, _|
+            Config::CATALOG.each do |component, _|
               return component if component.include?(token)
             end
           end
@@ -65,7 +66,8 @@ module InciScore
         private
 
         def tokens(src)
-          (src.split(' ') - UNMATCHABLE).reject { |t| t.size < TOLERANCE }.sort! { |a, b| b.size <=> a.size }
+          words = src.split(' ').map { |w| w.split('-') }.flatten
+          (words - UNMATCHABLE).reject { |t| t.size < TOLERANCE }.sort! { |a, b| b.size <=> a.size }
         end
       end
     end

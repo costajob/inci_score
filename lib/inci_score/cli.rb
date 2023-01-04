@@ -4,20 +4,19 @@ require 'optparse'
 
 module InciScore
   class CLI
-    attr_reader :args, :io, :catalog
+    attr_reader :args, :io
     attr_accessor :src
 
-    def initialize(args:, io: STDOUT, catalog: Config::CATALOG)
+    def initialize(args:, io: STDOUT)
       @args = args
       @io = io
-      @catalog = catalog
       @src = nil
     end
 
     def call
       parser.parse!(args)
       return io.puts(%q{Specify inci list as: --src='aqua, parfum, etc'}) unless src
-      computer = Computer.new(src: src, catalog: catalog)
+      computer = Computer.new(src: src)
       io.puts computer.call
     end
 
