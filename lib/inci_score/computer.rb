@@ -18,7 +18,7 @@ module InciScore
     end
 
     def call
-      Response.new(components: components.map(&:name),
+      Response.new(components: components,
                    unrecognized: unrecognized,
                    score: score,
                    valid: valid?,

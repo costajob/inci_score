@@ -16,7 +16,7 @@ module InciScore
     end
 
     def to_json
-      data = { components: components, unrecognized: unrecognized, score: score, valid: valid, precision: precision }.freeze
+      data = { components: components.map(&:to_h), unrecognized: unrecognized, score: score, valid: valid, precision: precision }.freeze
       Oj.dump(data, mode: :compat)
     end
 
@@ -29,9 +29,9 @@ VALID STATE:
 PRECISION:
       \t#{precision}
 COMPONENTS:
-      #{components.map { |c| "\t#{c}" }.join('\n')}
+      \t#{components.map { |c| "#{c.name} (#{c.hazard})" }.join(', ')}
 UNRECOGNIZED:
-      #{unrecognized.map { |c| "\t#{c}" }.join('\n')}
+      \t#{unrecognized.join(', ')}
       }
     end
   end

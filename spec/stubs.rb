@@ -109,4 +109,6 @@ module Stubs
     [[0,1,2,3,4] * 10, 61],
     [[0,1,2,3,4] * 100, 63]
   ].freeze
+
+  Component = Struct.new(:name, :hazard)
 end
