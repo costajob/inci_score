@@ -20,7 +20,7 @@ describe InciScore::CLI do
 
   it 'must call computer' do
     cli = InciScore::CLI.new(args: ['--src=aqua, parfum, peg-10'], io: io, catalog: {'aqua' => 0, 'parfum' => 0})
-    cli.call(computer_klass: Stubs::Computer)
-    _(io.string).must_equal %({"aqua"=>0, "parfum"=>0}\n)
+    cli.call
+    _(io.string).must_equal "\nTOTAL SCORE:\n      \t100.0\nVALID STATE:\n      \tfalse\nCOMPONENTS:\n      \taqua\\n\tparfum\nUNRECOGNIZED:\n      \tpeg-10\n      \n"
   end
 end

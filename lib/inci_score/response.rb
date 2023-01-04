@@ -26,9 +26,9 @@ TOTAL SCORE:
 VALID STATE:
       \t#{valid}
 COMPONENTS:
-      #{components.map { |c| '\t#{c}' }.join('\n')}
+      #{components.map { |c| "\t#{c}" }.join('\n')}
 UNRECOGNIZED:
-      #{unrecognized.map { |c| '\t#{c}' }.join('\n')}
+      #{unrecognized.map { |c| "\t#{c}" }.join('\n')}
       }
     end
   end

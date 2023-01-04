@@ -103,23 +103,4 @@ END
   def response
     InciScore::Response.new(components: %w(aqua dimethicone peg-10), score: 47.18034913243358, valid: true)
   end
-
-  class Computer
-    attr_reader :src, :catalog
-
-    def initialize(src:, catalog:)
-      @src = src
-      @catalog = catalog
-      freeze
-    end
-
-    def call
-      src.split(",").map(&:strip).reduce({}) do |acc, component|
-        _component = catalog[component]
-        next(acc) unless _component
-        acc[component] = _component
-        acc
-      end
-    end
-  end
 end
