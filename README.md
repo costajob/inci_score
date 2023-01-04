@@ -67,8 +67,8 @@ In such case the score is computed anyway by considering only recognized compone
 Is still possible to query the object for its state:
 
 ```ruby
-inci = InciScore::Computer.new(src: 'ingredients:aqua,noent1,noent2').call
-inci.valid # false
+inci = InciScore::Computer.new(src: 'ingredients:aqua,noent1,noent2')
+inci.valid? # false
 inci.unrecognized # ["noent1", "noent2"]
 ```
 
@@ -79,15 +79,15 @@ You can collect INCI data by using the available CLI interface:
 inci_score --src="ingredients: aqua, dimethicone, pej-10, noent"
 
 TOTAL SCORE:
-        47.1803
+      	47.18
 VALID STATE:
-        true
-COMPONENTS (hazard - name): 
-        aqua
-        dimethicone
-        peg-10
+      	true
+PRECISION:
+      	75.0
+COMPONENTS:
+      	aqua\n	dimethicone\n	peg-10
 UNRECOGNIZED:
-        noent
+      	noent
 ```
 
 #### Getting help
@@ -104,3 +104,9 @@ Usage: inci_score --src="aqua, parfum, etc"
 I noticed the APIs slows down dramatically when dealing with unrecognized components to fuzzy match on.  
 I profiled the code by using the [benchmark-ips](https://github.com/evanphx/benchmark-ips) gem, finding the bottleneck was the pure Ruby implementation of the Levenshtein distance algorithm.  
 After some pointless optimization, i replaced this routine with a C implementation: i opted for the straightforward [Ruby Inline](https://github.com/seattlerb/rubyinline) library to call the C code straight from Ruby.
+
+Once downloaded source code, run the bench specs by:
+
+```shell
+bundle exec rake spec:bench
+```

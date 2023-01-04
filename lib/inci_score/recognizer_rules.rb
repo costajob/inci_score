@@ -8,13 +8,9 @@ module InciScore
     module Rules
       TOLERANCE = 3
 
-      module Key
-        extend self
+      Key = ->(src, catalog) { src if catalog.has_key?(src) }
 
-        def call(src, catalog)
-          src if catalog.has_key?(src)
-        end
-      end
+      Hazard = ->(src, _) { 'generic-hazard' if Config::HAZARDS.any? { |h| src.include?(h) } }
 
       module Levenshtein
         extend self
@@ -66,6 +62,8 @@ module InciScore
           end
           nil
         end
+
+        private
 
         def tokens(src)
           (src.split(' ') - UNMATCHABLE).reject { |t| t.size < TOLERANCE }.sort! { |a, b| b.size <=> a.size }

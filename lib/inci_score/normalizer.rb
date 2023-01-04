@@ -10,12 +10,11 @@ module InciScore
 
     def initialize(src:, rules: DEFAULT_RULES)
       @src = src
-      @rules = rules.dup
+      @rules = rules
       freeze
     end
 
     def call
-      yield(rules) if block_given?
       rules.reduce(src) do |_src, rule|
         _src = rule.call(_src)
       end

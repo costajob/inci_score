@@ -4,7 +4,7 @@ require 'helper'
 require 'inci_score/recognizer_rules'
 
 describe InciScore::Recognizer::Rules do
-  let(:catalog) { Stubs.catalog }
+  let(:catalog) { Stubs::CATALOG }
 
   it 'must recognize component by key' do
     rule = InciScore::Recognizer::Rules::Key
@@ -34,6 +34,13 @@ describe InciScore::Recognizer::Rules do
   it 'must recognize component by meaningful digits' do
     rule = InciScore::Recognizer::Rules::Digits
     _(rule.call('olea europaea oil', catalog)).must_equal 'olea europea'
+  end
+
+  it 'must recognize generic hazard' do
+    rule = InciScore::Recognizer::Rules::Hazard
+    _(rule.call('favothicone', catalog)).must_equal 'generic-hazard'
+    _(rule.call('noent peg-4', catalog)).must_equal 'generic-hazard'
+    _(rule.call('noent boent glicol', catalog)).must_equal 'generic-hazard'
   end
 
   it 'must return nil with no matchings' do

@@ -4,7 +4,7 @@ require "inci_score/recognizer_rules"
 
 module InciScore
   class Recognizer
-    DEFAULT_RULES = [Rules::Key, Rules::Levenshtein, Rules::Digits, Rules::Tokens].freeze
+    DEFAULT_RULES = [Rules::Key, Rules::Levenshtein, Rules::Digits, Rules::Hazard, Rules::Tokens].freeze
 
     Component = Struct.new(:name, :hazard)
 

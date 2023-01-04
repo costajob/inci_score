@@ -31,11 +31,6 @@ module InciScore
       tokens[1, tokens.size].to_a
     end
 
-    def details
-      return unless parenthesis?
-      raw.match(DETAILS_RULE)[1].delete(PARENTHESIS.join('|'))
-    end
-
     def parenthesis?
       PARENTHESIS.each_slice(2).any? do |pair|
         pair.all? { |p| raw.index(p) }

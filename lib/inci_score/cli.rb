@@ -8,17 +8,18 @@ module InciScore
     attr_reader :args, :io, :catalog
     attr_accessor :src
 
-    def initialize(args:, io: STDOUT, catalog: InciScore::Catalog.fetch)
+    def initialize(args:, io: STDOUT, catalog: Config::CATALOG)
       @args = args
       @io = io
       @catalog = catalog
       @src = nil
     end
 
-    def call(computer_klass: Computer)
+    def call
       parser.parse!(args)
       return io.puts(%q{Specify inci list as: --src='aqua, parfum, etc'}) unless src
-      io.puts computer_klass.new(src: src, catalog: catalog).call
+      computer = Computer.new(src: src, catalog: catalog)
+      io.puts computer.call
     end
 
     private def parser

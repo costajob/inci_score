@@ -38,7 +38,7 @@ module InciScore
     end
 
     def weighted
-      hazards.each_with_index.map do |h,i|
+      hazards.each_with_index.map do |h, i|
         Score.new(h, weight(i))
       end
     end
