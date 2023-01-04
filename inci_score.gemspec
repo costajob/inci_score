@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.email = ['costajob@gmail.com']
   s.summary = %q{A library that computes the hazard of cosmetic products components, based on the Biodizionario data.}
   s.homepage = 'https://github.com/costajob/inci_score.git'
-  s.files = Dir.glob('{bin,lib}/**/*') + %w(LICENSE.txt README.md)
+  s.files = Dir.glob('{bin,lib,ext}/**/*') + %w(LICENSE.txt README.md)
   s.executables = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
   s.test_files = s.files.grep(%r{^(spec)/})
   s.require_paths = ['lib']
