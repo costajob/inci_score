@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'inci_score/levenshtein'
-
 module InciScore
   module Refinements
     refine(String) do

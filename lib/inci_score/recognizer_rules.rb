@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
-require 'inci_score/refinements'
-
 module InciScore
   using Refinements
+
   class Recognizer
     module Rules
       TOLERANCE = 3

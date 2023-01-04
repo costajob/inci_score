@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'inci_score/score'
-
 module InciScore
   class Scorer
     HAZARD_PERCENT = 25
