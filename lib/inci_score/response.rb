@@ -4,19 +4,18 @@ require 'oj'
 
 module InciScore
   class Response
-    attr_reader :components, :score, :unrecognized, :valid, :precision
+    attr_reader :components, :score, :unrecognized, :precision
 
     def initialize(options = {})
       @components = options.fetch(:components) { [] }
       @score = options.fetch(:score) { 0.0 }
       @unrecognized = options.fetch(:unrecognized) { [] }
-      @valid = options.fetch(:valid) { false }
       @precision = options.fetch(:precision) { 0 }
       freeze
     end
 
     def to_json
-      data = { components: components.map(&:to_h), unrecognized: unrecognized, score: score, valid: valid, precision: precision }.freeze
+      data = { components: components.map(&:to_h), unrecognized: unrecognized, score: score, precision: precision }.freeze
       Oj.dump(data, mode: :compat)
     end
 
@@ -24,8 +23,6 @@ module InciScore
       %Q{
 TOTAL SCORE:
       \t#{score}
-VALID STATE:
-      \t#{valid}
 PRECISION:
       \t#{precision}
 COMPONENTS:

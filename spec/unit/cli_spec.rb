@@ -22,6 +22,6 @@ describe InciScore::CLI do
   it 'must call computer' do
     cli = InciScore::CLI.new(args: ['--src=aqua, parfum, peg-10, bha'], io: io, catalog: catalog)
     cli.call
-    _(io.string).must_equal "\nTOTAL SCORE:\n      \t61.43\nVALID STATE:\n      \ttrue\nPRECISION:\n      \t100.0\nCOMPONENTS:\n      \taqua (0), parfum (0), generic-hazard (3), bha (4)\nUNRECOGNIZED:\n      \t\n      \n"
+    _(io.string).must_equal "\nTOTAL SCORE:\n      \t61.43\nPRECISION:\n      \t100.0\nCOMPONENTS:\n      \taqua (0), parfum (0), generic-hazard (3), bha (4)\nUNRECOGNIZED:\n      \t\n      \n"
   end
 end

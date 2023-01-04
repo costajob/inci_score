@@ -21,7 +21,6 @@ module InciScore
       Response.new(components: components,
                    unrecognized: unrecognized,
                    score: score,
-                   valid: valid?,
                    precision: precision)
     end
 
