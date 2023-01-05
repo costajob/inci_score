@@ -20,16 +20,35 @@ module InciScore
     end
 
     def to_s
+      [score_str, precision_str, components_str, unrecognized_str].join
+    end
+
+    private
+
+    def score_str
       %Q{
 TOTAL SCORE:
-      \t#{score}
+      \t#{score}}
+    end
+
+    def precision_str
+      %Q{
 PRECISION:
-      \t#{precision}
+      \t#{precision}}
+    end
+
+    def components_str
+      return '' if components.empty?
+      %Q{
 COMPONENTS:
-      \t#{components.map { |c| "#{c.name} (#{c.hazard})" }.join(', ')}
+      \t#{components.map { |c| "#{c.name} (#{c.hazard})" }.join(', ')}}
+    end
+
+    def unrecognized_str
+      return '' if unrecognized.empty?
+      %Q{
 UNRECOGNIZED:
-      \t#{unrecognized.join(', ')}
-      }
+      \t#{unrecognized.join(', ')}}
     end
   end
 end

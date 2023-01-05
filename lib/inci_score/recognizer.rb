@@ -4,8 +4,6 @@ module InciScore
   class Recognizer
     DEFAULT_RULES = [Rules::Key, Rules::Levenshtein, Rules::Hazard, Rules::Prefix, Rules::Tokens].freeze
 
-    Component = Struct.new(:name, :hazard)
-
     attr_reader :ingredient, :rules, :applied
 
     def initialize(ingredient, rules = DEFAULT_RULES)
@@ -17,9 +15,7 @@ module InciScore
 
     def call
       return if ingredient.to_s.empty?
-      component = find_component
-      return unless component
-      Component.new(component, Config::CATALOG[component])
+      find_component
     end
 
     private

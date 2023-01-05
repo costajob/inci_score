@@ -7,14 +7,23 @@ module InciScore
     module Rules
       TOLERANCE = 3
 
-      Key = ->(src) { src if Config::CATALOG.has_key?(src) }
+      Component = Struct.new(:name, :hazard)
 
-      Hazard = ->(src) { 'generic-hazard' if Config::HAZARDS.any? { |h| src.include?(h) } }
+      Key = ->(src) do
+        score = Config::CATALOG[src]
+        Component.new(src, score) if score
+      end
+
+      Hazard = ->(src) do
+        if hazard = Config::HAZARDS.detect { |name, _| src.include?(name) }
+          Component.new(src, hazard.last)
+        end
+      end
 
       module Levenshtein
         extend self
 
-        Result = Struct.new(:name, :distance) do
+        Result = Struct.new(:name, :distance, :score) do
           def tolerable?(size)
             distance < TOLERANCE && distance <= (size-1)
           end
@@ -25,14 +34,14 @@ module InciScore
           size = src.size
           farthest = Result.new(nil, size)
           initial = src[0]
-          result = Config::CATALOG.reduce(farthest) do |nearest, (component, _)|
-            next nearest unless component.start_with?(initial)
-            next nearest if component.size > (size + TOLERANCE)
-            d = src.distance(component)
-            nearest = Result.new(component, d) if d < nearest.distance
+          result = Config::CATALOG.reduce(farthest) do |nearest, (name, score)|
+            next nearest unless name.start_with?(initial)
+            next nearest if name.size > (size + TOLERANCE)
+            d = src.distance(name)
+            nearest = Result.new(name, d, score) if d < nearest.distance
             nearest
           end
-          result.name if result.tolerable?(size)
+          Component.new(result.name, result.score) if result.tolerable?(size)
         end
       end
 
@@ -44,7 +53,8 @@ module InciScore
         def call(src)
           return if src.size < TOLERANCE
           digits = src[0, MIN_MEANINGFUL]
-          Config::CATALOG.detect { |component, _| component.start_with?(digits) }.to_a.first
+          pairs = Config::CATALOG.detect { |name, _| name.start_with?(digits) }.to_a.first
+          Component.new(*pairs) if pairs
         end
       end
 
@@ -56,8 +66,8 @@ module InciScore
         def call(src)
           return if src.size <= TOLERANCE
           tokens(src).each do |token|
-            Config::CATALOG.each do |component, _|
-              return component if component.include?(token)
+            Config::CATALOG.each do |name, score|
+              return Component.new(name, score) if name.include?(token)
             end
           end
           nil

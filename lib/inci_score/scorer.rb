@@ -2,7 +2,7 @@
 
 module InciScore
   class Scorer
-    HAZARD_PERCENT = 25
+    HAZARD_RATIO = 25
     WEIGHT_FACTOR = 5
 
     attr_reader :hazards, :size
@@ -15,7 +15,7 @@ module InciScore
 
     def call
       return 0 if hazards.empty?
-      (100 - avg * HAZARD_PERCENT).round(4)
+      (100 - avg * HAZARD_RATIO).round(4)
     end
 
     private
@@ -25,10 +25,8 @@ module InciScore
     end
 
     def avg_weighted
-      return hazards.reduce(&:+) if same_hazard?
-      weighted.reduce(0.0) do |acc,score|
-        acc += score.value
-      end
+      return hazards.sum if same_hazard?
+      weighted.sum(&:value)
     end
 
     def same_hazard?

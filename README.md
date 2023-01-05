@@ -9,8 +9,9 @@
 * [Usage](#usage)
   * [Library](#library)
   * [CLI](#cli)
-* [Benchmark](#benchmark)
+* [Benchmarks](#benchmark)
   * [Levenshtein in C](#levenshtein-in-c)
+  * [Run benchmarks](#run-benchmarks)
 
 ## Scope
 This gem computes the score of cosmetic components basing on the information provided by the [Biodizionario site](http://www.biodizionario.it/) by Fabrizio Zago.
@@ -56,7 +57,7 @@ You can include this gem into your own library and start computing the INCI scor
 require "inci_score"
 
 inci = InciScore::Computer.new(src: 'aqua, dimethicone').call
-inci.score # 53.7629
+inci.score # 53.76
 ```
 
 As you see the results are wrapped by an *InciScore::Response* object, this is useful when dealing with the CLI and HTTP interfaces (read below).
@@ -80,12 +81,10 @@ inci_score --src="ingredients: aqua, dimethicone, pej-10, noent"
 
 TOTAL SCORE:
       	47.18
-VALID STATE:
-      	true
 PRECISION:
       	75.0
 COMPONENTS:
-      	aqua\n	dimethicone\n	peg-10
+      	aqua (0), dimethicone (4), peg-10 (3)
 UNRECOGNIZED:
       	noent
 ```
@@ -98,15 +97,17 @@ Usage: inci_score --src="aqua, parfum, etc"
     -h, --help                       Prints this help
 ```
 
-## Benchmark
+## Benchmarks
 
 ### Levenshtein in C
 I noticed the APIs slows down dramatically when dealing with unrecognized components to fuzzy match on.  
 I profiled the code by using the [benchmark-ips](https://github.com/evanphx/benchmark-ips) gem, finding the bottleneck was the pure Ruby implementation of the Levenshtein distance algorithm.  
-After some pointless optimization, i replaced this routine with a C implementation: i opted for the straightforward [Ruby Inline](https://github.com/seattlerb/rubyinline) library to call the C code straight from Ruby.
 
-Once downloaded source code, run the bench specs by:
+After some pointless optimization, i replaced this routine with a C implementation: i opted for the straightforward [Ruby Inline](https://github.com/seattlerb/rubyinline) library to call the C code straight from Ruby, gaining an order of magnitude in speed (x30).
+
+### Run benchmarks
+Once downloaded source code, run the benchmarks by:
 
 ```shell
-bundle exec rake spec:bench
+bundle exec rake bench
 ```

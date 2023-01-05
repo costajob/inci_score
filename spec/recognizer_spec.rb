@@ -19,42 +19,37 @@ describe InciScore::Recognizer do
 
   it 'must recognize by key' do
     recognizer = InciScore::Recognizer.new('aqua')
-    _(recognizer.call).must_be_instance_of InciScore::Recognizer::Component
+    _(recognizer.call.name).must_equal('aqua')
     _(recognizer.applied.last).must_equal InciScore::Recognizer::Rules::Key
   end
 
   it 'must recognize component by key synonim' do
     recognizer = InciScore::Recognizer.new('yarrow (achillea millefolium) extract')
-    _(recognizer.call).must_be_instance_of InciScore::Recognizer::Component
+    _(recognizer.call.name).must_equal('achillea millefolium')
     _(recognizer.applied.last).must_equal InciScore::Recognizer::Rules::Key
   end
 
   it 'must recognize by levenshtein' do
     recognizer = InciScore::Recognizer.new('agua')
-    _(recognizer.call).must_be_instance_of InciScore::Recognizer::Component
+    _(recognizer.call.name).must_equal('aqua')
     _(recognizer.applied.last).must_equal InciScore::Recognizer::Rules::Levenshtein
   end
 
   it 'must recognize by hazard' do
     recognizer = InciScore::Recognizer.new('fimethicone')
-    _(recognizer.call).must_be_instance_of InciScore::Recognizer::Component
+    _(recognizer.call.name).must_equal('fimethicone')
     _(recognizer.applied.last).must_equal InciScore::Recognizer::Rules::Hazard
   end
 
   it 'must recognize by prefix' do
     recognizer = InciScore::Recognizer.new('olea europaea oil')
-    _(recognizer.call).must_be_instance_of InciScore::Recognizer::Component
+    _(recognizer.call.name).must_equal('olea europaea')
     _(recognizer.applied.last).must_equal InciScore::Recognizer::Rules::Prefix
   end
 
   it 'must recognize by tokens' do
     recognizer = InciScore::Recognizer.new('f588 capric triglyceride')
-    _(recognizer.call).must_be_instance_of InciScore::Recognizer::Component
+    _(recognizer.call.name).must_equal('c10-18 triglycerides')
     _(recognizer.applied.last).must_equal InciScore::Recognizer::Rules::Tokens
-  end
-
-  it 'must recognize' do
-    recognizer = InciScore::Recognizer.new('yarrow (achillea millefolium) extract')
-    recognizer.call
   end
 end

@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.homepage = 'https://github.com/costajob/inci_score.git'
   s.files = Dir.glob('{bin,config,ext,lib}/**/*') + %w(LICENSE.txt README.md)
   s.executables = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
-  s.test_files = s.files.grep(%r{^(spec)/})
+  s.test_files = s.files.grep(%r{^(spec|bench)/})
   s.require_paths = ['lib']
   s.license = 'MIT'
   s.required_ruby_version = '>= 2.7'

@@ -1,31 +1,29 @@
-- peg-
-- ppg-
-- dea-
-- mipa-
-- edta-
-- thicone
-- siloxane
-- chlorexidine
-- petrolatum
-- paraffinum liquidum
-- carbomer
-- crosspolymer
-- acrylate
-- styrene
-- copolymer
-- triethanolamine
-- triclosan
-- dmdm
-- hydantoin
-- imidazolidinyl urea
-- diazolidinyl urea
-- formaldheyde
-- methylchloroisothiazolinone
-- methylisothiazolinone
-- sodium hydroxymethylglycinate
-- nonoxynol
-- poloxamer
-- trimonium
-- dimonium
-- glycol
-- glicol
+---
+peg-: 3
+ppg-: 3
+dea-: 3
+mipa-: 3
+edta-: 4
+thicone: 4
+siloxane: 4
+chlorexidine: 4
+petrolatum: 3
+paraffinum: 3
+carbomer: 3
+crosspolymer: 3
+acrylate: 3
+styrene: 3
+copolymer: 3
+triethanolamine: 3
+triclosan: 4
+dmdm: 3
+hydantoin: 3
+imidazolidinyl: 4
+diazolidinyl: 3
+methylchloroisothiazolinone: 3
+methylisothiazolinone: 3
+nonoxynol: 4
+poloxamer: 3
+trimonium: 3
+dimonium: 3
+glycol: 3

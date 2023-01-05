@@ -12,6 +12,6 @@ describe InciScore::Response do
   end
 
   it 'must return a string representation' do
-    _(response.to_s).must_equal "\nTOTAL SCORE:\n      \t47.18\nPRECISION:\n      \t100.0\nCOMPONENTS:\n      \taqua (0), dimethicone (4), peg-10 (4)\nUNRECOGNIZED:\n      \tnoent1, noent2\n      "
+    _(response.to_s).must_equal "\nTOTAL SCORE:\n      \t47.18\nPRECISION:\n      \t100.0\nCOMPONENTS:\n      \taqua (0), dimethicone (4), peg-10 (4)\nUNRECOGNIZED:\n      \tnoent1, noent2"
   end
 end
