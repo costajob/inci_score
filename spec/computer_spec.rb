@@ -7,7 +7,7 @@ describe InciScore::Computer do
     let(:computer) { InciScore::Computer.new(src: Stubs::SOURCES[0]) }
 
     it 'must collect components' do
-      _(computer.components.map(&:name)).must_equal(['aqua', 'disodium laureth sulfosuccinate', 'cocamidopropyl betaine', 'disodium cocoamphodiacetate', 'glyceryl laurate', 'diethylaminoethyl peg-5 cocoate', 'sodium lactate', 'parfum', 'niacinamide', 'glycine', 'magnesium aspartate', 'alanine', 'lysine', 'leucine', 'allantoin', 'peg-150 e- distearate', 'peg-120 methyl glucose dioleate', 'phenoxyethanol', 'ci 61570'])
+      _(computer.components.map(&:name)).must_equal(['aqua', 'disodium laureth sulfosuccinate', 'cocamidopropyl betaine', 'disodium cocoamphodiacetate', 'glyceryl laurate', 'peg-7 glyceryl cocoate', 'sodium lactate', 'parfum', 'niacinamide', 'glycine', 'magnesium aspartate', 'alanine', 'lysine', 'leucine', 'allantoin', 'peg-150 distearate', 'peg-120 methyl glucose dioleate', 'phenoxyethanol', 'ci 61570'])
     end
 
     it 'must collect unrecognized components' do

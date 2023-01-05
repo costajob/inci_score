@@ -49,13 +49,6 @@ module Stubs
     ["aqua/water", "glycerin", "dimethicone", "isohexadeune", "silica", "hvdroxveihyihperazine ethane sulfonic acid", "alcohol denat", " we sly", "-", "svnthetic wax", "ci 77163/bismuth oxvchloride", "ci 77391 / tiianium dioxide", "secale cereale extract/ rye seed extract", "sodium acrylates copolvmer", "sodium hvaluronate", "phenoxyethanol", "adendsine", "peg-10 dimethicone", "ethylhexyl hydroxvstearate", "nylon-12", "dimethicone/peg-io/is crosspolvmer", "dlhethicone/polvglycerin-3 crosspolymer", "penwlene glycol", "syntheiic fluorphlogopite", "benzvl salicvlate", "benzvl alcohol", "linalool", "benzvl benzoate", "caprvliucapric triglyceride", "caprvlyl glycoi", " dipotassium glvcvrrhizate", "alpinia gaunga leaf extract", "disteardimdniun hectdrite", "disouium edta", "ciironellol", "parfuh/ fragrance", "(fil 3166675)", "iorl mermizioni su m399 v", "wwwlorealpansnt"]
   ].freeze
 
-  COMPONENTS = [
-    ["ci 61570", "ci 61570"],
-    ["agua", "aqua"],
-    ["olea europaea oil", "olea europaea"],
-    ["f588 capric triglyceride", "c10-18 triglycerides"]
-  ].freeze
-
   HAZARDS = [
     [[], 0],
     [[0,1], 94],

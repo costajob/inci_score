@@ -28,24 +28,31 @@ module InciScore
         extend self
 
         Result = Struct.new(:name, :distance, :score) do
-          def tolerable?(size)
-            distance < TOLERANCE && distance <= (size-1)
+          def tolerable?(size, tolerance)
+            distance < tolerance && distance <= (size-1)
           end
         end
 
         def call(src)
           return if src.empty?
           size = src.size
+          t = tolerance(size)
           farthest = Result.new(nil, size)
           initial = src[0]
           result = Config::CATALOG.reduce(farthest) do |nearest, (name, score)|
             next nearest unless name.start_with?(initial)
-            next nearest if name.size > (size + TOLERANCE)
+            next nearest if name.size > (size + t)
             d = src.distance(name)
             nearest = Result.new(name, d, score) if d < nearest.distance
             nearest
           end
-          Component.new(result.name, result.score) if result.tolerable?(size)
+          Component.new(result.name, result.score) if result.tolerable?(size, t)
+        end
+
+        private
+
+        def tolerance(size)
+          Math.log(size, 1.8).round
         end
       end
 

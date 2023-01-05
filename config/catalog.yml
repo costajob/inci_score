@@ -1,6 +1,7 @@
 ---
 aqua: 0
 water: 0
+aroma: 2
 parfum: 3
 fragrance: 3
 phosphatidylcholine: 1
@@ -1580,6 +1581,7 @@ fagus sylvatica: 0
 farnesol: 2
 farnesyl acetate: 0
 fast green fcf: 4
+fava tonka: 1
 fermented vegetable extract: 0
 ferric chloride: 0
 ferula assa foetida: 0
@@ -3370,6 +3372,7 @@ pentasodium aminotrimethylene phosphonate: 3
 pentasodium pentetate: 3
 pentasodium triphosphate: 2
 pentetic acid: 3
+pentylene glycol: 2
 perfluorodecalin: 3
 perfluoropolymethylisopropyl ether: 3
 perfluorotetralin: 3
@@ -4832,6 +4835,8 @@ thymus extract: 4
 thymus hydrolysate: 4
 thymus serpyllum: 0
 thymus vulgaris: 0
+thymus vulgaris leaf oil: 0
+thymus vulgaris leaf water: 0
 tilia americana: 0
 tilia cordata: 0
 tilia vulgaris: 0

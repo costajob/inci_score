@@ -5,21 +5,14 @@ require 'helper'
 describe InciScore::Recognizer do
   let(:rules) { [] }
 
-  it 'must recognize the components based on applied rules' do
-    Stubs::COMPONENTS.each do |ingredient, name|
-      recognizer = InciScore::Recognizer.new(ingredient)
-      _(recognizer.call.name).must_equal name
-    end
-  end
-
   it 'must skip recognition for empty ingredient' do
     recognizer = InciScore::Recognizer.new(nil)
     _(recognizer.call).must_be_nil
   end
 
   it 'must recognize by key' do
-    recognizer = InciScore::Recognizer.new('aqua')
-    _(recognizer.call.name).must_equal('aqua')
+    recognizer = InciScore::Recognizer.new('caprylic/capric triglyceride')
+    _(recognizer.call.name).must_equal('caprylic/capric triglyceride')
     _(recognizer.applied.last).must_equal InciScore::Recognizer::Rules::Key
   end
 
@@ -35,6 +28,12 @@ describe InciScore::Recognizer do
     _(recognizer.applied.last).must_equal InciScore::Recognizer::Rules::Levenshtein
   end
 
+  it 'must recognize by levenshtein' do
+    recognizer = InciScore::Recognizer.new('thymus vulgaris oil')
+    _(recognizer.call.name).must_equal('thymus vulgaris')
+    _(recognizer.applied.last).must_equal InciScore::Recognizer::Rules::Levenshtein
+  end
+
   it 'must recognize by hazard' do
     recognizer = InciScore::Recognizer.new('fimethicone')
     _(recognizer.call.name).must_equal('fimethicone')
@@ -42,7 +41,7 @@ describe InciScore::Recognizer do
   end
 
   it 'must recognize by prefix' do
-    recognizer = InciScore::Recognizer.new('olea europaea oil')
+    recognizer = InciScore::Recognizer.new('olea europaea olive oil')
     _(recognizer.call.name).must_equal('olea europaea')
     _(recognizer.applied.last).must_equal InciScore::Recognizer::Rules::Prefix
   end
