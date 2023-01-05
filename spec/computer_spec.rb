@@ -23,7 +23,8 @@ describe InciScore::Computer do
     end
 
     it 'must compute the score' do
-      _(computer.score).must_equal(78.63)
+      _(computer.score).must_equal(74.43)
+      puts computer.call
     end
 
     it 'must return response' do
@@ -36,7 +37,7 @@ describe InciScore::Computer do
       let(:computer) { InciScore::Computer.new(src: 'water, dimethicone') }
 
       it 'must compute the score' do
-        _(computer.score).must_equal(53.76)
+        _(computer.score).must_equal(56.25)
       end
     end
 

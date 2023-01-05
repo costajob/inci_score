@@ -40,7 +40,11 @@ module InciScore
     end
 
     def weight(index)
-      Math.log(index+1, size * WEIGHT_FACTOR)
+      Math.log(index + 1, size * ratio(index))
+    end
+
+    def ratio(index)
+      WEIGHT_FACTOR / (index + 1)
     end
   end
 end

@@ -57,7 +57,7 @@ You can include this gem into your own library and start computing the INCI scor
 require "inci_score"
 
 inci = InciScore::Computer.new(src: 'aqua, dimethicone').call
-inci.score # 53.76
+inci.score # 56.25
 ```
 
 As you see the results are wrapped by an *InciScore::Response* object, this is useful when dealing with the CLI and HTTP interfaces (read below).
@@ -80,7 +80,7 @@ You can collect INCI data by using the available CLI interface:
 inci_score --src="ingredients: aqua, dimethicone, pej-10, noent"
 
 TOTAL SCORE:
-      	47.18
+      	53.22
 PRECISION:
       	75.0
 COMPONENTS:
