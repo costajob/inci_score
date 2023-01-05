@@ -23,6 +23,12 @@ describe InciScore::Recognizer do
     _(recognizer.applied.last).must_equal InciScore::Recognizer::Rules::Key
   end
 
+  it 'must recognize component by key synonim' do
+    recognizer = InciScore::Recognizer.new('yarrow (achillea millefolium) extract')
+    _(recognizer.call).must_be_instance_of InciScore::Recognizer::Component
+    _(recognizer.applied.last).must_equal InciScore::Recognizer::Rules::Key
+  end
+
   it 'must recognize by levenshtein' do
     recognizer = InciScore::Recognizer.new('agua')
     _(recognizer.call).must_be_instance_of InciScore::Recognizer::Component
@@ -45,5 +51,10 @@ describe InciScore::Recognizer do
     recognizer = InciScore::Recognizer.new('f588 capric triglyceride')
     _(recognizer.call).must_be_instance_of InciScore::Recognizer::Component
     _(recognizer.applied.last).must_equal InciScore::Recognizer::Rules::Tokens
+  end
+
+  it 'must recognize' do
+    recognizer = InciScore::Recognizer.new('yarrow (achillea millefolium) extract')
+    recognizer.call
   end
 end

@@ -5,14 +5,13 @@ module InciScore
     SLASH = '/'
     SLASH_RULE = /(?<!ate)\//.freeze
     PARENTHESIS = %w[( ) [ ]].freeze
-    DETAILS_RULE = /(\(.+\)|\[.+\])/.freeze
+    PARENTHESIS_RULE = /(\(.+\)|\[.+\])/.freeze
 
-    attr_reader :raw, :tokens, :values
+    attr_reader :raw, :values
 
     def initialize(raw)
       @raw = raw.to_s
-      @tokens = @raw.split(SLASH_RULE).map(&:strip)
-      @values ||= synonims.unshift(name).compact
+      @values = fetch_values
       freeze
     end
 
@@ -22,13 +21,15 @@ module InciScore
 
     private
 
-    def name
-      return tokens.first unless parenthesis?
-      raw.sub(DETAILS_RULE, '').strip
-    end
-
-    def synonims
-      tokens[1, tokens.size].to_a
+    def fetch_values
+      if parenthesis?
+        parenthesis = PARENTHESIS.join
+        parenthesis_values = raw.match(PARENTHESIS_RULE).captures.map { |c| c.delete(parenthesis) }
+        deparenthesized = raw.sub(PARENTHESIS_RULE, '').sub(/\s+/, ' ').strip
+        [deparenthesized].concat(parenthesis_values)
+      else
+        raw.split(SLASH_RULE).map(&:strip)
+      end
     end
 
     def parenthesis?

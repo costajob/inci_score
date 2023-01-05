@@ -72,6 +72,7 @@ acetanilid: 3
 acetic acid: 0
 acetone: 3
 acetum: 0
+acetyl tyrosine: 3
 acetylated castor oil: 0
 acetylated lanolin: 2
 acetylated lanolin alcohol: 1
@@ -155,6 +156,7 @@ algin: 0
 alginic acid: 0
 alkanna tinctoria: 0
 alkyl benzenesulfonic acid sodium salt: 3
+alkyldimethylsilyl polypropylsesquioxane: 3 
 allantoin: 0
 allantoin acetyl methionine: 0
 allantoin ascorbate: 0
@@ -323,6 +325,7 @@ arnica montana: 0
 artemisia abrotanum: 0
 artemisia absinthium: 4
 artemisia vulgaris: 0
+ascophyllum nodosum extract: 0
 ascorbic acid: 0
 ascorbic acid polypeptide: 1
 ascorbyl dipalmitate: 1
@@ -661,6 +664,7 @@ capryl hydroxyethyl imidazoline: 2
 capryleth-4 carboxylic acid: 3
 capryleth-6 carboxylic acid: 3
 capryleth-9 carboxylic acid: 3
+caprylhydroxamic acid: 3
 caprylic acid: 1
 caprylic alcohol: 1
 caprylic/capric glycerides: 0
@@ -1349,6 +1353,7 @@ dioscorea villosa: 0
 diospyros kaki: 0
 dipalmitoylethyl hydroxyethylmonium methosulfate: 1
 dipalmoylethyl hydroxyethylmonium methosulfate: 1
+dipentaerythrityl tetrabehenate/polyhydroxystearate: 1
 diphenyl dimethicone: 4
 dipotassium aspartate: 1
 dipotassium azelate: 1
@@ -1566,6 +1571,8 @@ euglena gracilis: 0
 eupatorium purpureum: 0
 euphorbia hirta: 0
 euphrasia officinalis: 0
+euterpe edulis: 0
+euterpe oleracea: 0
 evernia furfuracea: 3
 evernia prunastri: 3
 fabiana imbricata: 0
@@ -1612,6 +1619,7 @@ ginkgo biloba: 0
 ginseng hydroxypropyltrimonium chloride: 3
 glechoma hederacea: 0
 glucamine: 0
+glucomannan/konjac: 1
 gluconic acid: 0
 gluconolactone: 0
 glucosamine: 0
@@ -1796,6 +1804,7 @@ hexamidine: 3
 hexamidine diisethionate: 3
 hexamidine paraben: 3
 hexane: 3
+hexanediol: 3
 hexyl cinnamal: 2
 hexyl laurate: 0
 hexyldecyl laurate: 2
@@ -1996,10 +2005,12 @@ indigofera tinctoria: 0
 inositol: 0
 inositol hexanicotinate: 2
 inula helenium: 4
+inulin: 1
 iodized corn protein: 0
 iodized garlic: 0
 iodized garlic extract: 0
 iodized hydrolyzed zein: 1
+iodopropynyl butylcarbamate: 3
 ipomoea purga: 0
 iris florentina: 0
 iris pallida: 0
@@ -2059,6 +2070,7 @@ isolaureth-10: 3
 isolaureth-3: 3
 isolaureth-6: 3
 isolauryl behenate: 1
+isomalt: 2
 isooctyl thioglycolate: 3
 isopropanolamine nitrite: 4
 isopropyl acetate: 3
@@ -2792,6 +2804,7 @@ palmitoyl myristyl serinate: 1
 palmitoyl oligopeptide: 0
 palmitoyl pg-trimonium chloride: 3
 palmitoyl proline: 1
+palmitoyl tripeptide-5: 0
 panax ginseng: 0
 panicum miliaceum: 0
 panthenol: 0
@@ -3352,6 +3365,7 @@ pei-35: 3
 pei-45: 3
 pei-7: 3
 pei-700: 3
+pelargonic acid: 1
 pentapotassium triphosphate: 1
 pentasodium aminotrimethylene phosphonate: 3
 pentasodium pentetate: 3
@@ -3404,6 +3418,7 @@ phthalic anhydride/trimellitic anhydride/glycols copolymer: 3
 physalis alkekengi: 0
 phytantriol: 0
 phytic acid: 0
+phytosterols: 0
 picea excelsa: 0
 picramic acid: 3
 pigment blue: 3
@@ -4013,6 +4028,7 @@ psidium guajava: 0
 psoralea corylifolia: 0
 pterocarpus santalinus: 0
 ptfe: 3
+pullulan: 0
 pulmonaria officinalis: 0
 pumice: 0
 punica granatum: 0
@@ -4190,7 +4206,7 @@ sesamide dea: 3
 sesamidopropyl betaine: 1
 sesamidopropyl dimethylamine: 2
 sesamidopropylamine oxide: 1
-sesamum indicum: 0
+sesamum indicum/sesame oil: 0
 shellac: 0
 shellac cera: 0
 shorea stenoptera: 0
@@ -4804,6 +4820,7 @@ theobroma cacao: 0
 theophylline: 0
 thiamine nitrate: 0
 thiodiglycolic acid: 2
+thiodipropionic acid: 0 
 thioglycerin: 2
 thiolactic acid: 2
 thiolanediol: 2
@@ -4839,9 +4856,12 @@ toluene-2,5-diamine sulfate: 4
 toluene-3,4-diamine: 4
 torreya californica: 0
 trachea hydrolysate: 4
+trehalose: 0
 tri-c12-13 alkyl citrate: 3
 triacetin: 1
+tribehenin peg-20 esters: 3
 tricalcium phosphate: 0
+tricaprylin: 1
 triceteareth-4 phosphate: 3
 triceteth-5 phosphate: 3
 trichloroethane: 4
@@ -4884,6 +4904,8 @@ trilaurylamine: 3
 trilinoleic acid: 1
 trilinolein: 1
 trilinolenin: 1
+trimethylsiloxysilicate: 3
+tripeptide-29: 1
 triphenyl trimethicone: 4
 tripotassium edta: 4
 trisodium edta: 4
@@ -4902,6 +4924,7 @@ tropaeolum majus: 0
 tuna extract: 4
 turpentine: 3
 tussilago farfara: 0
+ubiquinone: 2
 ulex europaeus: 0
 ulmus campestris: 0
 ulmus fulva: 0

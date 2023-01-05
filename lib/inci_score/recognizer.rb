@@ -8,8 +8,8 @@ module InciScore
 
     attr_reader :ingredient, :rules, :applied
 
-    def initialize(ingredient, rules = DEFAULT_RULES, wrapper = Ingredient)
-      @ingredient = wrapper.new(ingredient)
+    def initialize(ingredient, rules = DEFAULT_RULES)
+      @ingredient = Ingredient.new(ingredient)
       @rules = rules
       @applied = []
       freeze
