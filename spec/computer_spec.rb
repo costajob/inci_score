@@ -24,7 +24,6 @@ describe InciScore::Computer do
 
     it 'must compute the score' do
       _(computer.score).must_equal(74.43)
-      puts computer.call
     end
 
     it 'must return response' do

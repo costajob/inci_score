@@ -25,7 +25,7 @@ module InciScore
       if parenthesis?
         parenthesis = PARENTHESIS.join
         parenthesis_values = raw.match(PARENTHESIS_RULE).captures.map { |c| c.delete(parenthesis) }
-        deparenthesized = raw.sub(PARENTHESIS_RULE, '').sub(/\s+/, ' ').strip
+        deparenthesized = raw.sub(PARENTHESIS_RULE, '').sub(/\s{2,}/, ' ').strip
         [deparenthesized].concat(parenthesis_values)
       else
         raw.split(SLASH_RULE).map(&:strip)

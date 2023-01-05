@@ -4,7 +4,7 @@ require 'helper'
 require 'inci_score/response'
 
 describe InciScore::Response do
-  let(:components) { [Stubs::Component.new('aqua', 0), Stubs::Component.new('dimethicone', 4), Stubs::Component.new('peg-10', 4)] }
+  let(:components) { [InciScore::Recognizer::Rules::Component.new('aqua', 0), InciScore::Recognizer::Rules::Component.new('dimethicone', 4), InciScore::Recognizer::Rules::Component.new('peg-10', 4)] }
   let(:response) { InciScore::Response.new(components: components, unrecognized: %w(noent1 noent2), score: 47.18, precision: 100.0) }
 
   it 'must return a JSON representation' do

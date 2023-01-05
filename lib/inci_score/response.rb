@@ -41,7 +41,7 @@ PRECISION:
       return '' if components.empty?
       %Q{
 COMPONENTS:
-      \t#{components.map { |c| "#{c.name} (#{c.hazard})" }.join(', ')}}
+      \t#{components.map(&:to_s).join(', ')}}
     end
 
     def unrecognized_str

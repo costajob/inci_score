@@ -7,7 +7,11 @@ module InciScore
     module Rules
       TOLERANCE = 3
 
-      Component = Struct.new(:name, :hazard)
+      Component = Struct.new(:name, :hazard) do
+        def to_s
+          "#{name} (#{hazard})"
+        end
+      end
 
       Key = ->(src) do
         score = Config::CATALOG[src]
@@ -53,7 +57,7 @@ module InciScore
         def call(src)
           return if src.size < TOLERANCE
           digits = src[0, MIN_MEANINGFUL]
-          pairs = Config::CATALOG.detect { |name, _| name.start_with?(digits) }.to_a.first
+          pairs = Config::CATALOG.detect { |name, _| name.start_with?(digits) }
           Component.new(*pairs) if pairs
         end
       end

@@ -29,8 +29,8 @@ describe InciScore::Ingredient do
   end
 
   it 'must fetch values with middle parenthesis' do
-    ingredient = InciScore::Ingredient.new('yarrow (achillea millefolium) extract')
-    _(ingredient.values).must_equal ['yarrow extract', 'achillea millefolium']
+    ingredient = InciScore::Ingredient.new('prunus amygdalus dulcis (sweet almond) oil')
+    _(ingredient.values).must_equal ['prunus amygdalus dulcis oil', 'sweet almond']
   end
 
   it 'must fetch values with final parenthesis' do
