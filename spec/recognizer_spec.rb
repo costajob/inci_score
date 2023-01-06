@@ -51,4 +51,10 @@ describe InciScore::Recognizer do
     _(recognizer.call.name).must_equal('c10-18 triglycerides')
     _(recognizer.applied.last).must_equal InciScore::Recognizer::Rules::Tokens
   end
+
+  it 'must recognize component by token synonim' do
+    recognizer = InciScore::Recognizer.new('mineral oil')
+    _(recognizer.call.name).must_equal('paraffinum liquidum (mineral oil)')
+    _(recognizer.applied.last).must_equal InciScore::Recognizer::Rules::Tokens
+  end
 end
