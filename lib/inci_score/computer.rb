@@ -5,10 +5,11 @@ module InciScore
     TOLERANCE = 30.0
     DECIMALS = 2
 
-    attr_reader :src, :rules, :ingredients, :components, :unrecognized
+    attr_reader :src, :rules, :ingredients, :components, :unrecognized, :precisions
 
     def initialize(src:, rules: Normalizer::DEFAULT_RULES)
       @unrecognized = []
+      @precisions = []
       @src = src
       @rules = rules
       @ingredients = Normalizer.new(src: src, rules: rules).call
@@ -28,7 +29,7 @@ module InciScore
     end
 
     def precision
-      (100 - ((unrecognized.size / Float(ingredients.size)) * 100)).round(DECIMALS)
+      (precisions.sum / ingredients.size).round(DECIMALS)
     end
 
     def valid?
@@ -39,7 +40,9 @@ module InciScore
 
     def fetch_components
       ingredients.map do |ingredient|
-        Recognizer.new(ingredient).call.tap do |component|
+        recognizer = Recognizer.new(ingredient)
+        recognizer.call.tap do |component|
+          precisions << recognizer.precision
           unrecognized << ingredient unless component
         end
       end.compact

@@ -15,7 +15,7 @@ module InciScore
 
     def call
       parser.parse!(args)
-      return io.puts(%q{Specify inci list as: --src='aqua, parfum, etc'}) unless src
+      return io.puts(%q{Specify INCI list as: --src='aqua, parfum, etc'}) unless src
       computer = Computer.new(src: src)
       io.puts computer.call
     end

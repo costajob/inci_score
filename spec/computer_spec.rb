@@ -19,7 +19,7 @@ describe InciScore::Computer do
     end
 
     it 'must compute precision' do
-      _(computer.precision).must_equal 95.0
+      _(computer.precision).must_equal 90.15
     end
 
     it 'must compute the score' do

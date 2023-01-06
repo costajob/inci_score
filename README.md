@@ -58,18 +58,21 @@ require "inci_score"
 
 inci = InciScore::Computer.new(src: 'aqua, dimethicone').call
 inci.score # 56.25
+inci.precision # 100.0
 ```
 
 As you see the results are wrapped by an *InciScore::Response* object, this is useful when dealing with the CLI and HTTP interfaces (read below).
 
 #### Unrecognized components
-The API treats unrecognized components as a common case by just marking the object as non valid and raise a warning in case more than 30% of the ingredients are not found.  
+The API treats unrecognized components as a common case by just marking the object as non valid.  
 In such case the score is computed anyway by considering only recognized components.  
-Is still possible to query the object for its state:
+You can check the `precision` value, which is zero for unrecognized components, and changes based on the applied recognizer rule (100% when exact matching).
 
 ```ruby
 inci = InciScore::Computer.new(src: 'ingredients:aqua,noent1,noent2')
 inci.valid? # false
+inci.score # 100.0
+inci.precision # 33.33
 inci.unrecognized # ["noent1", "noent2"]
 ```
 
@@ -82,7 +85,7 @@ inci_score --src="ingredients: aqua, dimethicone, pej-10, noent"
 TOTAL SCORE:
       	53.22
 PRECISION:
-      	75.0
+      	71.54
 COMPONENTS:
       	aqua (0), dimethicone (4), peg-10 (3)
 UNRECOGNIZED:

@@ -7,7 +7,7 @@ describe InciScore::CLI do
 
   it 'must warn if no inci is specified' do
     InciScore::CLI.new(args: ['aqua'], io: io).call
-    _(io.string).must_equal "Specify inci list as: --src='aqua, parfum, etc'\n"
+    _(io.string).must_equal "Specify INCI list as: --src='aqua, parfum, etc'\n"
   end
 
   it 'must print the help' do
