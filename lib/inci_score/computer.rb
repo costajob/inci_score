@@ -2,7 +2,7 @@
 
 module InciScore
   class Computer
-    TOLERANCE = 30.0
+    TOLERANCE = 50.0
     DECIMALS = 2
 
     attr_reader :src, :rules, :ingredients, :components, :unrecognized, :precisions

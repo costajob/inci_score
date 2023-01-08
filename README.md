@@ -31,11 +31,13 @@ The total score is then calculated on a percent basis.
 Since the ingredients list could come from an unreliable source (e.g. data scanned from a captured image), the gem tries to fuzzy match the ingredients by using different algorithms:
 * exact matching
 * [edit distance](https://en.wikipedia.org/wiki/Levenshtein_distance) behind a specified tolerance
+* known hazards (ie ending in `ethicone`) 
 * first relevant matching digits 
 * matching splitted tokens
 
 ### Sources
-The library accepts the list of ingredients as a single string of text. Since this source could come from an OCR program, the library performs a normalization by stripping invalid characters and removing the unimportant parts.  
+The library accepts the list of ingredients as a single string of text.  
+Since this source could come from an OCR program, the library performs a normalization by stripping invalid characters and removing the unimportant parts.  
 The ingredients are typically separated by comma, although normalizer will detect the most appropriate separator:
 
 ```
@@ -44,6 +46,7 @@ The ingredients are typically separated by comma, although normalizer will detec
 
 ## Installation
 Install the gem from your shell:
+
 ```shell
 gem install inci_score
 ```
@@ -61,7 +64,7 @@ inci.score # 56.25
 inci.precision # 100.0
 ```
 
-As you see the results are wrapped by an *InciScore::Response* object, this is useful when dealing with the CLI and HTTP interfaces (read below).
+As you see the results are wrapped by an *InciScore::Response* object, this is useful when dealing with the CLI (read below).
 
 #### Unrecognized components
 The API treats unrecognized components as a common case by just marking the object as non valid.  
@@ -94,6 +97,7 @@ UNRECOGNIZED:
 
 #### Getting help
 You can get CLI interface help by:
+
 ```shell
 Usage: inci_score --src="aqua, parfum, etc"
     -s, --src=SRC                    The INCI list: "aqua, parfum, etc"
